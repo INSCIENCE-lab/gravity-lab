@@ -111,3 +111,6 @@
 #gravity-projectile-stable .gp-view-warning{color:var(--gp-peach);font-size:12px;margin:6px 0 10px}
 #gravity-projectile-stable .gp-saved-label{color:var(--gp-peach);font-size:12px;margin:8px 0 0}
 #gravity-projectile-stable .gp-stage .gp-saved{stroke:var(--gp-peach);stroke-width:2;stroke-dasharray:3 5;fill:none}
+
+#gravity-projectile-stable .gp-auto-scale{display:flex;gap:9px;align-items:center;margin-bottom:10px;min-height:36px;font-size:12px;color:var(--gp-text)}
+#gravity-projectile-stable .gp-auto-scale input{width:18px;height:18px;accent-color:var(--gp-accent);flex-shrink:0}

@@ -20,10 +20,7 @@ export function fitSpan(width,height,flights){
  return clampSpan(Math.ceil(extent/step)*step);
 }
 
-// Expand on parameter changes, without erasing size comparisons by shrinking.
-// Explicit zoom and fit remain separate user actions.
-export function expandedSpan(width,height,currentSpan,flights){
- const view=viewport(width,height,currentSpan);
- const needsSpace=flights.some(f=>1.1*f.L>view.xMax||1.15*f.H>view.yMax);
- return needsSpace?Math.max(currentSpan,fitSpan(width,height,flights)):currentSpan;
+// Auto mode fits in both directions. Fixed mode preserves manual zoom.
+export function adaptiveSpan(width,height,currentSpan,flights,automatic=true){
+ return automatic?fitSpan(width,height,flights):clampSpan(currentSpan);
 }
