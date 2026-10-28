@@ -1,11 +1,12 @@
+import {getLocale,getLanguage} from './locales.js?v=languages4';
 import {AU,DAY} from './physics.js?v=pause1';
 
 const L=(lang,uk,en)=>lang==='uk'?uk:en;
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const formats=new Map();
 function number(value,lang,digits=6){
- const key=lang+':'+digits;
- if(!formats.has(key))formats.set(key,new Intl.NumberFormat(lang==='uk'?'uk-UA':'en-US',{maximumFractionDigits:digits}));
+ const key=getLanguage()+':'+digits;
+ if(!formats.has(key))formats.set(key,new Intl.NumberFormat(getLocale(),{maximumFractionDigits:digits}));
  return formats.get(key).format(value);
 }
 export function timeDifference(seconds,lang){

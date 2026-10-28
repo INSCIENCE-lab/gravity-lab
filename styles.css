@@ -79,3 +79,5 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
 .geometry-learning{padding:16px 18px;border-top:1px solid #304658;background:#101e2b;overflow-wrap:anywhere}.geometry-learning h3{font-size:15px;color:#d5e997;margin:0 0 10px}.geometry-learning h4{font-size:13px;color:#d5e4ea;margin:16px 0 6px}.geometry-learning p{font-size:12px;color:#b1c6d4;line-height:1.75;margin:8px 0}.geodesic-key{display:flex;flex-wrap:wrap;gap:10px 20px;margin:14px 0;font-size:12px;color:#dceaf0}.geodesic-key span{display:flex;align-items:center;gap:9px}.geodesic-key i{display:inline-block;flex:0 0 26px;border-top:3px solid #49e8ff}.geodesic-key .geodesic-flat{border-top:2px dashed #e6edf5}
 
 .geodesic-comparison{margin:0;padding:14px 18px;color:#ccebf2;background:#102834;border-top:1px solid #365766;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+
+.languages{flex-shrink:0}@media(max-width:420px){.topbar{gap:7px}.languages button{padding:4px 5px}.brand b{font-size:12px}.brand small{letter-spacing:.3px}}
