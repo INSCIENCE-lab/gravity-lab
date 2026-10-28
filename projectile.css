@@ -64,7 +64,7 @@
 #gravity-projectile-stable li{margin-bottom:9px}
 #gravity-projectile-stable .gp-theory{padding-top:30px}
 #gravity-projectile-stable .gp-worked{padding:21px;margin:20px 0}
-#gravity-projectile-stable .gp-eq{font-family:ui-monospace,'SFMono-Regular',Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#0c1422;border-left:2px solid var(--gp-accent);border-radius:0 7px 7px 0;padding:13px 16px;margin:12px 0 16px;color:var(--gp-accent);font-size:13px;line-height:1.85;font-variant-numeric:tabular-nums}
+#gravity-projectile-stable .gp-eq{font-family:Georgia,'Times New Roman',serif;white-space:normal;overflow-x:auto;max-width:100%;overflow-wrap:anywhere;background:#111c2e;border:1px solid #293c53;border-radius:7px;padding:15px 18px;margin:15px 0;color:#c9d7e0;font-size:16px;line-height:1.9;font-variant-numeric:tabular-nums}
 #gravity-projectile-stable .gp-theory-block{padding:18px 0;border-bottom:1px solid var(--gp-line);font-size:13px;line-height:1.85;color:#c0cbd7}
 #gravity-projectile-stable .gp-current-worked{margin-top:16px}
 #gravity-projectile-stable .gp-journal{margin-top:26px;padding:21px}
@@ -83,12 +83,22 @@
 #gravity-projectile-stable{padding:0;background:transparent}
 #gravity-projectile-stable .gp-intro{padding-top:10px}
 #gravity-projectile-stable .gp-intro h2{display:none}
-#gravity-projectile-stable .gp-eq{white-space:normal;overflow-x:auto;max-width:100%;font-family:inherit;line-height:1.8}
+#gravity-projectile-stable .gp-eq{white-space:normal;overflow-x:auto;max-width:100%;line-height:1.9}
 #gravity-projectile-stable .gp-math-line{display:block;max-width:100%;padding:6px 0}
-#gravity-projectile-stable math{font-size:1.1em;color:inherit}
+#gravity-projectile-stable math{font-size:1em;color:inherit;font-family:Georgia,'Times New Roman',serif}
 #gravity-projectile-stable .gp-math-line math{display:block;margin:0}
 #gravity-projectile-stable .gp-eq code{white-space:pre-wrap;overflow-wrap:anywhere}
 #gravity-projectile-stable .gp-theory-block{min-width:0}
 #gravity-projectile-stable .gp-state-detail{margin-top:16px}
 
 #gravity-projectile-stable .gp-intro{display:none}
+
+/* Match the established two-body theory and worked-calculation palette. */
+#gravity-projectile-stable .gp-worked{background:#172423;border-color:#344d3d;border-radius:13px;padding:20px 23px}
+#gravity-projectile-stable .gp-worked h3{color:#c4d6ae;font-weight:500}
+#gravity-projectile-stable .gp-worked h4{color:#d9e6cb;font-weight:500}
+#gravity-projectile-stable .gp-worked .gp-eq{background:#172423;border-color:#385440;color:#c9dfb5}
+@media(max-width:760px){
+ #gravity-projectile-stable .gp-eq{font-size:15px;padding:13px 14px}
+ #gravity-projectile-stable .gp-worked{padding:17px}
+}
