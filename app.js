@@ -1,4 +1,4 @@
-import {mountProjectile} from './projectile.js?v=projectile1';
+import {mountProjectile} from './projectile.js?v=stableview1';
 import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=projectile1';
 import {binaryGridReference} from './binary-grid.js';
 import {geometryLearning} from './geometry-learning.js?v=fixedillustration1';
