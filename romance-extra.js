@@ -140,4 +140,7 @@ event horizon|orizzonte degli eventi|horizonte de sucesos
 stationary|statico|estático
 observer|osservatore|observador
 years|anni|años
-yr|anni|años`;
+yr|anni|años
+Launching at an angle to the horizontal|Lancio obliquo|Lanzamiento oblicuo
+How do launch speed, angle and height determine the flight?|Come determinano il volo la velocità iniziale, l’angolo e l’altezza?|¿Cómo determinan el vuelo la velocidad inicial, el ángulo y la altura?
+NEWTON · UNIFORM FIELD|NEWTON · CAMPO UNIFORME|NEWTON · CAMPO UNIFORME`;
