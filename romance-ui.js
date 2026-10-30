@@ -2,9 +2,9 @@ export const rows=`357|Imposta un’altezza|Establece una altura
 358|Vicino alla superficie|Cerca de la superficie
 359|Terra intera|Tierra completa
 360|Altezza, sostegno e caduta libera|Altura, apoyo y caída libre
-361|Il corpo è mantenuto all’altezza scelta. Il sostegno N bilancia la gravità F. Per rilasciarlo, scegli «Caduta libera» e premi «Avvia esperimento».|El cuerpo se mantiene a la altura elegida. El apoyo N equilibra la gravedad F. Para soltarlo, elige «Caída libre» y pulsa «Iniciar experimento».
+361|Il corpo è mantenuto all’altezza scelta. Il sostegno N bilancia la gravità F. Per rilasciarlo, scegli «Caduta libera» e premi «Avvia l’esperimento».|El cuerpo se mantiene a la altura elegida. El apoyo N equilibra la gravedad F. Para soltarlo, elige «Caída libre» y pulsa «Iniciar experimento».
 362|Caduta libera: N = 0. L’altezza diminuisce e la velocità aumenta. Il calcolo termina al contatto col suolo.|Caída libre: N = 0. La altura disminuye y la velocidad aumenta. El cálculo termina al contacto con el suelo.
-363|Sostegno rimosso: N = 0. Premi «Avvia esperimento» per rilasciare il corpo da fermo. Osserva h, velocità e tempo; la resistenza dell’aria è esclusa.|Apoyo retirado: N = 0. Pulsa «Iniciar experimento» para soltar el cuerpo desde el reposo. Observa h, velocidad y tiempo; se omite la resistencia del aire.
+363|Sostegno rimosso: N = 0. Premi «Avvia l’esperimento» per rilasciare il corpo da fermo. Osserva h, velocità e tempo; la resistenza dell’aria è esclusa.|Apoyo retirado: N = 0. Pulsa «Iniciar experimento» para soltar el cuerpo desde el reposo. Observa h, velocidad y tiempo; se omite la resistencia del aire.
 364|Il corpo è già al suolo (h₀ = 0). Imposta un’altezza iniziale positiva prima di avviare la caduta.|El cuerpo ya está en el suelo (h₀ = 0). Establece una altura inicial positiva antes de iniciar la caída.
 365|SCALA LOCALE · ALTEZZA SULLA SUPERFICIE|ESCALA LOCAL · ALTURA SOBRE LA SUPERFICIE
 366|TERRA INTERA · DISTANZE IN UNITÀ DI R⊕|TIERRA COMPLETA · DISTANCIAS EN UNIDADES DE R⊕
@@ -84,14 +84,14 @@ export const rows=`357|Imposta un’altezza|Establece una altura
 440|coordinate + tempo|coordenadas + tiempo
 441|Impostazioni dell’esperimento|Configuración del experimento
 442|Modificare un parametro riavvia l’esperimento.|Cambiar un parámetro reinicia el experimento.
-443|Avvia esperimento|Iniciar experimento
+443|Avvia l’esperimento|Iniciar experimento
 444|Pausa|Pausa
 445|Riprendi|Continuar
 446|Ripeti|Repetir
 447|Ripristina|Restablecer
 448|Passo singolo|Paso individual
 449|Velocità|Velocidad
-450|Registra misura|Registrar medición
+450|Registra una misura|Registrar medición
 451|Registra serie|Registrar serie
 452|Link all’esperimento|Enlace al experimento
 453|Trascina per ruotare · scorri per ingrandire|Arrastra para girar · desplaza para ampliar
@@ -113,7 +113,7 @@ export const rows=`357|Imposta un’altezza|Establece una altura
 469|Esporta CSV|Exportar CSV
 470|Importa CSV|Importar CSV
 471|Svuota quaderno|Vaciar cuaderno
-472|Nessuna misura. Premi «Registra misura» sotto la scena.|No hay mediciones. Pulsa «Registrar medición» debajo de la escena.
+472|Nessuna misura. Premi «Registra una misura» sotto la scena.|No hay mediciones. Pulsa «Registrar medición» debajo de la escena.
 473|I dati rimangono nel browser. Esporta CSV per conservarne una copia.|Los datos permanecen en el navegador. Exporta CSV para conservar una copia.
 474|Grafico delle misure|Gráfica de mediciones
 475|Esperimento|Experimento

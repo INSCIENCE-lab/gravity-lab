@@ -1,10 +1,11 @@
+import {renderMathText,updateMathElement} from './assets/math.js?v=audit2';
 import {englishPhrases} from './romance-source.js?v=palette2';
-import {rows as basics} from './romance-theory.js?v=palette2';
-import {rows as relativity} from './romance-relativity.js?v=palette2';
-import {rows as clocks} from './romance-clocks.js?v=palette2';
-import {rows as ui} from './romance-ui.js?v=palette2';
+import {rows as basics} from './romance-theory.js?v=audit2';
+import {rows as relativity} from './romance-relativity.js?v=audit2';
+import {rows as clocks} from './romance-clocks.js?v=audit2';
+import {rows as ui} from './romance-ui.js?v=audit2';
 import {rows as extra} from './romance-extra.js?v=palette2';
-import {rows as runtime} from './romance-runtime.js?v=palette2';
+import {rows as runtime} from './romance-runtime.js?v=audit2';
 import {rows as notes} from './romance-notes.js?v=palette2';
 import {phrases as runtimePhrases} from './romance-runtime-source.js?v=palette2';
 import {phrases as notesPhrases} from './romance-notes-source.js?v=palette2';
@@ -24,7 +25,7 @@ const escapeRE=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 const pattern=new RegExp('(?<![\\p{L}\\p{N}_])(?:'+[...tables.it.keys()].sort((a,b)=>b.length-a.length).map(escapeRE).join('|')+')(?![\\p{L}_])','gu');
 export const translate=value=>tables[selected]?(tables[selected].get(String(value))??String(value).replace(pattern,key=>tables[selected].get(key))):String(value);
 const originals=new WeakMap(),attributes=new WeakMap();
-function text(node){if(node.parentElement?.closest('[data-brand-managed],[data-inscience-home],textarea,script,style,math,[data-projectile],[data-lang],#sourceList a'))return;const prior=originals.get(node),value=node.nodeValue,source=prior&&prior.output===value?prior.source:value,output=translate(source);originals.set(node,{source,output});if(value!==output)node.nodeValue=output;}
-function element(el){if(el.closest('[data-brand-managed],[data-inscience-home],script,style,math,[data-projectile]'))return;let record=attributes.get(el);if(!record){record={};attributes.set(el,record)}for(const key of ['aria-label','title','placeholder','alt','aria-valuetext']){if(!el.hasAttribute(key))continue;const prior=record[key],value=el.getAttribute(key),source=prior&&prior.output===value?prior.source:value,output=translate(source);record[key]={source,output};if(value!==output)el.setAttribute(key,output)}if(el.matches('a[href]')){const raw=el.getAttribute('href');if(raw.includes('lang=')){const url=new URL(raw,location.href);if(url.origin===location.origin&&url.searchParams.get('lang')!==selected){url.searchParams.set('lang',selected);el.setAttribute('href',url.href)}}}}
-export function localizeDOM(root=document.body){if(root.nodeType===3){text(root);return}if(root.nodeType!==1)return;element(root);const walk=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT);while(walk.nextNode()){const n=walk.currentNode;n.nodeType===3?text(n):element(n)}}
+function text(node){if(node.parentElement?.closest('[data-math-source],[data-brand-managed],[data-inscience-home],textarea,script,style,math,[data-projectile],[data-lang],#sourceList a'))return;const prior=originals.get(node),value=node.nodeValue,source=prior&&prior.output===value?prior.source:value,output=translate(source);originals.set(node,{source,output});renderMathText(node,source,output);}
+function element(el){if(el.hasAttribute('data-math-source')){updateMathElement(el,translate(el.dataset.mathSource));return;}if(el.closest('[data-math-source],[data-brand-managed],[data-inscience-home],script,style,math,[data-projectile]'))return;let record=attributes.get(el);if(!record){record={};attributes.set(el,record)}for(const key of ['aria-label','title','placeholder','alt','aria-valuetext']){if(!el.hasAttribute(key))continue;const prior=record[key],value=el.getAttribute(key),source=prior&&prior.output===value?prior.source:value,output=translate(source);record[key]={source,output};if(value!==output)el.setAttribute(key,output)}if(el.matches('a[href]')){const raw=el.getAttribute('href');if(raw.includes('lang=')){const url=new URL(raw,location.href);if(url.origin===location.origin&&url.searchParams.get('lang')!==selected){url.searchParams.set('lang',selected);el.setAttribute('href',url.href)}}}}
+export function localizeDOM(root=document.body){if(root.nodeType===3){text(root);return}if(root.nodeType!==1)return;element(root);const walk=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT);const nodes=[];while(walk.nextNode())nodes.push(walk.currentNode);for(const n of nodes)n.nodeType===3?text(n):element(n)}
 export function initLocalization(){const observer=new MutationObserver(records=>{for(const r of records){if(r.type==='characterData')text(r.target);else if(r.type==='attributes')element(r.target);else for(const n of r.addedNodes)localizeDOM(n)}});observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','placeholder','alt','aria-valuetext','href']});localizeDOM();}

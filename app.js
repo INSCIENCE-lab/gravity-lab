@@ -1,5 +1,5 @@
 import {mountProjectile} from './projectile.js?v=palette2';
-import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=palette2';
+import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=audit2';
 import {binaryGridReference} from './binary-grid.js?v=palette2';
 import {geometryLearning} from './geometry-learning.js?v=palette2';
 import {drawSurfaceLocal} from './surface-scene.js?v=palette2';
@@ -8,7 +8,7 @@ import {introduction} from './introduction.js?v=palette2';
 import {schwarzReference,lensReference} from './black-hole-guide.js?v=palette2';
 import {G,C,AU,DAY,MSUN,earth,planets,clockBodies,surface,jump,clock,clockAtHeight,clockReference,Binary,Schwarzschild,traceRay,rg,rs,rk4,norm,sampleRay} from './physics.js?v=palette2';
 import {experiments,defaultParams,clockHeights,ui,tr} from './config.js?v=palette2';
-import {theory,sources} from './theory.js?v=palette2';
+import {theory,sources} from './theory.js?v=audit2';
 import {Scene} from './scene.js?v=palette2';
 import {schwarzField,weakField,orbitPlane} from './geometry.js?v=palette2';
 import {drawSchwarzGeometry,drawBinaryGeometry} from './geometry-scene.js?v=palette2';

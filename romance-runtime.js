@@ -23,7 +23,7 @@ export const rows=`0|Come leggere questo esperimento|Cómo interpretar este expe
 22|Il riferimento è lontano da ogni oggetto.|La referencia está lejos de cada objeto.
 23|lancetta grigia tratteggiata — riferimento|aguja gris discontinua — referencia
 24|lancetta colorata — orologio locale|aguja coloreada — reloj local
-25|Premi «Avvia esperimento»: un giro del riferimento rappresenta 10 secondi dimostrativi. I numeri sotto riguardano l’intero intervallo T scelto. Per Terra e Sole, osserva il ritardo numerico.|Pulsa «Iniciar experimento»: una vuelta de referencia representa 10 segundos demostrativos. Los números de abajo corresponden a todo el intervalo T elegido. Para la Tierra y el Sol, observa el déficit numérico.
+25|Premi «Avvia l’esperimento»: un giro del riferimento rappresenta 10 secondi dimostrativi. I numeri sotto riguardano l’intero intervallo T scelto. Per Terra e Sole, osserva il ritardo numerico.|Pulsa «Iniciar experimento»: una vuelta de referencia representa 10 segundos demostrativos. Los números de abajo corresponden a todo el intervalo T elegido. Para la Tierra y el Sol, observa el déficit numérico.
 26|Orizzonte degli eventi|Horizonte de sucesos
 27|Ritmo dell’orologio locale|Ritmo del reloj local
 28|Orologio fermo|Reloj estacionario
