@@ -1,7 +1,7 @@
 /* Official INSCIENCE Lab identity */
 .inscience-logo{display:block;width:210px;height:32px;object-fit:cover;object-position:top;flex:none}
 .inscience-network{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px clamp(20px,4vw,64px);border-bottom:1px solid var(--line,#dedede);font:600 13px/1.5 NAMU,Arial,sans-serif}
-.inscience-network a{color:inherit;text-decoration:none}.inscience-home{display:inline-flex;align-items:center;gap:8px;padding:8px 0;min-height:40px}.inscience-home:hover{text-decoration:underline}.inscience-network a:focus-visible{outline:3px solid #054FF0;outline-offset:5px}
+.inscience-network a{color:inherit;text-decoration:none}.inscience-home{display:inline-flex;align-items:center;gap:8px;padding:8px 0;min-height:40px}.inscience-home:hover{text-decoration:underline}.inscience-network a:focus-visible{outline:3px solid var(--brand-accent,#054FF0);outline-offset:5px}
 .inscience-logo-link{display:inline-flex;align-items:center;flex:none}.inscience-logo-white{filter:invert(1)}
 .brand .inscience-logo{width:210px;height:32px}.footer-brand .inscience-logo,footer>.brand .inscience-logo{width:180px;height:27px}
 @media(max-width:600px){.inscience-logo,.brand .inscience-logo{width:170px;height:26px}.inscience-network{padding:12px 20px;gap:8px 18px}.inscience-home{font-size:12px}}
