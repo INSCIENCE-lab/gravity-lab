@@ -25,7 +25,7 @@ export const rows=`299|Confrontare orologi in un campo gravitazionale|Comparar r
 323|Orologio statico vicino al buco nero: dτ/dt = √[h/(r|Reloj estático cerca del agujero negro: dτ/dt = √[h/(r
 324|h è una differenza di raggi areali nelle coordinate di Schwarzschild. La distanza radiale propria sulla sezione t = costante è ℓ = ∫ dr/√(1 − r|h es una diferencia de radios areales en coordenadas de Schwarzschild. La distancia radial propia en la sección t constante es ℓ = ∫ dr/√(1 − r
 325|/r), integrata da R o r|/r), integrada desde R o r
-326|a r. Vicino all’orizzonte può differire molto da h. Altezze uguali non implicano r o r/r uguali|hasta r. Cerca del horizonte puede diferir mucho de h. Alturas iguales no implican r o r/r iguales
+326|a r. Vicino all’orizzonte può differire molto da h. Altezze uguali non implicano l’uguaglianza di r o di r/r|hasta r. Cerca del horizonte puede diferir mucho de h. Alturas iguales no implican igualdad de r o de r/r
 327|Verifica: 100 km = 100 000 m. Per la Terra, r = 6 371 008,4 + 100 000 = 6 471 008,4 m; inserisci questo raggio e la massa terrestre nella formula del ritmo. Per TON 618 aggiungi 100 000 m al suo r|Comprueba: 100 km = 100 000 m. Para la Tierra, r = 6 371 008,4 + 100 000 = 6 471 008,4 m; introduce este radio y la masa terrestre en la fórmula del ritmo. Para TON 618 añade 100 000 m a su r
 328|e calcola √[h/(r|y calcula √[h/(r
 329|+ h)]. Per un giorno di riferimento, T = 86 400 s, τ = T·dτ/dt e Δ = T − τ. Il riquadro dei calcoli mostra i valori scelti.|+ h)]. Para un día de referencia, T = 86 400 s, τ = T·dτ/dt y Δ = T − τ. El panel de cálculos muestra los valores elegidos.
@@ -36,13 +36,13 @@ export const rows=`299|Confrontare orologi in un campo gravitazionale|Comparar r
 334|Confrontare i raggi coerentemente|Comparar radios de forma coherente
 335|La modalità r uguale assegna lo stesso raggio dal centro a tutti gli oggetti. I modelli esterni di Terra e Sole richiedono r ≥ R; l’orologio statico del buco nero richiede r > r|El modo r igual asigna el mismo radio desde el centro a todos los objetos. Los modelos exteriores de la Tierra y el Sol exigen r ≥ R; el reloj estático del agujero negro exige r > r
 336|. Le posizioni non valide sono indicate come non disponibili. Con la massa adottata per TON 618, il raggio dell’orizzonte è circa 1304 UA: 2000 UA è quindi un raggio comune valido.|. Las posiciones inválidas se marcan como no disponibles. Con la masa adoptada para TON 618, el radio del horizonte es aproximadamente 1304 UA: 2000 UA es un radio común válido.
-337|r/r uguale|r/r igual
+337|La modalità con uguale r/r|El modo con igual r/r
 338|dà lo stesso ritmo statico a ogni oggetto valido, indipendentemente dalla massa. In campi deboli, r|da el mismo ritmo estático a todos los objetos válidos, independientemente de la masa. En campos débiles, r
 339|/r ≪ 1 e dτ/dt ≈ 1 − GM/(rc|/r ≪ 1 y dτ/dt ≈ 1 − GM/(rc
 340|). Conta la compattezza GM/(rc|). Lo que importa es la compacidad GM/(rc
 341|), non la sola massa o la sola accelerazione gravitazionale locale. Per pianeti e stelle resta valido il vincolo del raggio fisico.|), no solo la masa ni solo la aceleración gravitatoria local. Para planetas y estrellas sigue vigente la restricción del radio físico.
 342|Verifica numerica e indagine|Comprobación numérica e investigación
-343|Per x = r piccolo|Para x = r pequeño
+343|Per piccoli valori di x = r|Para valores pequeños de x = r
 344|/r, calcola precisamente Δ = Tx/[1 + √(1 − x)]. Questa riscrittura esatta evita di sottrarre numeri quasi uguali. Registra M, r, r/r|/r, calcula con precisión Δ = Tx/[1 + √(1 − x)]. Esta reformulación exacta evita restar números casi iguales. Registra M, r, r/r
 345|, tipo di osservatore, T, τ e Δ. Varia un parametro, traccia Δ rispetto a r e confronta raggi assoluti e normalizzati. Le masse dei buchi neri sono stime osservative adottate; Schwarzschild esclude lo spin. Sono esclusi anche campi esterni e rotazione planetaria.|, tipo de observador, T, τ y Δ. Varía un parámetro, representa Δ frente a r y compara radios absolutos y normalizados. Las masas de agujeros negros son estimaciones observacionales adoptadas; Schwarzschild excluye el espín. También se excluyen campos externos y rotación planetaria.
 346|Confrontare orologi e scale|Comparar relojes y escalas

@@ -149,7 +149,7 @@ export const rows=`357|Imposta un’altezza|Establece una altura
 505|50 kg è una massa. Il peso sul sostegno è circa mg.|50 kg es una masa. El peso sobre el apoyo es aproximadamente mg.
 506|Frecce: direzioni delle forze; moduli in newton. Corpi ingranditi.|Flechas: direcciones de fuerzas; módulos en newtons. Cuerpos ampliados.
 507|L’accelerazione propria in caduta libera è nulla. Le frecce mostrano l’accelerazione coordinata.|La aceleración propia en caída libre es cero. Las flechas muestran aceleración coordenada.
-508|(x, y, z, t) specificano un evento. La linea di universo proietta una coordinata spaziale contro ct.|(x, y, z, t) especifican un suceso. La línea de universo representa una coordenada espacial frente a ct.
+508|(x, y, z, t) specificano un evento. La linea di universo mostra una coordinata spaziale rispetto a ct.|(x, y, z, t) especifican un suceso. La línea de universo representa una coordenada espacial frente a ct.
 509|Paraboloide di Flamm: sezione spaziale equatoriale a t = costante. Non è tutto lo spaziotempo 4D.|Paraboloide de Flamm: sección espacial ecuatorial a t constante. No es todo el espacio-tiempo 4D.
 510|Un corpo di prova segue una geodetica; non subisce una «forza» gravitazionale propria applicata.|Un cuerpo de prueba sigue una geodésica; no tiene una «fuerza» gravitatoria propia aplicada.
 511|I giganti gassosi e ghiacciati non hanno superficie solida accessibile. Si usa una piattaforma virtuale al raggio medio adottato.|Los gigantes gaseosos y helados no tienen superficie sólida accesible. Se usa una plataforma virtual en el radio medio adoptado.

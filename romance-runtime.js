@@ -1,13 +1,13 @@
 export const rows=`0|Come leggere questo esperimento|Cómo interpretar este experimento
-1|07 · Geometria e tempo sono due misure diverse|07 · Geometría y tiempo son dos mediciones distintas
+1|08 · Geometria e tempo sono due misure diverse|08 · Geometría y tiempo son dos mediciones distintas
 2|Le linee sono calcolate nello spazio tridimensionale a un istante (t = costante). Sono geodetiche spaziali, generalizzazioni locali delle rette. Non sono traiettorie della luce o dei pianeti.|Las líneas se calculan en el espacio tridimensional en un instante (t constante). Son geodésicas espaciales, generalizaciones locales de rectas. No son trayectorias de la luz ni de planetas.
 3|Il reticolo deformato è uno schema spaziale dello spaziotempo curvo. La deformazione è amplificata per visibilità, con amplificazione fissa in questo esperimento. Il colore mostra il ritmo degli orologi fermi. Orbite e posizioni dei corpi sono mostrate senza questa amplificazione. Scegli «Geodetiche spaziali» per esplorare le curve spaziali calcolate.|La retícula deformada es un esquema espacial del espacio-tiempo curvo. La deformación se amplifica para verla, con amplificación fija en este experimento. El color muestra el ritmo de relojes estacionarios. Las órbitas y posiciones de cuerpos se muestran sin esta amplificación. Elige «Geodésicas espaciales» para explorar las curvas espaciales calculadas.
 4|Geodetica spaziale evidenziata|Geodésica espacial destacada
 5|Retta dallo stesso punto e con direzione iniziale uguale|Recta desde el mismo punto y con igual dirección inicial
-6|04 · I corpi in moto cambiano la geometria|04 · Los cuerpos en movimiento cambian la geometría
-7|05 · Geometria statica, corpo di prova in moto|05 · Geometría estática, cuerpo de prueba móvil
+6|05 · I corpi in moto cambiano la geometria|05 · Los cuerpos en movimiento cambian la geometría
+7|06 · Geometria statica, corpo di prova in moto|06 · Geometría estática, cuerpo de prueba móvil
 8|Attiva P e avvicinalo all’orizzonte restando all’esterno. Registra cube_probe_static_rate e i fattori di lunghezza. Radialmente dℓ/dr = 1/√(1 − r_s/r), mentre dτ/dt = √(1 − r_s/r).|Activa P y acércalo al horizonte sin entrar. Registra cube_probe_static_rate y los factores de longitud. Radialmente dℓ/dr = 1/√(1 − r_s/r), mientras dτ/dt = √(1 − r_s/r).
-9|06 · Curva spaziale e raggio luminoso|06 · Curva espacial y rayo de luz
+9|07 · Curva spaziale e raggio luminoso|07 · Curva espacial y rayo de luz
 10|Verifica e registra:|Comprueba y registra:
 11|Orologio dentro il corpo: qui la metrica esterna non vale.|Reloj dentro del cuerpo: aquí no se aplica la métrica exterior.
 12|Un orologio fermo sull’orizzonte o al suo interno è impossibile.|Un reloj estacionario en el horizonte o dentro de él es imposible.

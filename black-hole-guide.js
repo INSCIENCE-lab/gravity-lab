@@ -1,4 +1,4 @@
-import {MSUN,rg} from './physics.js?v=palette2';
+import {MSUN,rg} from './physics.js?v=fullaudit2';
 
 // Relative mode follows the physical gravitational radius; fixed mode retains
 // the last physical grid. Neither changes the geodesic calculation.

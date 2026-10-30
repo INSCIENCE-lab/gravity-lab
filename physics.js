@@ -63,3 +63,15 @@ export function traceRay(b=7,maxR=150,step=.025){
 export function sampleRay(ray,fraction){const target=Math.max(0,Math.min(1,fraction))*ray.affine;let a=0,b=ray.pathAffine.length-1;while(b-a>1){const m=Math.floor((a+b)/2);if(ray.pathAffine[m]<target)a=m;else b=m;}const u=(target-ray.pathAffine[a])/(ray.pathAffine[b]-ray.pathAffine[a]||1);return {position:ray.path[a].map((v,i)=>v+u*(ray.path[b][i]-v)),time_rg:ray.pathTimes[a]+u*(ray.pathTimes[b]-ray.pathTimes[a]),affine:target};}
 export function ntFlux(R){if(R<=6)return 0;const u=Math.sqrt(R),a=Math.sqrt(3),b=Math.sqrt(6);return Math.max(0,(u-b-a/2*Math.log((u-a)/(u+a)*(b+a)/(b-a)))/(R**2.5*(R-3)));}
 export function frequencyShift(R,Lz,observerR){return Math.sqrt(1-3/R)/(Math.sqrt(1-2/observerR)*(1+Lz/R**1.5));}
+
+// Resolve the first ground-contact event within an RK4 step, without advancing below ground.
+export function stepSurfaceFall(state,step){
+ const derivative=([height,velocity])=>[velocity,-G*earth.mass/(earth.radius+height)**2];
+ if(state[0]<=0)return {state:[0,state[1]],dt:0,impact:true};
+ const next=rk4(state,step,derivative);
+ if(next[0]>0)return {state:next,dt:step,impact:false};
+ let lo=0,hi=step;
+ for(let j=0;j<45;j++){const mid=(lo+hi)/2;if(rk4(state,mid,derivative)[0]>0)lo=mid;else hi=mid;}
+ const dt=(lo+hi)/2,hit=rk4(state,dt,derivative);
+ return {state:[0,hit[1]],dt,impact:true};
+}

@@ -143,4 +143,9 @@ years|anni|años
 yr|anni|años
 Launching at an angle to the horizontal|Lancio obliquo|Lanzamiento oblicuo
 How do launch speed, angle and height determine the flight?|Come determinano il volo la velocità iniziale, l’angolo e l’altezza?|¿Cómo determinan el vuelo la velocidad inicial, el ángulo y la altura?
-NEWTON · UNIFORM FIELD|NEWTON · CAMPO UNIFORME|NEWTON · CAMPO UNIFORME`;
+NEWTON · UNIFORM FIELD|NEWTON · CAMPO UNIFORME|NEWTON · CAMPO UNIFORME
+Here k|Qui k|Aquí k
+ is the photon wave covector and u| è il covettore d’onda del fotone e u| es el covector de onda del fotón y u
+ is the observer or emitter four-velocity. The contraction gives angular frequency: ω = −k| è la quadrivelocità dell’osservatore o dell’emettitore. La contrazione dà la frequenza angolare: ω = −k| es la cuadrivelocidad del observador o del emisor. La contracción da la frecuencia angular: ω = −k
+, while ν = ω/(2π). The factor 2π cancels in the frequency ratio.|, mentre ν = ω/(2π). Il fattore 2π si semplifica nel rapporto delle frequenze.|, mientras que ν = ω/(2π). El factor 2π se cancela en el cociente de frecuencias.
+INTERACTIVE PHYSICS · UA / EN / IT / ES|FISICA INTERATTIVA · UA / EN / IT / ES|FÍSICA INTERACTIVA · UA / EN / IT / ES`;

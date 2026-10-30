@@ -1,4 +1,4 @@
-import {MSUN,norm,scale,rg,sampleRay} from './physics.js?v=palette2';
+import {MSUN,norm,scale,rg,sampleRay} from './physics.js?v=fullaudit2';
 import {flammHeight,schwarzField,weakField,orbitPlane,rateColor} from './geometry.js?v=palette2';
 
 const L=(lang,uk,en)=>lang==='uk'?uk:en;

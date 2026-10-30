@@ -1,5 +1,5 @@
 import {warpedCube,latticeValues,latticeColor} from './cube-warp.js?v=palette2';
-import {buildCube,cubeField,seedValues} from './cube-physics.js?v=palette2';
+import {buildCube,cubeField,seedValues} from './cube-physics.js?v=fullaudit2';
 import {rateColor} from './geometry.js?v=palette2';
 const L=(lang,uk,en)=>lang==='uk'?uk:en;
 const cache=new Map();

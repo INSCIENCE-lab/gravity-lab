@@ -1,20 +1,20 @@
-import {mountProjectile} from './projectile.js?v=palette2';
+import {mountProjectile} from './projectile.js?v=fullaudit2';
 import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=audit2';
 import {binaryGridReference} from './binary-grid.js?v=palette2';
-import {geometryLearning} from './geometry-learning.js?v=palette2';
+import {geometryLearning} from './geometry-learning.js?v=fullaudit2';
 import {drawSurfaceLocal} from './surface-scene.js?v=palette2';
 import {AnimationLoop} from './animation-loop.js?v=palette2';
 import {introduction} from './introduction.js?v=palette2';
 import {schwarzReference,lensReference} from './black-hole-guide.js?v=palette2';
-import {G,C,AU,DAY,MSUN,earth,planets,clockBodies,surface,jump,clock,clockAtHeight,clockReference,Binary,Schwarzschild,traceRay,rg,rs,rk4,norm,sampleRay} from './physics.js?v=palette2';
-import {experiments,defaultParams,clockHeights,ui,tr} from './config.js?v=palette2';
-import {theory,sources} from './theory.js?v=audit2';
+import {G,C,AU,DAY,MSUN,earth,planets,clockBodies,surface,jump,clock,clockAtHeight,clockReference,Binary,Schwarzschild,traceRay,rg,rs,rk4,norm,sampleRay,stepSurfaceFall} from './physics.js?v=fullaudit2';
+import {experiments,defaultParams,clockHeights,ui,tr} from './config.js?v=fullaudit2';
+import {theory,sources} from './theory.js?v=fullaudit2';
 import {Scene} from './scene.js?v=palette2';
 import {schwarzField,weakField,orbitPlane} from './geometry.js?v=palette2';
 import {drawSchwarzGeometry,drawBinaryGeometry} from './geometry-scene.js?v=palette2';
 import {dashboardHTML,updateClockHands} from './clock-dashboard.js?v=palette2';
 import {drawCube} from './cube-scene.js?v=palette2';
-import {cubeProbeValues} from './cube-physics.js?v=palette2';
+import {cubeProbeValues} from './cube-physics.js?v=fullaudit2';
 import {startDiskRender} from './disk-task.js?v=palette2';
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let projectileController=null;
@@ -102,7 +102,7 @@ function recordHistory(){if(current==='surface')history.push({t:time,x:0,z:surfa
 function advance(amount,budgetMs=Infinity){
  const deadline=performance.now()+budgetMs;
  if(model){const end=modelTime()+amount;let n=0;while(modelTime()<end&&!model.done&&n++<30000&&(n===1||performance.now()<deadline)){model.step(Math.min(current==='schwarzschild'?.15:.006,end-modelTime()));}done=model.done;reason=model.reason;}
- else {const end=Math.min(maxTime(),time+amount);if(current==='surface'&&p.support==='fall'){while(time<end&&!done&&performance.now()<deadline){const h=Math.min(.02,end-time);surfaceY=rk4(surfaceY,h,([z,v])=>[v,-G*earth.mass/(earth.radius+z)**2]);time+=h;if(surfaceY[0]<=0){surfaceY=[0,surfaceY[1]];done=true;reason='impact';}}}else time=end;recordHistory();if(time>=maxTime()-1e-8)done=true;}
+ else {const end=Math.min(maxTime(),time+amount);if(current==='surface'&&p.support==='fall'){while(time<end&&!done&&performance.now()<deadline){const h=Math.min(.02,end-time);const contact=stepSurfaceFall(surfaceY,h);surfaceY=contact.state;time+=contact.dt;if(contact.impact){done=true;reason='impact';}}}else time=end;recordHistory();if(time>=maxTime()-1e-8)done=true;}
  if(modelTime()>=maxTime())done=true;if(done)pausePlayback();
 }
 function syncPlay(){$('playBtn').disabled=current==='surface'&&p.support==='fall'&&p.height===0;$('playIcon').textContent=running?'Ⅱ':done?'↺':'▶';$('playText').textContent=running?T('pause'):done?T('restart'):modelTime()>0?T('resume'):T('start');$('status').textContent=running?T('running'):done?T('complete'):modelTime()>0?T('paused'):T('ready');$('playBtn').setAttribute('aria-pressed',String(running));$('playBtn').setAttribute('aria-label',running?T('pause'):done?T('restart'):modelTime()>0?T('resume'):T('start'));$('stepBtn').disabled=running||done;if($('playBtn').disabled){$('playIcon').textContent='▶';$('playText').textContent=T('heightRequired');$('playBtn').setAttribute('aria-label',T('heightRequired'));$('status').textContent=T('heightRequired');}}

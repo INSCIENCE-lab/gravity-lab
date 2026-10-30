@@ -1,4 +1,4 @@
-import {nullInitial,unit,cross,add,scale,frequencyShift,ntFlux,nullConstraint} from './physics.js?v=palette2';
+import {nullInitial,unit,cross,add,scale,frequencyShift,ntFlux,nullConstraint} from './physics.js?v=fullaudit2';
 import {traceDiskRay} from './disk-ray.js?v=palette2';
 
 export function diskCamera({inclination=82,observer=90,outer=30,width=512,height=320,zoom=1}={}){
