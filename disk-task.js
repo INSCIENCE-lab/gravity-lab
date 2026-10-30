@@ -1,7 +1,7 @@
-import {renderDisk} from './disk-renderer.js?v=disk3';
+import {renderDisk} from './disk-renderer.js?v=palette2';
 
 // A module worker is an optimization, never a requirement for seeing the disk.
-export function startDiskRender(options,{signal,onProgress=()=>{},onFallback=()=>{},workerFactory=()=>new Worker(new URL('./disk-worker.js?v=disk3',import.meta.url),{type:'module'}),timeoutMs=5000,yieldControl}={}){
+export function startDiskRender(options,{signal,onProgress=()=>{},onFallback=()=>{},workerFactory=()=>new Worker(new URL('./disk-worker.js?v=palette2',import.meta.url),{type:'module'}),timeoutMs=5000,yieldControl}={}){
  return new Promise((resolve,reject)=>{
   let worker=null,timer=null,fallback=false,settled=false;
   const stopWorker=()=>{clearTimeout(timer);if(worker){worker.onmessage=null;worker.onerror=null;worker.onmessageerror=null;worker.terminate();worker=null;}};

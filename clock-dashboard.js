@@ -1,5 +1,5 @@
-import {getLocale,getLanguage} from './locales.js?v=brand1';
-import {AU,DAY} from './physics.js?v=pause1';
+import {getLocale,getLanguage} from './locales.js?v=palette2';
+import {AU,DAY} from './physics.js?v=palette2';
 
 const L=(lang,uk,en)=>lang==='uk'?uk:en;
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

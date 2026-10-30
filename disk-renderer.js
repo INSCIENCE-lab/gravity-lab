@@ -1,5 +1,5 @@
-import {nullInitial,unit,cross,add,scale,frequencyShift,ntFlux,nullConstraint} from './physics.js';
-import {traceDiskRay} from './disk-ray.js?v=disk3';
+import {nullInitial,unit,cross,add,scale,frequencyShift,ntFlux,nullConstraint} from './physics.js?v=palette2';
+import {traceDiskRay} from './disk-ray.js?v=palette2';
 
 export function diskCamera({inclination=82,observer=90,outer=30,width=512,height=320,zoom=1}={}){
  const i=inclination*Math.PI/180,origin=[0,observer*Math.sin(i),observer*Math.cos(i)],forward=scale(unit(origin),-1);

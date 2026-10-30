@@ -9,7 +9,7 @@ function separateDiagram(lang){
  <g stroke="#BDC71E" stroke-width="2" fill="none"><path d="M75 127 205 127 205 257 75 257Z M130 77 260 77 260 207 130 207Z M75 127 130 77M205 127 260 77M205 257 260 207M75 257 130 207"/>
  <path d="M75 257H290M75 257V65M75 257 164 176" stroke-opacity=".5"/></g>
  <g fill="#BDC71E" font-size="18" font-family="NAMU, sans-serif"><text x="291" y="263">x</text><text x="68" y="58">z</text><text x="170" y="176">y</text></g>
- <path d="M330 63V280" stroke="#60704d" stroke-dasharray="5 8"/>
+ <path d="M330 63V280" stroke="#697137" stroke-dasharray="5 8"/>
  <circle cx="471" cy="166" r="80" fill="#1d2a31" stroke="#BDC71E" stroke-width="2"/>
  <g stroke="#BDC71E" stroke-width="3"><path d="M471 99v10M471 223v10M404 166h10M528 166h10M471 166v-42m0 42 37 21"/></g><circle cx="471" cy="166" r="5" fill="#BDC71E"/>
  <g fill="#edf2df" font-size="18" font-family="NAMU, sans-serif" text-anchor="middle"><text x="167" y="313">${s('3D-простір: x, y, z','3D space: x, y, z')}</text><text x="470" y="313">${s('Окремо час: t','Separate time: t')}</text></g>`, '0 0 640 350');
@@ -18,7 +18,7 @@ function separateDiagram(lang){
 function worldlineDiagram(lang){
  const s=(u,e)=>pick(lang,u,e);
  return svg(s('Діаграма плоского простору-часу: вертикальний час ct, горизонтальна координата x; світло вздовж діагоналей, тіло всередині світлового конуса','Flat-spacetime diagram: vertical ct and horizontal x; diagonal light paths and a massive body inside the light cone'),`
- <path d="M300 320 60 80H540Z" fill="#b4a1e4" fill-opacity=".06"/>
+ <path d="M300 320 60 80H540Z" fill="#BDC71E" fill-opacity=".06"/>
  <g stroke="#29354d" stroke-width="1"><path d="M60 260H540M60 200H540M60 140H540M120 65V330M180 65V330M240 65V330M360 65V330M420 65V330M480 65V330"/></g>
  <g stroke="#91a1bb" stroke-width="1.7" fill="none"><path d="M35 320H580m-10-6 10 6-10 6M300 343V35m-6 10 6-10 6 10"/></g>
  <path d="M60 80 300 320 540 80" stroke="#f2c77f" stroke-width="3" fill="none"/>

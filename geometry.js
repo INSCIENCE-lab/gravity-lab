@@ -1,4 +1,4 @@
-import {G,C,rg,norm} from './physics.js';
+import {G,C,rg,norm} from './physics.js?v=palette2';
 
 // All arguments are physical SI values. Exterior Schwarzschild, static observers.
 export function schwarzField(mass,r){

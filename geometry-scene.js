@@ -1,5 +1,5 @@
-import {MSUN,norm,scale,rg,sampleRay} from './physics.js?v=pause1';
-import {flammHeight,schwarzField,weakField,orbitPlane,rateColor} from './geometry.js';
+import {MSUN,norm,scale,rg,sampleRay} from './physics.js?v=palette2';
+import {flammHeight,schwarzField,weakField,orbitPlane,rateColor} from './geometry.js?v=palette2';
 
 const L=(lang,uk,en)=>lang==='uk'?uk:en;
 const short=n=>Math.abs(n)>=1e5||Math.abs(n)<.001?n.toExponential(2):n.toFixed(3);

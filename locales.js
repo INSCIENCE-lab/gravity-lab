@@ -1,13 +1,13 @@
-import {englishPhrases} from './romance-source.js';
-import {rows as basics} from './romance-theory.js';
-import {rows as relativity} from './romance-relativity.js';
-import {rows as clocks} from './romance-clocks.js';
-import {rows as ui} from './romance-ui.js';
-import {rows as extra} from './romance-extra.js';
-import {rows as runtime} from './romance-runtime.js';
-import {rows as notes} from './romance-notes.js';
-import {phrases as runtimePhrases} from './romance-runtime-source.js';
-import {phrases as notesPhrases} from './romance-notes-source.js';
+import {englishPhrases} from './romance-source.js?v=palette2';
+import {rows as basics} from './romance-theory.js?v=palette2';
+import {rows as relativity} from './romance-relativity.js?v=palette2';
+import {rows as clocks} from './romance-clocks.js?v=palette2';
+import {rows as ui} from './romance-ui.js?v=palette2';
+import {rows as extra} from './romance-extra.js?v=palette2';
+import {rows as runtime} from './romance-runtime.js?v=palette2';
+import {rows as notes} from './romance-notes.js?v=palette2';
+import {phrases as runtimePhrases} from './romance-runtime-source.js?v=palette2';
+import {phrases as notesPhrases} from './romance-notes-source.js?v=palette2';
 const supported=['uk','en','it','es'];
 let saved;try{saved=localStorage.getItem('gravity-language')||localStorage.getItem('inscience-language')}catch{}
 const requested=new URLSearchParams(location.search).get('lang');

@@ -1,9 +1,9 @@
-import {surfaceViewTheory} from './surface-scene.js?v=fonts1';
-import {blackHoleTheory,lensScaleTheory} from './black-hole-guide.js?v=lensscale1';
-import {warpTheory} from './warp-theory.js';
-import {cubeTheory} from './cube-theory.js?v=pause1';
-import extra from './theory-extra.js?v=pause1';
-import {geometryTheory} from './geometry-theory.js?v=lensscale1';
+import {surfaceViewTheory} from './surface-scene.js?v=palette2';
+import {blackHoleTheory,lensScaleTheory} from './black-hole-guide.js?v=palette2';
+import {warpTheory} from './warp-theory.js?v=palette2';
+import {cubeTheory} from './cube-theory.js?v=palette2';
+import extra from './theory-extra.js?v=palette2';
+import {geometryTheory} from './geometry-theory.js?v=palette2';
 const eq=s=>`<div class="eq">${s}</div>`;
 export const foundations={uk:`<h3>Що саме означає «3 + 1 виміри»?</h3><p>Подія задається чотирма координатами (ct, x, y, z). Сцена показує просторовий стан у вибраний момент, а керування часом дозволяє простежити послідовність подій. Світова лінія — траєкторія тіла у просторі-часі; вкладка показує лише її проєкцію x–ct. Масштаби осей незалежні. Обертання камери змінює ракурс, а не фізичний стан.</p><h3>Геометрія замість ньютонівської сили</h3><p>У загальній теорії відносності метрика g<sub>μν</sub> задає інтервали, власний час і геодезичні. Прийнято сигнатуру (−,+,+,+), координату x⁰ = ct і Λ = 0. Індекси μ,ν пробігають 0,1,2,3; за повторюваними індексами підсумовуємо.</p>${eq('ds² = g<sub>μν</sub> dx<sup>μ</sup> dx<sup>ν</sup>, &nbsp; c²dτ² = −ds² для масивного тіла; &nbsp; ds² = 0 для світла.')}${eq('G<sub>μν</sub> = R<sub>μν</sub> − ½Rg<sub>μν</sub> = (8πG/c⁴)T<sub>μν</sub>')}
 <p>T<sub>μν</sub> описує густину енергії, потік імпульсу й напруження. R<sub>μν</sub> і скаляр R = g<sup>μν</sup>R<sub>μν</sub> побудовані з метрики. У вакуумі T<sub>μν</sub> = 0, але простір-час може залишатися викривленим.</p>${eq('Γ<sup>μ</sup><sub>αβ</sub> = ½g<sup>μν</sup>(∂<sub>α</sub>g<sub>νβ</sub> + ∂<sub>β</sub>g<sub>να</sub> − ∂<sub>ν</sub>g<sub>αβ</sub>)<br>R<sub>μν</sub> = ∂<sub>λ</sub>Γ<sup>λ</sup><sub>μν</sub> − ∂<sub>ν</sub>Γ<sup>λ</sup><sub>μλ</sub> + Γ<sup>λ</sup><sub>λρ</sub>Γ<sup>ρ</sup><sub>μν</sub> − Γ<sup>λ</sup><sub>νρ</sub>Γ<sup>ρ</sup><sub>μλ</sub>')}${eq('d²x<sup>μ</sup>/dλ² + Γ<sup>μ</sup><sub>αβ</sub>(dx<sup>α</sup>/dλ)(dx<sup>β</sup>/dλ) = 0')}

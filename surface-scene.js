@@ -33,7 +33,7 @@ export function drawSurfaceLocal(scene,p,s,lang){
  }
  scene.text('h ('+unitLabel+')',rulerX-20,upper[1]-14,'#c8d8df',11);
  c.setLineDash([3,5]);c.strokeStyle='#bfd29555';c.beginPath();c.moveTo(rulerX+6,pos[1]);c.lineTo(pos[0]-15,pos[1]);c.stroke();c.setLineDash([]);
- if(fall&&p.height>0){const start=scene.project([0,0,p.height/top]);c.setLineDash([3,4]);c.strokeStyle='#a1b17d88';c.beginPath();c.moveTo(start[0]-25,start[1]);c.lineTo(start[0]+25,start[1]);c.stroke();c.setLineDash([]);scene.text('h₀',start[0]-35,start[1]-6,'#a7b58e',10);}
+ if(fall&&p.height>0){const start=scene.project([0,0,p.height/top]);c.setLineDash([3,4]);c.strokeStyle='#a1b17d88';c.beginPath();c.moveTo(start[0]-25,start[1]);c.lineTo(start[0]+25,start[1]);c.stroke();c.setLineDash([]);scene.text('h₀',start[0]-35,start[1]-6,'#BDC71E',10);}
  if(!fall){c.strokeStyle='#80caca';c.lineWidth=4;c.beginPath();c.moveTo(pos[0]-29,pos[1]+3);c.lineTo(pos[0]+29,pos[1]+3);c.stroke();scene.text(L(lang,'Опора','Support'),pos[0]-31,pos[1]+20,'#80caca',10);}
  scene.surfaceObject(p.object,pos);
  const names={person:['Людина','Person'],car:['Автомобіль','Car'],house:['Будинок','House'],block:['Брусок','Block']};
@@ -42,9 +42,9 @@ export function drawSurfaceLocal(scene,p,s,lang){
  if(!fall)arrow(scene,pos[0]+65,pos[1]-15,-46,'#80caca','N');
  if(fall&&s.speed_ms>0)arrow(scene,pos[0]-35,pos[1]-15,Math.min(60,25+s.speed_ms*.3),'#b4a1e4','v');
  const displayHeight=height>=1000?nf(height/1000,lang,3)+' '+L(lang,'км','km'):nf(height,lang,3)+' '+L(lang,'м','m');
- scene.text('h = '+displayHeight+' · |v| = '+nf(s.speed_ms,lang,2)+' m/s',18,55,'#d4e3c2',13);
+ scene.text('h = '+displayHeight+' · |v| = '+nf(s.speed_ms,lang,2)+' m/s',18,55,'#E2E7AE',13);
  scene.text(fall?L(lang,'N = 0 · невагомість','N = 0 · weightlessness'):L(lang,'N = F · тіло на опорі','N = F · supported body'),18,77,fall?'#b4a1e4':'#80caca',11);
- scene.text(L(lang,'Поверхня Землі · h = 0','Earth’s surface · h = 0'),scene.W-18,scene.H-54,'#91b5a8',11,'right');
+ scene.text(L(lang,'Поверхня Землі · h = 0','Earth’s surface · h = 0'),scene.W-18,scene.H-54,'#909A58',11,'right');
  scene.text(L(lang,'Масштаб висоти: 0–','Height scale: 0–')+nf(top/unit,lang,3)+' '+unitLabel,18,scene.H-34,'#9eb2c4',10);
  scene.text(L(lang,'Тіло та стрілки умовного розміру. F спрямована до центра Землі.','Body and arrow sizes are symbolic. F points towards Earth’s centre.'),18,scene.H-17,'#7c94ac',scene.W<550?8:9);
 }

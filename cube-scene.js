@@ -1,6 +1,6 @@
-import {warpedCube,latticeValues,latticeColor} from './cube-warp.js';
-import {buildCube,cubeField,seedValues} from './cube-physics.js?v=warp1';
-import {rateColor} from './geometry.js';
+import {warpedCube,latticeValues,latticeColor} from './cube-warp.js?v=palette2';
+import {buildCube,cubeField,seedValues} from './cube-physics.js?v=palette2';
+import {rateColor} from './geometry.js?v=palette2';
 const L=(lang,uk,en)=>lang==='uk'?uk:en;
 const cache=new Map();
 function curvesFor(spec,extent,density){
@@ -15,7 +15,7 @@ function frame(scene,e,flat,density){
  if(flat)for(let axis=0;axis<3;axis++)for(const a of seedValues(density,e))for(const b of seedValues(density,e)){
   const ij=[0,1,2].filter(j=>j!==axis),p=[0,0,0],q=[0,0,0];p[axis]=-e;q[axis]=e;p[ij[0]]=q[ij[0]]=a;p[ij[1]]=q[ij[1]]=b;scene.line(p,q,'#7891ae24',.6,true);
  }
- const origin=[-e,-e,-e];for(let j=0;j<3;j++){const end=origin.slice();end[j]=e*1.12;const colour=['#e4948c','#a4d593','#95b8ee'][j];scene.arrow(origin,end,colour);const q=scene.project(end);scene.text(['x','y','z'][j],q[0]+(j===0?18:9),q[1]+(j===0?17:-6),colour,10);}
+ const origin=[-e,-e,-e];for(let j=0;j<3;j++){const end=origin.slice();end[j]=e*1.12;const colour=['#e4948c','#BDC71E','#95b8ee'][j];scene.arrow(origin,end,colour);const q=scene.project(end);scene.text(['x','y','z'][j],q[0]+(j===0?18:9),q[1]+(j===0?17:-6),colour,10);}
 }
 function wireSphere(scene,centre,r,color){
  for(let axis=0;axis<3;axis++)scene.path(Array.from({length:65},(_,j)=>{const a=j*Math.PI/32,p=centre.slice(),ij=[0,1,2].filter(k=>k!==axis);p[ij[0]]+=r*Math.cos(a);p[ij[1]]+=r*Math.sin(a);return p;}),color,1.2);
@@ -120,7 +120,7 @@ function drawDeformedCube(scene,{spec,extent,unit,probe,options,objects=[],track
  const y=scene.H-94,x=18,w=Math.min(180,scene.W*.42);
  scene.text(L(lang,'Колір: dτ/dt нерухомого годинника','Colour: stationary-clock dτ/dt'),x,y-12,'#a8bbc8',9);
  for(let j=0;j<48;j++){c.fillStyle=latticeColor(min+(1-min)*j/47,min);c.fillRect(x+j*w/48,y,w/48+1,5);}
- scene.text('≤ '+min.toFixed(2),x,y+18,'#6eeeb0',9);scene.text('1.00',x+w,y+18,'#6e9ef0',9,'right');
+ scene.text('≤ '+min.toFixed(2),x,y+18,'#BDC71E',9);scene.text('1.00',x+w,y+18,'#6e9ef0',9,'right');
  scene.text(L(lang,'Схема · фіксоване підсилення ×','Diagram · fixed amplification ×')+gain,18,scene.H-48,'#c3d5dc',9);
  scene.text('1 '+L(lang,'од.','unit')+' = '+(unit/1000).toExponential(3)+' km',18,scene.H-33,'#8fa8b9',9);
  if(title)scene.text(title,18,54,'#c6d5e2',11);

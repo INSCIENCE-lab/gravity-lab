@@ -1,6 +1,6 @@
 // A shared, explicitly illustrative display map. It never enters metric,
 // orbit, light-ray or clock calculations. All lengths use fixed grid units.
-import {cubeField} from './cube-physics.js?v=warp1';
+import {cubeField} from './cube-physics.js?v=palette2';
 export function warpPoint(q,spec,extent,gain){
  const sources=spec.kind==='pn'?spec.bodies:[{rg:spec.rs/2,position:[0,0,0]}];
  let total=0;const vector=[0,0,0],soft=.08*extent,range=1.2*extent;

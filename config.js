@@ -1,4 +1,4 @@
-import {AU} from './physics.js?v=pause1';
+import {AU} from './physics.js?v=palette2';
 export const clockHeights=[...([100,200,500].map(v=>({id:v+'km',height_m:v*1000,unit_m:1000,units:['км','km'],labels:[v+' км',v+' km']}))),...([1,5,10,100,1000].map(v=>({id:v+'au',height_m:v*AU,unit_m:AU,units:['а. о.','AU'],labels:[v+' астрономічн'+(v===1?'а одиниця':'их одиниць'),v+' astronomical unit'+(v===1?'':'s')]})))];
 export const tr=(s,lang)=>Array.isArray(s)?s[lang==='uk'?0:1]:s;
 const p=(key,labels,min,max,step,value,units='',type='range',options=null)=>({key,labels,min,max,step,value,units,type,options});

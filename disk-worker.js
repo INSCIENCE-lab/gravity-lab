@@ -1,4 +1,4 @@
-import {renderDisk} from './disk-renderer.js?v=disk3';
+import {renderDisk} from './disk-renderer.js?v=palette2';
 self.onmessage=async({data})=>{
  try{
   const result=await renderDisk(data,{onProgress:progress=>self.postMessage({job:data.job,progress})});
