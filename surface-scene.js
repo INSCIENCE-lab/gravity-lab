@@ -37,7 +37,7 @@ export function drawSurfaceLocal(scene,p,s,lang){
  if(!fall){c.strokeStyle='#80caca';c.lineWidth=4;c.beginPath();c.moveTo(pos[0]-29,pos[1]+3);c.lineTo(pos[0]+29,pos[1]+3);c.stroke();scene.text(L(lang,'Опора','Support'),pos[0]-31,pos[1]+20,'#80caca',10);}
  scene.surfaceObject(p.object,pos);
  const names={person:['Людина','Person'],car:['Автомобіль','Car'],house:['Будинок','House'],block:['Брусок','Block']};
- scene.text(L(lang,...names[p.object]),pos[0],pos[1]-43,'#d5e997',12,'center');
+ scene.text(L(lang,...names[p.object]),pos[0],pos[1]-43,'#BDC71E',12,'center');
  arrow(scene,pos[0]+35,pos[1]-15,46,'#eead77','F');
  if(!fall)arrow(scene,pos[0]+65,pos[1]-15,-46,'#80caca','N');
  if(fall&&s.speed_ms>0)arrow(scene,pos[0]-35,pos[1]-15,Math.min(60,25+s.speed_ms*.3),'#b4a1e4','v');

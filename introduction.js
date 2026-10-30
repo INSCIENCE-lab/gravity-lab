@@ -6,12 +6,12 @@ const svg=(label,body,view='0 0 640 400')=>`<svg viewBox="${view}" role="img" ar
 function separateDiagram(lang){
  const s=(u,e)=>pick(lang,u,e);
  return svg(s('Куб із трьома просторовими координатами та окремий годинник абсолютного часу','A cube with three spatial coordinates and a separate clock for absolute time'),`
- <g stroke="#d5e997" stroke-width="2" fill="none"><path d="M75 127 205 127 205 257 75 257Z M130 77 260 77 260 207 130 207Z M75 127 130 77M205 127 260 77M205 257 260 207M75 257 130 207"/>
+ <g stroke="#BDC71E" stroke-width="2" fill="none"><path d="M75 127 205 127 205 257 75 257Z M130 77 260 77 260 207 130 207Z M75 127 130 77M205 127 260 77M205 257 260 207M75 257 130 207"/>
  <path d="M75 257H290M75 257V65M75 257 164 176" stroke-opacity=".5"/></g>
- <g fill="#d5e997" font-size="18" font-family="sans-serif"><text x="291" y="263">x</text><text x="68" y="58">z</text><text x="170" y="176">y</text></g>
+ <g fill="#BDC71E" font-size="18" font-family="sans-serif"><text x="291" y="263">x</text><text x="68" y="58">z</text><text x="170" y="176">y</text></g>
  <path d="M330 63V280" stroke="#60704d" stroke-dasharray="5 8"/>
- <circle cx="471" cy="166" r="80" fill="#1d2a31" stroke="#d5e997" stroke-width="2"/>
- <g stroke="#d5e997" stroke-width="3"><path d="M471 99v10M471 223v10M404 166h10M528 166h10M471 166v-42m0 42 37 21"/></g><circle cx="471" cy="166" r="5" fill="#d5e997"/>
+ <circle cx="471" cy="166" r="80" fill="#1d2a31" stroke="#BDC71E" stroke-width="2"/>
+ <g stroke="#BDC71E" stroke-width="3"><path d="M471 99v10M471 223v10M404 166h10M528 166h10M471 166v-42m0 42 37 21"/></g><circle cx="471" cy="166" r="5" fill="#BDC71E"/>
  <g fill="#edf2df" font-size="18" font-family="sans-serif" text-anchor="middle"><text x="167" y="313">${s('3D-простір: x, y, z','3D space: x, y, z')}</text><text x="470" y="313">${s('Окремо час: t','Separate time: t')}</text></g>`, '0 0 640 350');
 }
 

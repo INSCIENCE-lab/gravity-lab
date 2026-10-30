@@ -42,7 +42,7 @@ export function drawSchwarzGeometry(scene,{mass,unit,outer,model=null,ray=null,o
  if(model){
   const projected=model.history.map(h=>{const R=norm(h.position);return[R*Math.cos(h.phi),R*Math.sin(h.phi),0];}).filter(p=>norm(p)*factor<=outer);
   scene.path(projected.map(map),'#e5ed9c',2.1);
-  const R=model.y[0],phi=model.y[2];if(R*factor<=outer){const p=map([R*Math.cos(phi),R*Math.sin(phi),0]);scene.sphere(p,6,'#d5e997',true);scene.label(L(lang,'Пробне тіло','Test body'),p,'#e6edb1',-15);}
+  const R=model.y[0],phi=model.y[2];if(R*factor<=outer){const p=map([R*Math.cos(phi),R*Math.sin(phi),0]);scene.sphere(p,6,'#BDC71E',true);scene.label(L(lang,'Пробне тіло','Test body'),p,'#e6edb1',-15);}
  }else if(ray){
   for(const r of others){const pts=r.path.filter(p=>norm(p)*factor>s&&norm(p)*factor<=outer);scene.path(pts.map(map),'#84b8c475',1);}
   scene.path(ray.path.filter(p=>norm(p)*factor>s&&norm(p)*factor<=outer).map(map),'#f3d58e',2.2);
@@ -66,7 +66,7 @@ export function drawBinaryGeometry(scene,model,reference,lang){
    if(!f.valid){previous=null;continue;}const point=[x,y,height(f)];if(previous)scene.line(previous,point,rateColor(f.rate,.95,1,.65),.85);previous=point;
   }
  }
- const colours=['#d5e997','#b3a1e0'];
+ const colours=['#BDC71E','#b3a1e0'];
  for(let i=0;i<2;i++){
   const trail=model.history.map(h=>scale(orbitPlane(h.positions[i],model.p.inc,model.p.node),factor)).filter(v=>Math.abs(v[0])<extent&&Math.abs(v[1])<extent);
   scene.path(trail.map(v=>[v[0],v[1],.025]),colours[i]+'bb',1.6);

@@ -1,5 +1,5 @@
 
-#gravity-projectile-stable{--gp-bg:#0c1020;--gp-panel:#12192a;--gp-scene:#090f1b;--gp-line:#2a3549;--gp-text:#e6ebee;--gp-muted:#a6b4c6;--gp-accent:#d6e99d;--gp-blue:#88b6ed;--gp-peach:#eeae8f;--gp-mint:#85d4cb;background:var(--gp-bg);color:var(--gp-text);font:14px/1.65 Inter,'Segoe UI',Arial,sans-serif;padding:0 28px 32px;border-radius:18px;color-scheme:dark}
+#gravity-projectile-stable{--gp-bg:#0c1020;--gp-panel:#12192a;--gp-scene:#090f1b;--gp-line:#2a3549;--gp-text:#e6ebee;--gp-muted:#a6b4c6;--gp-accent:#BDC71E;--gp-blue:#88b6ed;--gp-peach:#eeae8f;--gp-mint:#85d4cb;background:var(--gp-bg);color:var(--gp-text);font:14px/1.65 Inter,'Segoe UI',Arial,sans-serif;padding:0 28px 32px;border-radius:18px;color-scheme:dark}
 #gravity-projectile-stable *{box-sizing:border-box}
 #gravity-projectile-stable [hidden]{display:none!important}
 #gravity-projectile-stable button,#gravity-projectile-stable input,#gravity-projectile-stable select,#gravity-projectile-stable textarea{font:inherit}

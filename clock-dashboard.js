@@ -1,4 +1,4 @@
-import {getLocale,getLanguage} from './locales.js?v=languages4';
+import {getLocale,getLanguage} from './locales.js?v=brand1';
 import {AU,DAY} from './physics.js?v=pause1';
 
 const L=(lang,uk,en)=>lang==='uk'?uk:en;

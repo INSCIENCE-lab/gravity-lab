@@ -1,19 +1,19 @@
 import {mountProjectile} from './projectile.js?v=autofitboth1';
-import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=projectile1';
+import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=brand1';
 import {binaryGridReference} from './binary-grid.js';
 import {geometryLearning} from './geometry-learning.js?v=fixedillustration1';
-import {drawSurfaceLocal} from './surface-scene.js?v=languages4';
+import {drawSurfaceLocal} from './surface-scene.js?v=brand1';
 import {AnimationLoop} from './animation-loop.js?v=startfix1';
-import {introduction} from './introduction.js?v=credits2';
+import {introduction} from './introduction.js?v=brand1';
 import {schwarzReference,lensReference} from './black-hole-guide.js?v=lensscale1';
 import {G,C,AU,DAY,MSUN,earth,planets,clockBodies,surface,jump,clock,clockAtHeight,clockReference,Binary,Schwarzschild,traceRay,rg,rs,rk4,norm,sampleRay} from './physics.js?v=pause1';
 import {experiments,defaultParams,clockHeights,ui,tr} from './config.js?v=projectile1';
 import {theory,sources} from './theory.js?v=surface1';
-import {Scene} from './scene.js?v=languages4';
+import {Scene} from './scene.js?v=brand1';
 import {schwarzField,weakField,orbitPlane} from './geometry.js';
-import {drawSchwarzGeometry,drawBinaryGeometry} from './geometry-scene.js?v=languages4';
+import {drawSchwarzGeometry,drawBinaryGeometry} from './geometry-scene.js?v=brand1';
 import {dashboardHTML,updateClockHands} from './clock-dashboard.js?v=languages4';
-import {drawCube} from './cube-scene.js?v=languages4';
+import {drawCube} from './cube-scene.js?v=brand1';
 import {cubeProbeValues} from './cube-physics.js?v=warp1';
 import {startDiskRender} from './disk-task.js?v=disk3';
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -121,8 +121,8 @@ function cubeSetup(){
   unit=geometryReference.unit;extent=geometryReference.outer*.65;
   const positions=model.positions().map(v=>v.map(x=>x*model.length/unit));
   spec={kind:'pn',bodies:positions.map((position,i)=>({position,rg:rg((i?p.m2:p.m1)*MSUN)/unit}))};
-  objects=positions.map((position,i)=>({position,label:'m'+(i+1),color:i?'#b3a1e0':'#d5e997',size:9}));
-  tracks=[0,1].map(i=>({points:model.history.map(h=>h.positions[i].map(x=>x*model.length/unit)),color:i?'#b3a1e0':'#d5e997'}));
+  objects=positions.map((position,i)=>({position,label:'m'+(i+1),color:i?'#b3a1e0':'#BDC71E',size:9}));
+  tracks=[0,1].map(i=>({points:model.history.map(h=>h.positions[i].map(x=>x*model.length/unit)),color:i?'#b3a1e0':'#BDC71E'}));
  }else if(current==='clocks'){
   const rows=clockRows(),body=clockBodies.find(b=>b.id===cube.body),row=rows.find(r=>r.body===cube.body);
   unit=AU;extent=Math.max(...rows.map(r=>Math.max(r.radius_m,r.rs_m,clockBodies.find(b=>b.id===r.body).radius)))*1.15/unit;
@@ -132,8 +132,8 @@ function cubeSetup(){
   unit=geometryReference.unit;extent=geometryReference.outer*.65;const factor=rg(p.mass*MSUN)/unit;
   spec={kind:'schwarzschild',rs:2*factor};
   if(current==='schwarzschild'){
-   tracks=[{points:model.history.map(h=>h.position.map(x=>x*factor)),color:'#d5e997',width:2}];
-   objects=[{position:model.position().map(x=>x*factor),label:lang==='uk'?'Пробне тіло':'Test body',color:'#d5e997',size:5}];
+   tracks=[{points:model.history.map(h=>h.position.map(x=>x*factor)),color:'#BDC71E',width:2}];
+   objects=[{position:model.position().map(x=>x*factor),label:lang==='uk'?'Пробне тіло':'Test body',color:'#BDC71E',size:5}];
   }else{
    tracks=[...otherRays.map(r=>({points:r.path.map(v=>v.map(x=>x*factor)),color:'#94b9df60',width:1})),{points:ray.path.map(v=>v.map(x=>x*factor)),color:'#f3d58e',width:2.2}];
    selectedPoint=sampleRay(ray,time).position.map(x=>x*factor);
@@ -226,7 +226,7 @@ function renderNotebook(){const previous=$('chartFilter').value;setOptions($('ch
 function setOptions(el,opts,value){el.innerHTML=opts.map(([v,l])=>`<option value="${esc(v)}" ${v===value?'selected':''}>${esc(l)}</option>`).join('');if(!opts.some(o=>o[0]===value)&&opts.length)el.value=opts[0][0];}
 function filtered(){return records.filter(r=>r.experiment===$('chartFilter').value);}
 function updateAxes(){const rows=filtered(),keys=[...new Set(rows.flatMap(r=>Object.keys(r.values).filter(k=>typeof r.values[k]==='number'&&Number.isFinite(r.values[k]))))];const preferred={surface:['radius_m','g_ms2'],binary:['radius_m','force_N'],jump:['g_ms2','height_m'],pn:['radius_m','energy_residual'],schwarzschild:['radius_m','rate'],lens:['impact_rg','deflection_rad'],projectile:['x_m','y_m'],clocks:[p.mode==='height'?'height_m':'radius_m','lost_s']}[$('chartFilter').value];setOptions($('chartX'),keys.map(k=>[k,k]),keys.includes($('chartX').value)?$('chartX').value:preferred[0]);setOptions($('chartY'),keys.map(k=>[k,k]),keys.includes($('chartY').value)?$('chartY').value:preferred[1]);chart();}
-function chart(){const kx=$('chartX').value,ky=$('chartY').value,lx=$('logX').checked,ly=$('logY').checked;const rows=filtered().filter(r=>typeof r.values[kx]==='number'&&typeof r.values[ky]==='number'&&Number.isFinite(r.values[kx])&&Number.isFinite(r.values[ky])&&(!lx||r.values[kx]>0)&&(!ly||r.values[ky]>0));if(!rows.length){$('journalChart').innerHTML=`<text x="420" y="145" fill="#8da4bc" font-size="13" text-anchor="middle">${T('noneNumeric')}</text>`;return;}const x=r=>lx?Math.log10(r.values[kx]):r.values[kx],y=r=>ly?Math.log10(r.values[ky]):r.values[ky];let xmin=Math.min(...rows.map(x)),xmax=Math.max(...rows.map(x)),ymin=Math.min(...rows.map(y)),ymax=Math.max(...rows.map(y));if(xmin===xmax){const pad=Math.abs(xmin)*.1||1;xmin-=pad;xmax+=pad;}if(ymin===ymax){const pad=Math.abs(ymin)*.1||1;ymin-=pad;ymax+=pad;}const X=v=>90+(v-xmin)/(xmax-xmin)*710,Y=v=>250-(v-ymin)/(ymax-ymin)*220;let svg='';for(let i=0;i<5;i++){const xx=xmin+(xmax-xmin)*i/4,yy=ymin+(ymax-ymin)*i/4;svg+=`<line x1="90" y1="${Y(yy)}" x2="800" y2="${Y(yy)}" stroke="#25394e"/><text x="81" y="${Y(yy)+4}" fill="#7f99b1" font-size="9" text-anchor="end">${esc(sci(ly?10**yy:yy,2))}</text><text x="${X(xx)}" y="270" fill="#7f99b1" font-size="9" text-anchor="middle">${esc(sci(lx?10**xx:xx,2))}</text>`;}svg+=`<text x="8" y="16" fill="#bbcdbe" font-size="10">${esc(ky)}${ly?' (log)':''}</text><text x="445" y="294" fill="#bbcdbe" font-size="10" text-anchor="middle">${esc(kx)}${lx?' (log)':''}</text>`;for(const r of rows){const color=clockBodies.find(b=>b.id===r.values.body)?.color||planets.find(b=>b.id===r.values.planet)?.color||'#d5e997';svg+=`<circle cx="${X(x(r))}" cy="${Y(y(r))}" r="4" fill="${color}" opacity=".8" tabindex="0" data-record="${r.id}"><title>${esc((r.values.body||r.values.planet||name(r.experiment))+': '+kx+' = '+sci(r.values[kx])+', '+ky+' = '+sci(r.values[ky]))}</title></circle>`;}$('journalChart').innerHTML=svg;$('chartReadout').textContent=rows.length+' '+(lang==='uk'?'точок · наведи на точку для деталей':'points · hover for details');}
+function chart(){const kx=$('chartX').value,ky=$('chartY').value,lx=$('logX').checked,ly=$('logY').checked;const rows=filtered().filter(r=>typeof r.values[kx]==='number'&&typeof r.values[ky]==='number'&&Number.isFinite(r.values[kx])&&Number.isFinite(r.values[ky])&&(!lx||r.values[kx]>0)&&(!ly||r.values[ky]>0));if(!rows.length){$('journalChart').innerHTML=`<text x="420" y="145" fill="#8da4bc" font-size="13" text-anchor="middle">${T('noneNumeric')}</text>`;return;}const x=r=>lx?Math.log10(r.values[kx]):r.values[kx],y=r=>ly?Math.log10(r.values[ky]):r.values[ky];let xmin=Math.min(...rows.map(x)),xmax=Math.max(...rows.map(x)),ymin=Math.min(...rows.map(y)),ymax=Math.max(...rows.map(y));if(xmin===xmax){const pad=Math.abs(xmin)*.1||1;xmin-=pad;xmax+=pad;}if(ymin===ymax){const pad=Math.abs(ymin)*.1||1;ymin-=pad;ymax+=pad;}const X=v=>90+(v-xmin)/(xmax-xmin)*710,Y=v=>250-(v-ymin)/(ymax-ymin)*220;let svg='';for(let i=0;i<5;i++){const xx=xmin+(xmax-xmin)*i/4,yy=ymin+(ymax-ymin)*i/4;svg+=`<line x1="90" y1="${Y(yy)}" x2="800" y2="${Y(yy)}" stroke="#25394e"/><text x="81" y="${Y(yy)+4}" fill="#7f99b1" font-size="9" text-anchor="end">${esc(sci(ly?10**yy:yy,2))}</text><text x="${X(xx)}" y="270" fill="#7f99b1" font-size="9" text-anchor="middle">${esc(sci(lx?10**xx:xx,2))}</text>`;}svg+=`<text x="8" y="16" fill="#bbcdbe" font-size="10">${esc(ky)}${ly?' (log)':''}</text><text x="445" y="294" fill="#bbcdbe" font-size="10" text-anchor="middle">${esc(kx)}${lx?' (log)':''}</text>`;for(const r of rows){const color=clockBodies.find(b=>b.id===r.values.body)?.color||planets.find(b=>b.id===r.values.planet)?.color||'#BDC71E';svg+=`<circle cx="${X(x(r))}" cy="${Y(y(r))}" r="4" fill="${color}" opacity=".8" tabindex="0" data-record="${r.id}"><title>${esc((r.values.body||r.values.planet||name(r.experiment))+': '+kx+' = '+sci(r.values[kx])+', '+ky+' = '+sci(r.values[ky]))}</title></circle>`;}$('journalChart').innerHTML=svg;$('chartReadout').textContent=rows.length+' '+(lang==='uk'?'точок · наведи на точку для деталей':'points · hover for details');}
 function renderEntries(){$('entries').innerHTML=records.length?[...records].reverse().slice(0,150).map(r=>`<article class="journal-entry"><header><h4>${name(r.experiment)}${r.values.body?' · '+esc(r.values.body):r.values.planet?' · '+esc(r.values.planet):''}</h4><button data-delete="${esc(r.id)}">${T('delete')}</button></header><div class="entry-meta">${new Date(r.date).toLocaleString(getLocale())}</div><div class="entry-values">${Object.entries(r.values).filter(([,v])=>v!==null&&v!==undefined).map(([k,v])=>`<span>${esc(k)}: <b>${typeof v==='number'?sci(v):esc(v)}</b></span>`).join('')}</div><details><summary class="small muted">${T('parameters')}</summary><div class="entry-values">${Object.entries(r.params).map(([k,v])=>`<span>${esc(k)}: ${esc(v)}</span>`).join('')}</div></details><textarea data-note="${esc(r.id)}" maxlength="3000" placeholder="${T('notes')}" aria-label="${T('notes')}">${esc(r.note)}</textarea></article>`).join(''):`<p class="empty">${T('noRecords')}</p>`;}
 function csvCell(v){let s=String(v??'');if(/^[=+@\t\r]/.test(s)||(/^\-/.test(s)&&!Number.isFinite(Number(s))))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
 function exportCSV(){const keys=[...new Set(records.flatMap(r=>Object.keys(r.values)))],head=['id','date','experiment','params_json','note',...keys],rows=records.map(r=>[r.id,r.date,r.experiment,JSON.stringify(r.params),r.note,...keys.map(k=>r.values[k]??'')]);const content='\uFEFF'+[head,...rows].map(r=>r.map(csvCell).join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([content],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='gravity-lab-measurements.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);}
