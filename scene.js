@@ -6,7 +6,7 @@ export class Scene {
  reset(){this.yaw=-.35;this.pitch=.65;this.zoom=1;this.redraw();}
  clear(extent=1.8){const c=this.ctx;c.clearRect(0,0,this.W,this.H);c.fillStyle='#080e1c';c.fillRect(0,0,this.W,this.H);for(const [x,y,r] of this.stars){c.fillStyle='#788ba633';c.beginPath();c.arc(Math.abs(x)*this.W,Math.abs(y)*this.H,r,0,Math.PI*2);c.fill();}this.S=Math.min(this.W*.36,this.H*.37)/extent*this.zoom;this.cx=this.W*.5;this.cy=this.H*.53;}
  project(v){const [x,y,z]=v,a=x*Math.cos(this.yaw)-y*Math.sin(this.yaw),b=x*Math.sin(this.yaw)+y*Math.cos(this.yaw);return[this.cx+a*this.S,this.cy+(b*Math.sin(this.pitch)-z*Math.cos(this.pitch))*this.S,b*Math.cos(this.pitch)+z*Math.sin(this.pitch)];}
- text(text,x,y,color='#839ab3',size=10,align='left'){const c=this.ctx;c.fillStyle=color;c.font=`${size}px Inter, Segoe UI, Arial`;c.textAlign=align;c.fillText(translate(text),x,y);}
+ text(text,x,y,color='#839ab3',size=10,align='left'){const c=this.ctx;c.fillStyle=color;c.font=`${size}px NAMU, sans-serif`;c.textAlign=align;c.fillText(translate(text),x,y);}
  label(text,p,color='#839ab3',dy=-15){const q=this.project(p);this.text(text,q[0]+10,q[1]+dy,color,10);}
  line(a,b,color='#334763',width=1,dashed=false){const c=this.ctx,A=this.project(a),B=this.project(b);c.strokeStyle=color;c.lineWidth=width;c.setLineDash(dashed?[3,5]:[]);c.beginPath();c.moveTo(A[0],A[1]);c.lineTo(B[0],B[1]);c.stroke();c.setLineDash([]);}
  path(points,color='#a7c783',width=1.5){if(points.length<2)return;const c=this.ctx;c.strokeStyle=color;c.lineWidth=width;c.beginPath();for(let i=0;i<points.length;i++){const p=this.project(points[i]);if(i===0)c.moveTo(p[0],p[1]);else c.lineTo(p[0],p[1]);}c.stroke();}

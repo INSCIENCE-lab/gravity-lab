@@ -8,11 +8,11 @@ function separateDiagram(lang){
  return svg(s('Куб із трьома просторовими координатами та окремий годинник абсолютного часу','A cube with three spatial coordinates and a separate clock for absolute time'),`
  <g stroke="#BDC71E" stroke-width="2" fill="none"><path d="M75 127 205 127 205 257 75 257Z M130 77 260 77 260 207 130 207Z M75 127 130 77M205 127 260 77M205 257 260 207M75 257 130 207"/>
  <path d="M75 257H290M75 257V65M75 257 164 176" stroke-opacity=".5"/></g>
- <g fill="#BDC71E" font-size="18" font-family="sans-serif"><text x="291" y="263">x</text><text x="68" y="58">z</text><text x="170" y="176">y</text></g>
+ <g fill="#BDC71E" font-size="18" font-family="NAMU, sans-serif"><text x="291" y="263">x</text><text x="68" y="58">z</text><text x="170" y="176">y</text></g>
  <path d="M330 63V280" stroke="#60704d" stroke-dasharray="5 8"/>
  <circle cx="471" cy="166" r="80" fill="#1d2a31" stroke="#BDC71E" stroke-width="2"/>
  <g stroke="#BDC71E" stroke-width="3"><path d="M471 99v10M471 223v10M404 166h10M528 166h10M471 166v-42m0 42 37 21"/></g><circle cx="471" cy="166" r="5" fill="#BDC71E"/>
- <g fill="#edf2df" font-size="18" font-family="sans-serif" text-anchor="middle"><text x="167" y="313">${s('3D-простір: x, y, z','3D space: x, y, z')}</text><text x="470" y="313">${s('Окремо час: t','Separate time: t')}</text></g>`, '0 0 640 350');
+ <g fill="#edf2df" font-size="18" font-family="NAMU, sans-serif" text-anchor="middle"><text x="167" y="313">${s('3D-простір: x, y, z','3D space: x, y, z')}</text><text x="470" y="313">${s('Окремо час: t','Separate time: t')}</text></g>`, '0 0 640 350');
 }
 
 function worldlineDiagram(lang){
@@ -24,7 +24,7 @@ function worldlineDiagram(lang){
  <path d="M60 80 300 320 540 80" stroke="#f2c77f" stroke-width="3" fill="none"/>
  <path d="M300 320 396 80" stroke="#a9ddd4" stroke-width="4"/>
  <circle cx="360" cy="170" r="7" fill="#a9ddd4"/><circle cx="300" cy="320" r="5" fill="#edf0f4"/>
- <g font-family="sans-serif" font-size="17"><text x="313" y="39" fill="#e8e8ef">ct</text><text x="586" y="326" fill="#e8e8ef">x</text><text x="265" y="349" fill="#91a1bb">0</text><text x="427" y="57" fill="#f2c77f">${s('світло','light')}</text><text x="348" y="57" fill="#a9ddd4">${s('тіло','body')}</text><text x="376" y="179" fill="#a9ddd4">${s('подія','event')}</text></g>`, '0 0 640 380');
+ <g font-family="NAMU, sans-serif" font-size="17"><text x="313" y="39" fill="#e8e8ef">ct</text><text x="586" y="326" fill="#e8e8ef">x</text><text x="265" y="349" fill="#91a1bb">0</text><text x="427" y="57" fill="#f2c77f">${s('світло','light')}</text><text x="348" y="57" fill="#a9ddd4">${s('тіло','body')}</text><text x="376" y="179" fill="#a9ddd4">${s('подія','event')}</text></g>`, '0 0 640 380');
 }
 
 function media(name,alt,caption,lang,extra=''){

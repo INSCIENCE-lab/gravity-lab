@@ -1,5 +1,5 @@
 
-#gravity-projectile-stable{--gp-bg:#0c1020;--gp-panel:#12192a;--gp-scene:#090f1b;--gp-line:#2a3549;--gp-text:#e6ebee;--gp-muted:#a6b4c6;--gp-accent:#BDC71E;--gp-blue:#88b6ed;--gp-peach:#eeae8f;--gp-mint:#85d4cb;background:var(--gp-bg);color:var(--gp-text);font:14px/1.65 Inter,'Segoe UI',Arial,sans-serif;padding:0 28px 32px;border-radius:18px;color-scheme:dark}
+#gravity-projectile-stable{--gp-bg:#0c1020;--gp-panel:#12192a;--gp-scene:#090f1b;--gp-line:#2a3549;--gp-text:#e6ebee;--gp-muted:#a6b4c6;--gp-accent:#BDC71E;--gp-blue:#88b6ed;--gp-peach:#eeae8f;--gp-mint:#85d4cb;background:var(--gp-bg);color:var(--gp-text);font:14px/1.65 NAMU, sans-serif;padding:0 28px 32px;border-radius:18px;color-scheme:dark}
 #gravity-projectile-stable *{box-sizing:border-box}
 #gravity-projectile-stable [hidden]{display:none!important}
 #gravity-projectile-stable button,#gravity-projectile-stable input,#gravity-projectile-stable select,#gravity-projectile-stable textarea{font:inherit}
@@ -26,7 +26,7 @@
 #gravity-projectile-stable .gp-status{color:var(--gp-muted);font-size:11px}
 #gravity-projectile-stable .gp-stage{background:var(--gp-scene);width:100%;min-width:0}
 #gravity-projectile-stable .gp-stage svg{display:block;width:100%;height:350px}
-#gravity-projectile-stable .gp-stage svg text{fill:var(--gp-muted);font:11px Inter,'Segoe UI',Arial,sans-serif}
+#gravity-projectile-stable .gp-stage svg text{fill:var(--gp-muted);font:11px NAMU, sans-serif}
 #gravity-projectile-stable .gp-stage .gp-axis{stroke:var(--gp-muted);stroke-width:1}
 #gravity-projectile-stable .gp-stage .gp-gridline{stroke:var(--gp-line);stroke-width:.7}
 #gravity-projectile-stable .gp-stage .gp-path{stroke:var(--gp-accent);stroke-width:2.3;fill:none}
@@ -35,7 +35,7 @@
 #gravity-projectile-stable .gp-stage .gp-gravity{stroke:var(--gp-peach);stroke-width:2;fill:none}
 #gravity-projectile-stable .gp-stage .gp-component{stroke:var(--gp-blue);stroke-width:1.2;stroke-dasharray:3 3;fill:none}
 #gravity-projectile-stable .gp-stage .gp-ball{fill:var(--gp-accent);stroke:var(--gp-scene);stroke-width:1}
-#gravity-projectile-stable .gp-live{display:flex;flex-wrap:wrap;gap:7px 18px;padding:12px 16px;border-top:1px solid var(--gp-line);font-family:ui-monospace,monospace;font-size:12px;color:var(--gp-muted);font-variant-numeric:tabular-nums}
+#gravity-projectile-stable .gp-live{display:flex;flex-wrap:wrap;gap:7px 18px;padding:12px 16px;border-top:1px solid var(--gp-line);font-family:NAMU,monospace;font-size:12px;color:var(--gp-muted);font-variant-numeric:tabular-nums}
 #gravity-projectile-stable .gp-transport{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 16px}
 #gravity-projectile-stable .gp-button{border:1px solid var(--gp-line);border-radius:9px;padding:9px 12px;background:#1a2435;color:var(--gp-text);font-size:12px;min-height:39px}
 #gravity-projectile-stable .gp-button.gp-primary{background:var(--gp-accent);border-color:var(--gp-accent);color:var(--gp-bg);font-weight:600}
@@ -64,7 +64,7 @@
 #gravity-projectile-stable li{margin-bottom:9px}
 #gravity-projectile-stable .gp-theory{padding-top:30px}
 #gravity-projectile-stable .gp-worked{padding:21px;margin:20px 0}
-#gravity-projectile-stable .gp-eq{font-family:Georgia,'Times New Roman',serif;white-space:normal;overflow-x:auto;max-width:100%;overflow-wrap:anywhere;background:#111c2e;border:1px solid #293c53;border-radius:7px;padding:15px 18px;margin:15px 0;color:#c9d7e0;font-size:16px;line-height:1.9;font-variant-numeric:tabular-nums}
+#gravity-projectile-stable .gp-eq{font-family:NAMU, sans-serif;white-space:normal;overflow-x:auto;max-width:100%;overflow-wrap:anywhere;background:#111c2e;border:1px solid #293c53;border-radius:7px;padding:15px 18px;margin:15px 0;color:#c9d7e0;font-size:16px;line-height:1.9;font-variant-numeric:tabular-nums}
 #gravity-projectile-stable .gp-theory-block{padding:18px 0;border-bottom:1px solid var(--gp-line);font-size:13px;line-height:1.85;color:#c0cbd7}
 #gravity-projectile-stable .gp-current-worked{margin-top:16px}
 #gravity-projectile-stable .gp-journal{margin-top:26px;padding:21px}
@@ -85,7 +85,7 @@
 #gravity-projectile-stable .gp-intro h2{display:none}
 #gravity-projectile-stable .gp-eq{white-space:normal;overflow-x:auto;max-width:100%;line-height:1.9}
 #gravity-projectile-stable .gp-math-line{display:block;max-width:100%;padding:6px 0}
-#gravity-projectile-stable math{font-size:1em;color:inherit;font-family:Georgia,'Times New Roman',serif}
+#gravity-projectile-stable math{font-size:1em;color:inherit;font-family:NAMU, sans-serif}
 #gravity-projectile-stable .gp-math-line math{display:block;margin:0}
 #gravity-projectile-stable .gp-eq code{white-space:pre-wrap;overflow-wrap:anywhere}
 #gravity-projectile-stable .gp-theory-block{min-width:0}
