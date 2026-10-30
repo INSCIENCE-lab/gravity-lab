@@ -81,3 +81,5 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
 .geodesic-comparison{margin:0;padding:14px 18px;color:#ccebf2;background:#102834;border-top:1px solid #365766;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
 
 .languages{flex-shrink:0}@media(max-width:420px){.topbar{gap:7px}.languages button{padding:4px 5px}.brand b{font-size:12px}.brand small{letter-spacing:.3px}}
+
+.page-breadcrumbs{align-items:flex-start;line-height:1.7}.page-breadcrumbs a{display:block;min-width:0;max-width:100%;overflow-wrap:anywhere;padding:6px 0}@media(max-width:600px){.page-breadcrumbs{flex-direction:column;gap:4px;margin:20px 0}.lab-heading{flex-wrap:wrap;gap:12px}.transport{flex-wrap:wrap}.transport>div{flex-wrap:wrap}}

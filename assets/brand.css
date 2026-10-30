@@ -14,3 +14,6 @@ body,button,input,select,textarea{font-family:'NAMU',Arial,sans-serif}
 h1,h2,.card-title h3{font-family:'AdLib','NAMU',Arial,sans-serif;font-weight:400;letter-spacing:0;line-height:1.18}
 h1 em{font-family:inherit;font-style:normal}
 svg text{font-family:'NAMU',Arial,sans-serif}
+
+/* Keep shared return navigation readable at narrow widths. */
+.inscience-network>*{min-width:0;max-width:100%}.inscience-home{white-space:normal;overflow-wrap:anywhere;line-height:1.6}.inscience-network a{flex-shrink:1}@media(max-width:480px){.inscience-network{align-items:flex-start;flex-direction:column;gap:8px}.inscience-home{display:block;width:100%;padding:8px 0}}
