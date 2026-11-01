@@ -91,3 +91,25 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
  .transport button,.view-tabs button,.language-switch button{min-height:44px}
  input[type=range]{min-height:36px}
 }
+/* Shared mobile reading order, including explanatory introductions. */
+@media(max-width:760px){
+ #standardExperiment{display:flex;flex-direction:column;gap:18px}
+ #standardExperiment>.simulation-grid{display:contents}
+ #standardExperiment .viewport-card{order:0;width:100%}
+ #standardExperiment .controls-card{order:1;width:100%}
+ #standardExperiment>.black-hole-guide{order:2;margin:0}
+ #standardExperiment>.comparison-card{order:3}
+ #gravity-projectile-stable .gp-grid{display:flex;flex-direction:column;gap:18px}
+ #gravity-projectile-stable .gp-grid>div{display:contents}
+ #gravity-projectile-stable .gp-viewport{order:0;width:100%}
+ #gravity-projectile-stable .gp-controls{order:1;width:100%}
+ #gravity-projectile-stable .gp-stat{order:2;width:100%}
+ #gravity-projectile-stable .gp-worked{order:3;width:100%}
+ #gravity-projectile-stable .gp-journal{order:4;width:100%}
+}
+@media(max-width:760px){
+ #standardExperiment>*{order:3}
+ #standardExperiment>.lab-procedure{order:4}
+ #standardExperiment>.theory-section{order:5}
+}
+@media(max-width:760px){#gravity-projectile-stable .gp-stats{order:2;width:100%}}
