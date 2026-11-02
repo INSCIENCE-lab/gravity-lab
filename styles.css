@@ -113,3 +113,16 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
  #standardExperiment>.theory-section{order:5}
 }
 @media(max-width:760px){#gravity-projectile-stable .gp-stats{order:2;width:100%}}
+@media(max-width:760px){
+ #standardExperiment>#cubeTools,#standardExperiment>#geometryInfo{order:0}
+ #standardExperiment>.black-hole-guide,#standardExperiment>#geometryLearning{order:4}
+ .controls-card input:not([type=range]):not([type=checkbox]),.controls-card select,dialog select,dialog input:not([type=checkbox]),dialog textarea{font-size:16px;max-width:100%}
+ dialog{max-width:calc(100vw - 20px)}
+}
+/* Prevent aspect-ratio + min-height from expanding any mobile canvas. */
+@media(max-width:760px){
+ .canvas-wrap{width:100%;min-width:0;max-width:100%}
+ .canvas-wrap #scene,.canvas-wrap #diskCanvas{position:absolute;inset:0;max-width:100%;max-height:100%}
+ .chart-panel{overflow-x:auto;max-width:100%;min-width:0}
+ #journalChart{min-width:600px}
+}
