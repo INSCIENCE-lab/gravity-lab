@@ -5,7 +5,7 @@ export const rows=`0|LE IDEE ESSENZIALI|LAS IDEAS ESENCIALES
 4|Perché una mela cade e la Luna rimane in orbita?|¿Por qué cae una manzana y la Luna permanece en órbita?
 5|Nella fisica classica,|En la física clásica,
 6|la gravità è l’attrazione reciproca tra corpi dotati di massa|la gravedad es la atracción mutua entre cuerpos con masa
-7|. La Terra attrae una persona, una palla o una mela. Anche la mela attrae la Terra: le forze hanno lo stesso modulo, ma l’accelerazione della Terra, molto più massiccia, è minuscola.|. La Tierra atrae a una persona, una pelota o una manzana. La manzana también atrae a la Tierra: las fuerzas tienen el mismo módulo, pero la aceleración de la Tierra, mucho más masiva, es diminuta.
+7|. La Terra attrae una persona, una palla o una mela. Anche la mela attrae la Terra: le forze hanno lo stesso modulo e la Terra, che ha massa molto maggiore, subisce un’accelerazione minima.|. La Tierra atrae a una persona, una pelota o una manzana. La manzana también atrae a la Tierra: las fuerzas tienen el mismo módulo, pero la aceleración de la Tierra, mucho más masiva, es diminuta.
 8|Immagina Newton in un giardino sotto un melo. Una mela cade. Perché verso la Terra? William Stukeley ricordava che Newton gli aveva raccontato come una mela caduta lo avesse spinto a riflettere sulla gravitazione. La storia introduce una domanda; sviluppare la teoria richiese anni di lavoro.|Imagina a Newton en un jardín bajo un manzano. Cae una manzana. ¿Por qué hacia la Tierra? William Stukeley recordó que Newton le había contado cómo una manzana al caer lo llevó a reflexionar sobre la gravitación. La historia plantea una pregunta; desarrollar la teoría exigió años de trabajo.
 9|L’intuizione di Newton:|La intuición de Newton:
 10|la stessa interazione governa la caduta di una mela e il moto della Luna|la misma interacción gobierna la caída de una manzana y el movimiento de la Luna
@@ -16,7 +16,7 @@ export const rows=`0|LE IDEE ESSENZIALI|LAS IDEAS ESENCIALES
 16|è la distanza tra i loro centri e|es la distancia entre sus centros y
 17|è la costante gravitazionale. La formula è esatta per masse puntiformi e corpi sfericamente simmetrici che non si sovrappongono.|es la constante gravitatoria. La fórmula es exacta para masas puntuales y cuerpos esféricamente simétricos que no se solapan.
 18|Raddoppia una massa → raddoppia la forza.|Duplica una masa → se duplica la fuerza.
-19|Raddoppia la distanza → la forza diventa un quarto.|Duplica la distancia → la fuerza se reduce a un cuarto.
+19|Raddoppia la distanza. La forza si riduce a un quarto.|Duplica la distancia. La fuerza se reduce a un cuarto.
 20|Questa teoria funziona molto bene nella vita quotidiana e in molti problemi astrofisici: caduta dei corpi, orbite planetarie approssimate e stelle negli ammassi. È sufficiente quando le velocità sono molto inferiori a quella della luce, il campo è debole e la precisione richiesta non necessita di correzioni relativistiche.|Esta teoría funciona muy bien en la vida cotidiana y en muchos problemas astrofísicos: caída de cuerpos, órbitas planetarias aproximadas y estrellas en cúmulos. Es suficiente cuando las velocidades son mucho menores que la de la luz, el campo es débil y la precisión requerida no exige correcciones relativistas.
 21|L’IDEA DA RICORDARE|LA IDEA QUE DEBES RECORDAR
 22|Lo spazio è separato.|El espacio está separado.
@@ -29,7 +29,7 @@ export const rows=`0|LE IDEE ESSENZIALI|LAS IDEAS ESENCIALES
 29|Vicino all’orizzonte degli eventi la legge di Newton non descrive tutto. Bisogna spiegare i raggi luminosi curvi, i diversi tempi propri misurati dagli orologi e l’orizzonte stesso. Lontano dal buco nero, l’approssimazione newtoniana può tornare sufficiente.|Cerca del horizonte de sucesos la ley de Newton ya no lo describe todo. Hay que explicar las trayectorias curvas de la luz, los distintos tiempos propios medidos por los relojes y el propio horizonte. Lejos del agujero negro, la aproximación newtoniana puede volver a ser suficiente.
 30|Qui la luce del lato lontano del disco si incurva attorno al buco nero e ci raggiunge. Parti del disco appaiono quindi sopra e sotto di esso. Questa è la|Aquí la luz del lado lejano del disco se curva alrededor del agujero negro y nos alcanza. Por eso partes del disco aparecen por encima y por debajo de él. Esto es la
 31|lente gravitazionale|lente gravitacional
-32|Visualizzazione usata nella lezione.|Visualización utilizada en la conferencia.
+32|Illustrazione dell’effetto di lente gravitazionale.|Ilustración del efecto de lente gravitacional.
 34|EINSTEIN · LA GRAVITÀ COME GEOMETRIA|EINSTEIN · LA GRAVEDAD COMO GEOMETRÍA
 35|Entra in scena la|Entra en escena la
 36|relatività|relatividad
@@ -55,7 +55,7 @@ export const rows=`0|LE IDEE ESSENZIALI|LAS IDEAS ESENCIALES
 56|Linea di universo|Línea de universo
 57|La storia completa della posizione di un corpo nel tempo. Ogni punto è un evento: il corpo era in un certo luogo a un certo istante. Anche da fermo, la tua linea di universo continua nel tempo.|La historia completa de la posición de un cuerpo a lo largo del tiempo. Cada punto es un suceso: el cuerpo estaba en un lugar en un instante. Incluso en reposo, tu línea de universo continúa en el tiempo.
 58|Ogni corpo ha una linea di universo. È una geodetica solo nelle opportune condizioni di moto libero.|Todo cuerpo tiene una línea de universo. Es geodésica solo bajo las condiciones adecuadas de movimiento libre.
-59|Linea di universo di tipo luce|Línea de universo de tipo luz
+59|Linea di universo di tipo luce (geodetica nulla)|Línea de universo de tipo luz (geodésica nula)
 60|Il percorso della luce nello spaziotempo. Nel vuoto, nell’approssimazione dell’ottica geometrica, la luce segue una geodetica nulla: il suo intervallo spaziotemporale è zero. La curvatura devia il percorso luminoso producendo lenti gravitazionali.|La trayectoria de la luz en el espacio-tiempo. En el vacío, en la aproximación de óptica geométrica, la luz sigue una geodésica nula: su intervalo espacio-temporal es cero. La curvatura desvía la trayectoria luminosa y produce lentes gravitacionales.
 61|Localmente la luce nel vuoto viaggia a c. Intervallo nullo non significa distanza spaziale nulla.|Localmente la luz en el vacío viaja a c. Un intervalo nulo no significa una distancia espacial nula.
 62|luce|luz

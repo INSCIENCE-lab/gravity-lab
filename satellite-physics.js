@@ -20,6 +20,23 @@ export function orbitalElements([x,y,vx,vy]){
  return {speed, energy, eccentricity, perigee, apogee};
 }
 
+// For tangential initial velocity the start is an apsis. The sign of e
+// places the focus on the correct side when starting at apogee.
+export function referenceEllipse(initialState){
+ const [x,y,vx,vy]=initialState;
+ const r=Math.hypot(x,y), speed=Math.hypot(vx,vy);
+ const signedEccentricity=r*speed**2/mu-1;
+ if(Math.abs(signedEccentricity)>=1)return [];
+ const a=r/(1-signedEccentricity);
+ const b=a*Math.sqrt(1-signedEccentricity**2);
+ const phase=Math.atan2(y,x), c=Math.cos(phase), s=Math.sin(phase);
+ return Array.from({length:257},(_,index)=>{
+  const anomaly=2*Math.PI*index/256;
+  const u=a*(Math.cos(anomaly)-signedEccentricity), v=b*Math.sin(anomaly);
+  return [u*c-v*s,u*s+v*c];
+ });
+}
+
 export function orbitalReadout(state){
  const orbit=orbitalElements(state);
  return {altitude:(Math.hypot(state[0],state[1])-radius)/1000,speed:orbit.speed/1000,perigee:orbit.perigee/1000,apogee:orbit.apogee===null?null:orbit.apogee/1000};

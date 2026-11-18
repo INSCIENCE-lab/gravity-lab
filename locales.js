@@ -1,11 +1,11 @@
 import {ukrainianText} from './uk-display.js';
 import {renderMathText,updateMathElement} from './assets/math.js?v=audit2';
-import {englishPhrases} from './romance-source.js?v=palette2';
-import {rows as basics} from './romance-theory.js?v=uk-copy1';
-import {rows as relativity} from './romance-relativity.js?v=fullaudit2';
+import {englishPhrases} from './romance-source.js?v=editorial1';
+import {rows as basics} from './romance-theory.js?v=editorial1';
+import {rows as relativity} from './romance-relativity.js?v=editorial1';
 import {rows as clocks} from './romance-clocks.js?v=fullaudit2';
 import {rows as ui} from './romance-ui.js?v=fullaudit2';
-import {rows as extra} from './romance-extra.js?v=orbit3d2';
+import {rows as extra} from './romance-extra.js?v=editorial1';
 import {rows as runtime} from './romance-runtime.js?v=fullaudit2';
 import {rows as notes} from './romance-notes.js?v=palette2';
 import {phrases as runtimePhrases} from './romance-runtime-source.js?v=fullaudit2';

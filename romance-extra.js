@@ -28,7 +28,7 @@ units|unità|unidades
 rest-mass centroid|centro pesato con masse a riposo|centro ponderado por masas en reposo
 at dxᵢ = 0|per dxᵢ = 0|para dxᵢ = 0
 On planet Earth|Sul pianeta Terra|En el planeta Tierra
-Getting to know gravitational force, weight and free fall|Conosciamo forza gravitazionale, peso e caduta libera|Conocemos la fuerza gravitatoria, el peso y la caída libre
+Compare gravitational force and weight on a support and in free fall|Conosciamo forza gravitazionale, peso e caduta libera|Conocemos la fuerza gravitatoria, el peso y la caída libre
 Object|Oggetto|Objeto
 Object mass|Massa dell’oggetto|Masa del objeto
 Initial height above surface|Altezza iniziale sulla superficie|Altura inicial sobre la superficie
@@ -56,7 +56,7 @@ What happens to spacetime in a two-body system?|Che cosa accade allo spaziotempo
 Precession & approximation limits|Precessione e limiti dell’approssimazione|Precesión y límites de la aproximación
 Speed / Newtonian circular|Velocità / circolare newtoniana|Velocidad / circular newtoniana
 Orbit inclination|Inclinazione dell’orbita|Inclinación de la órbita
-Black-hole orbit|Orbita attorno a un buco nero|Órbita alrededor de un agujero negro
+Orbit around a black hole|Orbita attorno a un buco nero|Órbita alrededor de un agujero negro
 Timelike geodesics|Geodetiche di tipo tempo|Geodésicas de tipo tiempo
 Grid scale|Scala della griglia|Escala de la cuadrícula
 Automatic · in r_g|Automatico · in r_g|Automática · en r_g
@@ -141,7 +141,7 @@ stationary|statico|estático
 observer|osservatore|observador
 years|anni|años
 yr|anni|años
-Launching at an angle to the horizontal|Lancio obliquo|Lanzamiento oblicuo
+Projectile motion at an angle|Lancio obliquo|Lanzamiento oblicuo
 How do launch speed, angle and height determine the flight?|Come determinano il volo la velocità iniziale, l’angolo e l’altezza?|¿Cómo determinan el vuelo la velocidad inicial, el ángulo y la altura?
 NEWTON · UNIFORM FIELD|NEWTON · CAMPO UNIFORME|NEWTON · CAMPO UNIFORME
 Here k|Qui k|Aquí k

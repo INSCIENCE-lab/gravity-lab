@@ -162,3 +162,6 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
 .sat-theory table{width:100%;border-collapse:collapse;margin-top:.8rem}
 .sat-theory caption{text-align:left;padding:.5rem 0}
 .sat-theory th,.sat-theory td{text-align:left;padding:.25rem .65rem;border-bottom:1px solid #26384c}
+
+.sat-fit{display:flex;align-items:center;gap:.45rem;margin:.7rem 0}
+.sat-fit input{accent-color:#dae94d}
