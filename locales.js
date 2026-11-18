@@ -1,10 +1,11 @@
+import {ukrainianText} from './uk-display.js';
 import {renderMathText,updateMathElement} from './assets/math.js?v=audit2';
 import {englishPhrases} from './romance-source.js?v=palette2';
-import {rows as basics} from './romance-theory.js?v=fullaudit2';
+import {rows as basics} from './romance-theory.js?v=uk-copy1';
 import {rows as relativity} from './romance-relativity.js?v=fullaudit2';
 import {rows as clocks} from './romance-clocks.js?v=fullaudit2';
 import {rows as ui} from './romance-ui.js?v=fullaudit2';
-import {rows as extra} from './romance-extra.js?v=fullaudit2';
+import {rows as extra} from './romance-extra.js?v=uk-copy1';
 import {rows as runtime} from './romance-runtime.js?v=fullaudit2';
 import {rows as notes} from './romance-notes.js?v=palette2';
 import {phrases as runtimePhrases} from './romance-runtime-source.js?v=fullaudit2';
@@ -23,7 +24,7 @@ for(const line of extra.split('\n')){const [en,it,es]=line.split('|');if(it===un
 for(const table of Object.values(tables))for(const [key,value] of [...table])if(key.length>3)table.set(key.toUpperCase(),value.toUpperCase());
 const escapeRE=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 const pattern=new RegExp('(?<![\\p{L}\\p{N}_])(?:'+[...tables.it.keys()].sort((a,b)=>b.length-a.length).map(escapeRE).join('|')+')(?![\\p{L}_])','gu');
-export const translate=value=>tables[selected]?(tables[selected].get(String(value))??String(value).replace(pattern,key=>tables[selected].get(key))):String(value);
+export const translate=value=>selected==='uk'?ukrainianText(String(value)):tables[selected]?(tables[selected].get(String(value))??String(value).replace(pattern,key=>tables[selected].get(key))):String(value);
 const originals=new WeakMap(),attributes=new WeakMap();
 function text(node){if(node.parentElement?.closest('[data-math-source],[data-brand-managed],[data-inscience-home],textarea,script,style,math,[data-projectile],[data-lang],#sourceList a'))return;const prior=originals.get(node),value=node.nodeValue,source=prior&&prior.output===value?prior.source:value,output=translate(source);originals.set(node,{source,output});renderMathText(node,source,output);}
 function element(el){if(el.hasAttribute('data-math-source')){updateMathElement(el,translate(el.dataset.mathSource));return;}if(el.closest('[data-math-source],[data-brand-managed],[data-inscience-home],script,style,math,[data-projectile]'))return;let record=attributes.get(el);if(!record){record={};attributes.set(el,record)}for(const key of ['aria-label','title','placeholder','alt','aria-valuetext']){if(!el.hasAttribute(key))continue;const prior=record[key],value=el.getAttribute(key),source=prior&&prior.output===value?prior.source:value,output=translate(source);record[key]={source,output};if(value!==output)el.setAttribute(key,output)}if(el.matches('a[href]')){const raw=el.getAttribute('href');if(raw.includes('lang=')){const url=new URL(raw,location.href);if(url.origin===location.origin&&url.searchParams.get('lang')!==selected){url.searchParams.set('lang',selected);el.setAttribute('href',url.href)}}}}

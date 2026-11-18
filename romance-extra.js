@@ -22,8 +22,8 @@ Reduce speed to 0.8 circular; tilt the orbital plane. Record (x, y, z, t).|Riduc
 Skip to laboratory / До лабораторії|Vai al laboratorio|Ir al laboratorio
 Навігація / Navigation|Navigazione|Navegación
 Контакти / Contact|Contatti|Contacto
-TRY / ПЕРЕВІР|PROVA|COMPRUEBA
-THE SCIENCE / ФІЗИКА|LA FISICA|LA FÍSICA
+TRY|PROVA|COMPRUEBA
+THE SCIENCE|LA FISICA|LA FÍSICA
 units|unità|unidades
 rest-mass centroid|centro pesato con masse a riposo|centro ponderado por masas en reposo
 at dxᵢ = 0|per dxᵢ = 0|para dxᵢ = 0

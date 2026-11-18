@@ -1,4 +1,5 @@
-import {getLocale,getLanguage} from './locales.js?v=fullaudit3';
+import {dayWord, scientificNumber} from './uk-display.js';
+import {getLocale,getLanguage} from './locales.js?v=uk-copy1';
 import {AU,DAY} from './physics.js?v=fullaudit2';
 
 const L=(lang,uk,en)=>lang==='uk'?uk:en;
@@ -14,18 +15,18 @@ export function timeDifference(seconds,lang){
  const magnitude=Math.abs(seconds);
  const [factor,unit]=magnitude>0&&magnitude<1e-6?[1e9,L(lang,'нс','ns')]:magnitude>0&&magnitude<.001?[1e6,L(lang,'мкс','μs')]:magnitude>0&&magnitude<1?[1000,L(lang,'мс','ms')]:[1,L(lang,'с','s')];
  const value=seconds*factor;
- return (value!==0&&Math.abs(value)<.000001?value.toExponential(3):number(value,lang,6))+' '+unit;
+ return (value!==0&&Math.abs(value)<.000001?scientificNumber(value,3,getLocale()):number(value,lang,6))+' '+unit;
 }
 function distance(m,lang){
  const unit=Math.abs(m)>=AU?AU:1000;
  const value=m/unit;
- return (value!==0&&Math.abs(value)<.000001?value.toExponential(3):number(value,lang,6))+' '+L(lang,unit===AU?'а. о.':'км',unit===AU?'AU':'km');
+ return (value!==0&&Math.abs(value)<.000001?scientificNumber(value,3,getLocale()):number(value,lang,6))+' '+L(lang,unit===AU?'а. о.':'км',unit===AU?'AU':'km');
 }
 function elapsed(seconds,lang){
  return Math.abs(seconds)<.001?timeDifference(seconds,lang):number(seconds,lang,6)+' '+L(lang,'с','s');
 }
 function reason(row,lang){
- const reasons={insideBody:['Годинник усередині тіла: зовнішня метрика тут не застосовується.','Clock inside the body: the exterior metric does not apply here.'],insideHorizon:['Нерухомий годинник на горизонті або всередині нього неможливий.','A stationary clock at or inside the horizon is impossible.'],unstableOrbit:['Стабільна кругова орбіта тут неможлива: потрібно r ≥ 3r_s.','No stable circular orbit here: r ≥ 3r_s is required.']};
+ const reasons={insideBody:['Годинник усередині тіла: зовнішня метрика тут не застосовується.','Clock inside the body: the exterior metric does not apply here.'],insideHorizon:['Нерухомий годинник на горизонті або всередині нього неможливий.','A stationary clock at or inside the horizon is impossible.'],unstableOrbit:['Стійка колова орбіта тут неможлива: потрібно r ≥ 3r_s.','No stable circular orbit here: r ≥ 3r_s is required.']};
  const text=reasons[row.reason]||['Цей годинник недоступний.','This clock is unavailable.'];return L(lang,...text);
 }
 
@@ -72,13 +73,13 @@ function dial(row,lang){
 }
 
 export function dashboardHTML(rows,lang,T=rows.find(row=>row.reference_s)?.reference_s||DAY){
- const days=T/DAY,dayWord=lang==='en'?(days===1?'day':'days'):days%10===1&&days%100!==11?'доба':[2,3,4].includes(days%10)&&![12,13,14].includes(days%100)?'доби':'діб';
- return `<div class="clock-dashboard-heading"><span class="clock-eyebrow">${L(lang,'ОДИН ЕТАЛОН · ЧОТИРИ ГОДИННИКИ','ONE REFERENCE · FOUR CLOCKS')}</span><h3>${L(lang,'Скільки часу мине тут?','How much time passes here?')}</h3><p>${L(lang,'Еталонний інтервал','Reference interval')}: <strong>T = ${number(days,lang)} ${dayWord} = ${number(T,lang)} ${L(lang,'с','s')}</strong>. ${L(lang,'Еталон розташований далеко від кожного об’єкта.','The reference is far from each object.')}</p></div>
+ const days=T/DAY;
+ return `<div class="clock-dashboard-heading"><span class="clock-eyebrow">${L(lang,'ОДИН ЕТАЛОН · ЧОТИРИ ГОДИННИКИ','ONE REFERENCE · FOUR CLOCKS')}</span><h3>${L(lang,'Скільки часу мине тут?','How much time passes here?')}</h3><p>${L(lang,'Еталонний інтервал','Reference interval')}: <strong>T = ${number(days,lang)} ${dayWord(days,lang,6,true)} = ${number(T,lang)} ${L(lang,'с','s')}</strong>. ${L(lang,'Еталон розташований далеко від кожного об’єкта.','The reference is far from each object.')}</p></div>
  <div class="clock-hand-key"><span><i class="reference-key"></i>${L(lang,'сірий пунктир — еталон','grey dashed hand — reference')}</span><span><i class="local-key"></i>${L(lang,'кольорова — місцевий годинник','coloured hand — local clock')}</span></div>
  <p class="clock-help">${L(lang,'Натисни «Почати дослід»: один оберт еталона — 10 секунд демонстрації. Числа нижче — результат за весь обраний інтервал T. Для Землі та Сонця дивись насамперед числове відставання.','Select “Start experiment”: one reference revolution represents 10 demonstration seconds. Numbers below give the result for the full selected interval T. For Earth and the Sun, focus on the numerical deficit.')}</p>
  <div class="clock-card-grid">${rows.map(row=>{
  const profile=clockProfile(row),source=L(lang,row.height_reference==='surface'?'Поверхня':'Горизонт подій',row.height_reference==='surface'?'Surface':'Event horizon');
- return `<article class="clock-card" style="--body-color:${row.color}"><header><h4>${esc(row.label)}</h4><span>${source}</span></header><div class="clock-rate-row">${dial(row,lang)}<div><span>${L(lang,'Темп місцевого часу','Local clock rate')}</span><strong>dτ/dt = ${row.valid?number(row.rate,lang,12):'—'}</strong><small>${L(lang,row.observer==='static'?'Нерухомий годинник':'На круговій орбіті',row.observer==='static'?'Stationary clock':'Circular orbit')}</small></div></div>
+ return `<article class="clock-card" style="--body-color:${row.color}"><header><h4>${esc(row.label)}</h4><span>${source}</span></header><div class="clock-rate-row">${dial(row,lang)}<div><span>${L(lang,'Темп місцевого часу','Local clock rate')}</span><strong>dτ/dt = ${row.valid?number(row.rate,lang,12):'—'}</strong><small>${L(lang,row.observer==='static'?'Нерухомий годинник':'На коловій орбіті',row.observer==='static'?'Stationary clock':'Circular orbit')}</small></div></div>
  <div class="clock-reading"><span>${L(lang,'Тут минуло, τ','Time elapsed here, τ')}</span><strong>${row.valid?'≈ '+elapsed(row.proper_s,lang):'—'}</strong></div>
  <div class="clock-deficit"><span>${L(lang,'Відставання від еталона, T − τ','Behind the reference, T − τ')}</span><strong>${row.valid?'≈ '+timeDifference(row.lost_s,lang):'—'}</strong></div>
  ${!row.valid?`<p class="clock-warning">${reason(row,lang)}</p>`:''}
