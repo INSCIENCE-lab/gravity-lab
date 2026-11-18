@@ -2,7 +2,7 @@ import {dayWord, scientificNumber, journalLabel, unitLabel} from './uk-display.j
 import {mountProjectile} from './projectile.js?v=uk-copy1';
 import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=uk-copy1';
 import {binaryGridReference} from './binary-grid.js?v=palette2';
-import {geometryLearning} from './geometry-learning.js?v=uk-copy1';
+import {geometryLearning} from './geometry-learning.js?v=uk-copy2';
 import {drawSurfaceLocal} from './surface-scene.js?v=fullaudit3';
 import {AnimationLoop} from './animation-loop.js?v=palette2';
 import {introduction} from './introduction.js?v=palette2';
