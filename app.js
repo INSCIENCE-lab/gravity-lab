@@ -1,6 +1,7 @@
+import {orbitVelocityHelp} from './orbit-velocity-help.js';
 import {dayWord, scientificNumber, journalLabel, unitLabel} from './uk-display.js';
 import {mountProjectile} from './projectile.js?v=uk-copy1';
-import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=uk-copy1';
+import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=earth-orbit1';
 import {binaryGridReference} from './binary-grid.js?v=palette2';
 import {geometryLearning} from './geometry-learning.js?v=uk-copy2';
 import {drawSurfaceLocal} from './surface-scene.js?v=fullaudit3';
@@ -8,12 +9,12 @@ import {AnimationLoop} from './animation-loop.js?v=palette2';
 import {introduction} from './introduction.js?v=palette2';
 import {schwarzReference,lensReference} from './black-hole-guide.js?v=uk-copy1';
 import {G,C,AU,DAY,MSUN,earth,planets,clockBodies,surface,jump,clock,clockAtHeight,clockReference,Binary,Schwarzschild,traceRay,rg,rs,rk4,norm,sampleRay,stepSurfaceFall} from './physics.js?v=fullaudit2';
-import {experiments,defaultParams,clockHeights,ui,tr} from './config.js?v=uk-copy1';
+import {experiments,defaultParams,clockHeights,ui,tr} from './config.js?v=earth-orbit1';
 import {theory,sources} from './theory.js?v=uk-copy1';
-import {Scene} from './scene.js?v=fullaudit3';
+import {Scene} from './scene.js?v=earth-orbit1';
 import {schwarzField,weakField,orbitPlane} from './geometry.js?v=palette2';
 import {drawSchwarzGeometry,drawBinaryGeometry} from './geometry-scene.js?v=fullaudit3';
-import {dashboardHTML,updateClockHands} from './clock-dashboard.js?v=uk-copy1';
+import {dashboardHTML,updateClockHands} from './clock-dashboard.js?v=earth-orbit1';
 import {drawCube} from './cube-scene.js?v=fullaudit3';
 import {cubeProbeValues} from './cube-physics.js?v=fullaudit2';
 import {startDiskRender} from './disk-task.js?v=palette2';
@@ -87,7 +88,9 @@ function nav(){pageNavigation();const active=experiments[current].category;for(c
 function controls(){
  $('params').innerHTML=experiments[current].params.filter(q=>!q.gridOnly||['cube','geometry'].includes(view)).filter(q=>!q.disk||view==='disk').filter(q=>current!=='clocks'||(q.key!=='ratio'||p.mode==='scaled')&&(q.key!=='distance'||p.mode==='absolute')&&(q.key!=='heightPreset'||p.mode==='height')).map(q=>{
  let input;if(q.type==='select'||q.type==='planet'){const opts=q.type==='planet'?planets.map(b=>[b.id,b.uk,b.en]):q.options;input=`<select id="p-${q.key}" data-key="${q.key}">${opts.map(o=>`<option value="${o[0]}" ${String(p[q.key])===o[0]?'selected':''}>${o[lang==='uk'?1:2]}</option>`).join('')}</select>`;}else input=`<input id="p-${q.key}" data-key="${q.key}" type="${q.type}" min="${q.min}" max="${q.max}" step="${q.step}" value="${p[q.key]}" aria-valuetext="${nf(p[q.key],6)} ${unitLabel(q.units,lang)}">${q.type==='range'?`<div class="extents"><span>${nf(q.min,6)} ${unitLabel(q.units,lang)}</span><span>${nf(q.max,6)} ${unitLabel(q.units,lang)}</span></div>`:''}`;
- return `<div class="parameter"><div class="param-head"><label for="p-${q.key}">${tr(q.labels,lang)}</label><output id="o-${q.key}">${q.type==='range'?nf(p[q.key],3)+' '+unitLabel(q.units,lang):unitLabel(q.units,lang)}</output></div>${input}</div>`;
+ const hint=current==='schwarzschild'?orbitVelocityHelp[getLanguage()]?.[q.key]:null;
+ if(hint)input=input.replace('<input ',`<input aria-describedby="hint-${q.key}" `);
+ return `<div class="parameter"><div class="param-head"><label for="p-${q.key}">${tr(q.labels,lang)}</label><output id="o-${q.key}">${q.type==='range'?nf(p[q.key],3)+' '+unitLabel(q.units,lang):unitLabel(q.units,lang)}</output></div>${input}${hint?`<p id="hint-${q.key}" class="small muted">${hint}</p>`:''}</div>`;
  }).join('');$('renderBtn').hidden=view!=='disk';$('seriesBtn').title=T(current==='clocks'&&p.mode==='height'?'heightSeriesNote':'seriesNote');
 }
 function viewTabs(){if(current==='projectile')return;const views=current==='lens'?['cube','geometry','scene','worldline']:current==='schwarzschild'?['cube','geometry','scene','worldline','disk']:current==='pn'?['cube','geometry','scene','worldline']:current==='clocks'?['geometry']:current==='surface'?['scene','planet','worldline']:['scene','worldline'];if(!views.includes(view))view=views[0];$('diskInfo').hidden=view!=='disk';$('viewTabs').innerHTML=views.map(v=>`<button data-view="${v}" class="${view===v?'active':''}" aria-pressed="${view===v}">${current==='clocks'?(lang==='uk'?'Порівняння часу · 2D':'Time comparison · 2D'):current==='surface'&&v==='scene'?T('surfaceLocal'):T(v)}</button>`).join('');$('scene').dataset.view=view;$('scene').dataset.experiment=current;$('scene').hidden=view==='disk';$('diskCanvas').hidden=view!=='disk';$('renderBtn').hidden=view!=='disk';$('cameraReset').parentElement.hidden=view==='disk'||view==='worldline'||current==='clocks';$('sceneWrap').hidden=current==='clocks';$('clockDashboard').hidden=current!=='clocks';$('clockDashboard').setAttribute('aria-label',lang==='uk'?'Порівняння годинників':'Clock comparison');}
@@ -160,7 +163,7 @@ function draw(s=snapshot()){if(current==='projectile')return;if(current==='clock
  if(current==='binary'||current==='pn')scene.drawWorldline(model.history.map(h=>({t:h.t,x:h.positions[0][0]})),model.length,model.time,lang);else if(current==='schwarzschild')scene.drawWorldline(model.history.map(h=>({t:h.t,x:h.position[0]})),model.length,model.time,lang);else if(current==='lens'){const sample=sampleRay(ray,time),points=ray.path.map((v,i)=>({t:ray.pathTimes[i],x:v[0],a:ray.pathAffine[i]})).filter(v=>v.a<=sample.affine);points.push({t:sample.time_rg,x:sample.position[0]});scene.drawWorldline(points,rg(p.mass*MSUN),rg(p.mass*MSUN)/C,lang);}else scene.drawWorldline(history.map(h=>({t:h.t,x:current==='surface'?h.h:h.x})),1,1,lang,current==='surface'?'h':'z');return;
  }if(current==='surface'){if(view==='planet')scene.drawSurface(p,s,lang);else drawSurfaceLocal(scene,p,s,lang);}if(current==='binary'||current==='pn')scene.drawBinary(model,lang);if(current==='schwarzschild')scene.drawSchwarz(model,view==='embedding',lang);if(current==='lens')scene.drawLens(ray,otherRays,time,lang);if(current==='jump')scene.drawJump(p,time,lang);}
 function surfaceReadout(){
- $('surfaceGuide').hidden=current!=='surface';if(current!=='surface')return;
+ $('earthPhotoCredit').hidden=current!=='surface'||view!=='planet';$('surfaceGuide').hidden=current!=='surface';if(current!=='surface')return;
  $('surfaceState').textContent=T(p.support==='supported'?'surfaceSupported':p.height===0?'groundStart':done?'impact':running||time>0?'surfaceInFlight':'surfaceFall');
 }
 
