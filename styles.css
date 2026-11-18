@@ -126,3 +126,5 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
  .chart-panel{overflow-x:auto;max-width:100%;min-width:0}
  #journalChart{min-width:600px}
 }
+
+.clock-card h4 .clock-black-hole{display:inline-block;width:.9em;height:.9em;margin-inline-end:.4em;vertical-align:-.08em;border-radius:50%;background:#000;border:1px solid #74869a}

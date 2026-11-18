@@ -63,8 +63,13 @@ function drawGeodesicCube(scene,{spec,extent,unit,probe,options,objects=[],track
   scene.sphere(selected.start,3,'#49e8ff');
  }
  if(spec.kind==='schwarzschild'){
-  const radius=Math.max(spec.rs,spec.bodyRadius||0);
-  if(radius<extent*1.65){wireSphere(scene,[0,0,0],radius,'#ddae858e');scene.label(spec.bodyRadius>spec.rs?L(lang,'Поверхня тіла','Body surface'):L(lang,'Горизонт','Horizon'),[0,0,radius],'#d7b395',-18);}
+  const hasSurface=spec.bodyRadius>spec.rs;
+  const radius=hasSurface?spec.bodyRadius:spec.rs;
+  if(radius<extent*1.65){
+   if(hasSurface)wireSphere(scene,[0,0,0],radius,'#ddae858e');
+   else scene.blackHole([0,0,0],radius);
+   scene.label(hasSurface?L(lang,'Поверхня тіла','Body surface'):L(lang,'Горизонт','Horizon'),[0,0,radius],'#d7b395',-18);
+  }
  }
  for(const o of objects){if(visible(o.position,extent,false)){scene.sphere(o.position,o.size||8,o.color,true);scene.label(o.label,o.position,o.color,-16);}}
  if(selectedPoint&&visible(selectedPoint,extent,false))scene.sphere(selectedPoint,4,'#f9e39e',true);
@@ -111,8 +116,11 @@ function drawDeformedCube(scene,{spec,extent,unit,probe,options,objects=[],track
  // with the current moving mass field: that makes old orbits wobble.
  for(const t of tracks){let segment=[];for(const p of t.points){if(visible(p,extent,false))segment.push(p);else{scene.path(segment,t.color,t.width||1.7);segment=[];}}scene.path(segment,t.color,t.width||1.7);}
  if(spec.kind==='schwarzschild'&&spec.rs<extent){
-  for(let axis=0;axis<3;axis++){const ij=[0,1,2].filter(k=>k!==axis),pts=Array.from({length:65},(_,j)=>{const q=[0,0,0];q[ij[0]]=spec.rs*Math.cos(j*Math.PI/32);q[ij[1]]=spec.rs*Math.sin(j*Math.PI/32);return q;});scene.path(pts,'#e0b089',1.1);}
-  scene.sphere([0,0,0],5,'#dbeaf1',true);scene.label(L(lang,'Чорна діра','Black hole'),[0,0,0],'#c4d7e6',-40);
+  if(spec.bodyRadius>spec.rs)wireSphere(scene,[0,0,0],spec.bodyRadius,'#e0b089');
+  else {
+   scene.blackHole([0,0,0],spec.rs);
+   scene.label(L(lang,'Чорна діра','Black hole'),[0,0,spec.rs],'#c4d7e6',-18);
+  }
  }
  for(const o of objects)if(visible(o.position,extent,false)){scene.sphere(o.position,o.size||8,o.color,true);scene.label(o.label,o.position,o.color,-16);}
  if(selectedPoint&&visible(selectedPoint,extent,false))scene.sphere(selectedPoint,4,'#f9e39e',true);

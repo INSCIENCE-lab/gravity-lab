@@ -37,6 +37,7 @@ export function drawSchwarzGeometry(scene,{mass,unit,outer,model=null,ray=null,o
   scene.text(L(lang,'Натисни «Підібрати масштаб».','Select “Fit scale”.'),scene.W/2,scene.H*.45+25,'#9bb6c2',12,'center');return;
  }
  const z=R=>flammHeight(R,s,outer),map=p=>{const R=norm(p)*factor;return[p[0]*factor,p[1]*factor,z(R)];};
+ scene.blackHole([0,0,z(s)],s);
  if(s<outer)scene.text(L(lang,'Горизонт: ','Horizon: ')+'r_s = '+short(s*unit/1000)+' km',18,55,'#d8a788',10);
  for(const [r,color,label] of [[3,'#d9a17a','3r_g'],[6,'#abb5d8','ISCO · 6r_g']])if(r*factor<outer){ring(scene,r*factor,z(r*factor),color+'99',1.1);scene.text(label,18,r===3?74:92,color,10);}
  if(model){
