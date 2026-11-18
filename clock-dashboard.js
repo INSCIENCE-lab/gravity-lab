@@ -1,5 +1,5 @@
 import {dayWord, scientificNumber} from './uk-display.js';
-import {getLocale,getLanguage} from './locales.js?v=orbit3d1';
+import {getLocale,getLanguage} from './locales.js?v=orbit3d2';
 import {AU,DAY} from './physics.js?v=fullaudit2';
 
 const L=(lang,uk,en)=>lang==='uk'?uk:en;

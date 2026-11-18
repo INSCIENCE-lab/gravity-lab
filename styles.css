@@ -148,7 +148,7 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
 .sat-media canvas{display:block;width:100%;height:auto;aspect-ratio:4/3;background:#080e1c;border:1px solid #29394d;border-radius:12px;touch-action:none;cursor:grab}
 .sat-media canvas:active{cursor:grabbing}
 .sat-control{grid-template-columns:minmax(0,1fr) minmax(65px,82px)}
-.sat-control input.sat-number{grid-column:2;grid-row:1;width:100%;padding:.4rem .35rem;font-size:1rem}
+.sat-control input.sat-number{grid-column:2;grid-row:1;width:100%;padding:.4rem .45rem;font-size:1rem;background:#0b1424;color:#e8edaa;border:1px solid #35465a;border-radius:7px;text-align:right;font-variant-numeric:tabular-nums}
 .sat-control input[type=range]{grid-row:2}
 .sat-settings select{width:100%;margin:.45rem 0 .65rem}
 .sat-camera{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;margin-top:.65rem}

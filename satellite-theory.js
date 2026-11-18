@@ -1,4 +1,4 @@
-import {atmosphereTable} from './satellite-physics.js?v=orbit3d1';
+import {atmosphereTable} from './satellite-physics.js?v=orbit3d2';
 
 const modules = [
  {math:'r₀ = R⊕ + h₀    |    μ = GM⊕    |    aᵍ = −μ r⃗ / r³',
@@ -33,6 +33,12 @@ const modules = [
   es:['Qué representa el modelo','El satélite parte a la altitud elegida. El ascenso del cohete, el empuje y la rotación atmosférica quedan fuera del modelo. La Tierra es esférica y la densidad solo depende de la altitud. El movimiento plano se orienta en el espacio.','Se integra con Runge–Kutta de cuarto orden durante seis horas y se detiene al bajar a 100 km. La cámara recorta la trayectoria de escape, pero el tiempo y los datos siguen evolucionando.']},
 ];
 
+const dragExample={
+ uk:'Оціни різницю. За швидкості 7,7 км/с, маси 100 кг та площі 1 м² прискорення від опору на висоті 200 км становить приблизно 1,7 × 10⁻⁴ м/с², а на 400 км — 1,8 × 10⁻⁶ м/с². Це приблизно у 90 разів менше. Порівняй зміну висоти перигею за шість годин для цих двох висот. Практичний критерій залежить від мети: враховуй опір, якщо зміна перевищує потрібну точність за час спостереження.',
+ en:'Estimate the difference. At 7.7 km/s, with a mass of 100 kg and a cross-section of 1 m², drag acceleration is about 1.7 × 10⁻⁴ m/s² at 200 km and 1.8 × 10⁻⁶ m/s² at 400 km. It is about 90 times smaller. At these two heights, compare the change in perigee over six hours. Include drag whenever its effect over the time you are studying exceeds the accuracy you need.',
+ it:'Stima la differenza. A 7,7 km/s, con una massa di 100 kg e una sezione di 1 m², l’accelerazione dovuta alla resistenza è circa 1,7 × 10⁻⁴ m/s² a 200 km e 1,8 × 10⁻⁶ m/s² a 400 km. È circa 90 volte più piccola. Confronta la variazione del perigeo in sei ore alle due quote. Tieni conto della resistenza quando il suo effetto nel tempo considerato supera la precisione richiesta.',
+ es:'Estima la diferencia. A 7,7 km/s, con una masa de 100 kg y una sección de 1 m², la aceleración debida al arrastre es de unos 1,7 × 10⁻⁴ m/s² a 200 km y de 1,8 × 10⁻⁶ m/s² a 400 km. Es unas 90 veces menor. Compara el cambio de perigeo en seis horas a estas dos altitudes. Incluye el arrastre cuando su efecto en el período estudiado supere la precisión que necesitas.'
+};
 const headers={
  uk:['Теорія та розрахунки','Геометрична висота, км','Густина, кг/м³','Джерела'],
  en:['Theory and calculations','Geometric altitude, km','Density, kg/m³','Sources'],
@@ -41,6 +47,7 @@ const headers={
 };
 const exponent='⁻⁰¹²³⁴⁵⁶⁷⁸⁹';
 export function densityText(value,locale){
+ if(!value)return "0";
  const [m,e]=value.toExponential(4).split('e');
  return Number(m).toLocaleString(locale,{maximumFractionDigits:4})+' × 10'+String(Number(e)).replace(/[-0-9]/g,c=>exponent['-0123456789'.indexOf(c)]);
 }
@@ -51,7 +58,7 @@ export function satelliteTheory(lang){
  return `<section class="black-hole-guide sat-theory" id="satelliteTheory"><h3>${title}</h3>${modules.map(({math,...body},i)=>{
   const [heading,intro,detail]=body[lang];
   const units=lang==='uk'?math.replace('4 s','4 с'):math;
-  return `<article><h4>${heading}</h4><p>${intro}</p><div class="sat-formula">${units.replaceAll('<','&lt;')}</div><p>${detail}</p>${i===4?table:''}</article>`;
+  return `<article><h4>${heading}</h4><p>${intro}</p><div class="sat-formula">${units.replaceAll('<','&lt;')}</div><p>${detail}</p>${i===4?table+'<p>'+dragExample[lang]+'</p>':''}</article>`;
  }).join('')}<h4>${sources}</h4><ul>
  <li><a href="https://ntrs.nasa.gov/api/citations/20070022273/downloads/20070022273.pdf" target="_blank" rel="noopener">NASA-HDBK-1001, Table A-6-3 · U.S. Standard Atmosphere 1976</a></li>
  <li><a href="https://www.spaceweather.gov/impacts/satellite-drag" target="_blank" rel="noopener">NOAA Space Weather Prediction Center · Satellite Drag</a></li>

@@ -1,6 +1,6 @@
-import {atmosphericDensity,circularSpeed,initialOptions,orbitFrame,orbitalReadout,simulateSatellite} from './satellite-physics.js?v=orbit3d1';
-import {createOrbitView,defaultCamera} from './satellite-view.js?v=orbit3d1';
-import {densityText,satelliteTheory} from './satellite-theory.js?v=orbit3d1';
+import {atmosphericDensity,circularSpeed,initialOptions,orbitFrame,orbitalReadout,simulateSatellite} from './satellite-physics.js?v=orbit3d2';
+import {createOrbitView,defaultCamera} from './satellite-view.js?v=orbit3d2';
+import {densityText,satelliteTheory} from './satellite-theory.js?v=orbit3d2';
 
 const words={
  uk:['Початкові умови','Висота на старті, км','Дотична швидкість, км/с','Маса, кг','Площа перерізу, м²','Нахил орбіти i, °','Довгота висхідного вузла Ω, °',
@@ -32,7 +32,12 @@ export function mountSatellite(root,{language,query,onRecord,onJournal,onChange}
  let changed=0,renderPending=0;
  let camera=defaultCamera();
  const $=id=>root.querySelector('#sat-'+id);
- const fmt=(n,d=1)=>n===null?'—':n.toLocaleString(locales[language],{maximumFractionDigits:d});
+ const fmt=(n,d=1)=>n===null?'—':(Math.abs(n)<0.5*10**-d?0:n).toLocaleString(locales[language],{maximumFractionDigits:d});
+ const inputValue=n=>n.toLocaleString(locales[language],{useGrouping:false,maximumFractionDigits:3});
+ const parseInput=input=>{
+  const value=input.value.trim().replace(',','.');
+  return /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/.test(value)?Number(value):NaN;
+ };
  const notify=()=>onChange(params);
 
  function render(){
@@ -43,7 +48,7 @@ export function mountSatellite(root,{language,query,onRecord,onJournal,onChange}
   <div class="sat-camera"><label for="sat-zoom">${t.zoom}</label><input id="sat-zoom" type="range" min="1.12" max="12" step=".01" value="${camera.zoom}" aria-label="${t.zoom}"><button class="secondary" id="sat-camera">${t.camera}</button></div>
   <div id="sat-metrics" class="metrics"></div></div>
   <section class="sat-settings" aria-labelledby="sat-settings"><h3 id="sat-settings">${t.settings}</h3>
-  ${Object.entries(initialOptions).map(([key,[min,max,step]])=>`<div class="sat-control"><label for="sat-${key}">${t[key]}</label><input class="sat-number" type="number" id="sat-value-${key}" min="${min}" max="${max}" step="${step}" value="${params[key]}" aria-label="${t[key]}"><input type="range" id="sat-${key}" min="${min}" max="${max}" step="${step}" value="${params[key]}"></div>`).join('')}
+  ${Object.entries(initialOptions).map(([key,[min,max,step]])=>`<div class="sat-control"><label for="sat-${key}">${t[key]}</label><input class="sat-number" type="text" inputmode="decimal" id="sat-value-${key}" value="${inputValue(params[key])}" aria-label="${t[key]}"><input type="range" id="sat-${key}" min="${min}" max="${max}" step="${step}" value="${params[key]}"></div>`).join('')}
   <label for="sat-mode">${t.environment}</label><select id="sat-mode"><option value="standard">${t.standard}</option><option value="vacuum">${t.vacuum}</option></select>
   <button class="secondary" id="sat-circle">${t.circular}</button>
   <button class="secondary" id="sat-record">${t.record}</button><button class="secondary" id="sat-journal">${t.journal}</button></section></div>${satelliteTheory(language)}`;
@@ -51,18 +56,21 @@ export function mountSatellite(root,{language,query,onRecord,onJournal,onChange}
   viewer=createOrbitView($('view'),draw);
   for(const [key,[min,max]] of Object.entries(initialOptions)){
    const slider=$(key),number=$('value-'+key);
-   slider.oninput=()=>{number.value=slider.value;update(key,Number(slider.value));};
+   slider.oninput=()=>{const value=Number(slider.value);number.value=inputValue(value);update(key,value);};
    number.oninput=()=>{
-    const n=number.valueAsNumber;
-    if(Number.isFinite(n)&&n>=min&&n<=max){slider.value=n;update(key,n);}
+    const n=parseInput(number);
+    if(Number.isFinite(n)&&n>=min&&n<=max){slider.value=n;update(key,Number(slider.value));}
    };
    number.onchange=()=>{
-    const n=Number.isFinite(number.valueAsNumber)?clamp(number.valueAsNumber,min,max):params[key];
-    slider.value=n;number.value=n;update(key,n);
+    const n=parseInput(number);
+    slider.value=Number.isFinite(n)?clamp(n,min,max):params[key];
+    const value=Number(slider.value);
+    number.value=inputValue(value);update(key,value);
    };
+   number.onkeydown=e=>{if(e.key==='Enter'){number.onchange();number.blur();}};
   }
   $('mode').onchange=e=>update('atmosphere',e.target.value);
-  $('circle').onclick=()=>{const value=Number(circularSpeed(params.height).toFixed(3));$('speed').value=$('value-speed').value=value;update('speed',value);};
+  $('circle').onclick=()=>{const value=Number(circularSpeed(params.height).toFixed(3));$('speed').value=value;$('value-speed').value=inputValue(value);update('speed',value);};
   $('play').onclick=()=>{if(animation){pause();return;}if(position>=run.time)position=0;animation=requestAnimationFrame(tick);$('play').textContent=t.pause;};
   $('reset').onclick=()=>{pause();position=0;draw();};
   $('timeline').oninput=e=>{pause();position=Math.min(run.time,Number(e.currentTarget.value));draw();};
