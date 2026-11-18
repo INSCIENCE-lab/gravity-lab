@@ -63,6 +63,8 @@ const journal = {
   body:'Об’єкт', planet:'Планета', valid:'Допустимий вимір', observer:'Спостерігач', reason:'Причина',
   barycenter_shift_m:'Зміщення центра мас, м', barycenter_x_m:'Координата центра мас x, м',
   energy_invariant:'Енергетичний інтеграл', angular_invariant:'Інтеграл моменту імпульсу', constraint_error:'Похибка умови нормування',
+  satellite_area_m2:'Площа перерізу, м²', drag_multiplier:'Множник атмосферної густини', orbit_turns:'Кількість обертів',
+  perigee_m:'Перигей, м', apogee_m:'Апогей, м', satellite_duration_s:'Тривалість прогону, с', satellite_outcome:'Результат прогону',
   curvature_m4:'Інваріант кривини, м⁻⁴', scale_m:'Масштаб, м',
 };
 export function journalLabel(key, lang) {

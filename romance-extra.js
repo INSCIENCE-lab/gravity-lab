@@ -150,4 +150,9 @@ Here k|Qui k|Aquí k
 , while ν = ω/(2π). The factor 2π cancels in the frequency ratio.|, mentre ν = ω/(2π). Il fattore 2π si semplifica nel rapporto delle frequenze.|, mientras que ν = ω/(2π). El factor 2π se cancela en el cociente de frecuencias.
 INTERACTIVE PHYSICS · UA / EN / IT / ES|FISICA INTERATTIVA · UA / EN / IT / ES|FÍSICA INTERACTIVA · UA / EN / IT / ES
 Initial tangential speed vφ|Velocità tangenziale iniziale vφ|Rapidez tangencial inicial vφ
-Initial radial velocity vᵣ|Velocità radiale iniziale vᵣ|Velocidad radial inicial vᵣ`;
+Initial radial velocity vᵣ|Velocità radiale iniziale vᵣ|Velocidad radial inicial vᵣ
+Satellite in Earth orbit|Satellite in orbita terrestre|Satélite en órbita terrestre
+Altitude, speed and atmospheric drag|Quota, velocità e resistenza atmosferica|Altitud, velocidad y arrastre atmosférico
+CLASSICAL PHYSICS · ORBITAL MOTION|FISICA CLASSICA · MOTO ORBITALE|FÍSICA CLÁSICA · MOVIMIENTO ORBITAL
+Altitude above the surface, at diagram scale|Quota sopra la superficie, in scala|Altitud sobre la superficie, a escala
+Satellite experiment|Esperimento con un satellite|Experimento con un satélite`;

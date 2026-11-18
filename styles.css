@@ -128,3 +128,20 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
 }
 
 .clock-card h4 .clock-black-hole{display:inline-block;width:.9em;height:.9em;margin-inline-end:.4em;vertical-align:-.08em;border-radius:50%;background:#000;border:1px solid #74869a}
+.sat-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,300px);gap:16px}
+.sat-layout>*{min-width:0}
+.sat-media svg{display:block;width:100%;background:#080e1c;border:1px solid #29394d;border-radius:12px}
+.sat-media .metrics{grid-template-columns:repeat(auto-fit,minmax(126px,1fr))}
+.sat-settings{background:#101a2a;border:1px solid #29394d;border-radius:12px;padding:16px}
+.sat-settings h3{margin:0 0 14px}
+.sat-control{display:grid;grid-template-columns:1fr auto;gap:.45rem;align-items:start;margin-bottom:1rem}
+.sat-control input{grid-column:1/-1;width:100%}
+.sat-control output,.sat-play output{color:#e8edaa;font-variant-numeric:tabular-nums}
+.sat-settings button{width:100%;margin:.25rem 0}
+.sat-settings [role=status]{font-size:.875rem;line-height:1.5}
+.sat-settings [role=status]:empty{display:none}
+.sat-play{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.sat-play label{display:flex;align-items:center;gap:.6rem;flex:1 1 230px;flex-wrap:wrap}
+.sat-play input{min-width:115px;flex:1}
+.sat-theory{margin-top:1rem}
+@media(max-width:800px){.sat-layout{grid-template-columns:1fr}}
