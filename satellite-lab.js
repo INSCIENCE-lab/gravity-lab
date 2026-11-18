@@ -1,137 +1,132 @@
-import {circularSpeed, initialOptions, orbitalReadout, radius, simulateSatellite, testedDragLimit} from './satellite-physics.js';
+import {atmosphericDensity,circularSpeed,initialOptions,orbitFrame,orbitalReadout,simulateSatellite} from './satellite-physics.js?v=orbit3d1';
+import {createOrbitView,defaultCamera} from './satellite-view.js?v=orbit3d1';
+import {densityText,satelliteTheory} from './satellite-theory.js?v=orbit3d1';
 
-const labels = {
- uk: {
-  settings:'Початкові умови', height:'Висота над Землею, км', speed:'Дотична швидкість, км/с', mass:'Маса супутника, кг', area:'Площа поперечного перерізу, м²', drag:'Множник густини атмосфери, ×',
-  play:'Почати рух', pause:'Пауза', reset:'На початок', timeline:'Час симуляції, хв', circular:'Встановити колову швидкість', sweep:'Перевірити межу опору', record:'Записати результат', journal:'Відкрити журнал',
-  heading:'Що визначає орбіту?', orbit:'Початкова орбіта у вакуумі', circle:'Майже колова', ellipse:'Еліптична', open:'Незамкнена', low:'Еліпс із перигеєм нижче 100 км', reference:'Колова швидкість на старті, км/с', result:'Результат прогону', bound:'Зв’язана траєкторія після 6 годин', reentry:'Спуск до висоти 100 км', escape:'Вихід за межу сцени на незамкненій траєкторії', unbound:'Незамкнена траєкторія після 6 годин',
-  peri:'Поточний перигей, км', apo:'Поточний апогей, км', altitude:'Поточна висота, км', instantSpeed:'Поточна швидкість, км/с', revolutions:'Оберти за весь прогін',
-  range:'Перевірено множники 0, 5, …, 100. Найбільший перевірений, за якого є повний оберт і траєкторія лишається зв’язаною вище 100 км протягом 6 годин', none:'Жоден перевірений множник не дав повного оберту та зв’язаної траєкторії протягом 6 годин.',
-  caption:'Вигляд згори на площину орбіти. Бліда лінія — прогноз для заданих умов, яскрава — пройдена ділянка. Пунктирне коло — початкова висота.',
-  scope:'Рух починається на заданій висоті з дотичною швидкістю. Землю вважаємо сферичною та нерухомою. Інтегруємо до 6 годин або до спуску на висоту 100 км. Незамкнена траєкторія припиняється також на відстані шести радіусів Землі від центра.',
-  gravity:'У вакуумі за маси супутника, малої порівняно з масою Землі, початкову орбіту визначають висота й швидкість. Коловій орбіті відповідає v = √(GM/r), а швидкість втечі у вакуумі дорівнює √2 від колової. Перигей і апогей — найнижча й найвища точки миттєвої орбіти, яку тіло мало б, якби опір вимкнути у цей момент. Від’ємний перигей означає перетин поверхні.',
-  resistance:'Опір зменшує енергію руху. Модуль його прискорення дорівнює ρ Cᴅ A v²/(2m), де Cᴅ = 2,2, A — площа перерізу. Густина експоненційно зменшується з висотою зі шкалою 35 км. Початкове значення для порівняння — 2,8 × 10⁻¹⁰ кг/м³ на 200 км, помножене на повзунок. Значення 0 задає вакуум. Це навчальна модель. Реальна густина залежить від часу й сонячної активності.',
-  task:'Спершу встанови колову швидкість у вакуумі. Зменш швидкість, щоб опустити перигей. Потім порівняй дві маси за однакових швидкості, площі та густини й перевір межу опору.',
-  dragSource:'NOAA: атмосферний опір для супутників', image:'Фото Землі',
- },
- en: {
-  settings:'Initial conditions', height:'Altitude above Earth, km', speed:'Tangential speed, km/s', mass:'Satellite mass, kg', area:'Cross-sectional area, m²', drag:'Atmospheric density multiplier, ×',
-  play:'Start motion', pause:'Pause', reset:'Back to start', timeline:'Simulation time, min', circular:'Set circular speed', sweep:'Check the drag limit', record:'Record result', journal:'Open notebook',
-  heading:'What determines the orbit?', orbit:'Initial vacuum orbit', circle:'Nearly circular', ellipse:'Elliptical', open:'Unbound', low:'Ellipse with perigee below 100 km', reference:'Circular speed at launch altitude, km/s', result:'Simulation result', bound:'Bound trajectory after 6 hours', reentry:'Descended to 100 km', escape:'Left the scene on an unbound trajectory', unbound:'Unbound trajectory after 6 hours',
-  peri:'Current perigee, km', apo:'Current apogee, km', altitude:'Current altitude, km', instantSpeed:'Current speed, km/s', revolutions:'Revolutions over the run',
-  range:'Multipliers tested: 0, 5, …, 100. Largest tested value with a full revolution and a bound trajectory above 100 km for 6 hours', none:'None of the tested multipliers gave a full revolution and a bound trajectory for 6 hours.',
-  caption:'View perpendicular to the orbital plane. The faint line is the predicted trajectory, the bright line the part already travelled. The dashed circle marks the initial altitude.',
-  scope:'Motion starts at the selected altitude with tangential velocity. Earth is spherical and stationary. The calculation runs for up to 6 hours or until the satellite reaches 100 km altitude. An unbound trajectory also stops at six Earth radii from the centre.',
-  gravity:'In vacuum, for satellite masses small compared with Earth, altitude and speed determine the initial orbit. Circular speed is v = √(GM/r), and vacuum escape speed is √2 times larger. Perigee and apogee describe the instantaneous orbit if drag were switched off at that moment. A negative perigee intersects the surface.',
-  resistance:'Drag dissipates mechanical energy. Its acceleration magnitude is ρ Cᴅ A v²/(2m), with Cᴅ = 2.2 and area A. Density decreases exponentially with altitude on a 35 km scale. The reference density at 200 km is 2.8 × 10⁻¹⁰ kg/m³ times the slider. Zero gives vacuum. This is a teaching model. Actual density varies with time and solar activity.',
-  task:'Start at circular speed in vacuum. Reduce the speed and watch the perigee drop. Compare two masses at the same speed, area and density, then check the drag limit.',
-  dragSource:'NOAA: satellite drag', image:'Earth photograph',
- },
- it: {
-  settings:'Condizioni iniziali', height:'Quota, km', speed:'Velocità tangenziale, km/s', mass:'Massa, kg', area:'Sezione, m²', drag:'Moltiplicatore di densità, ×',
-  play:'Avvia', pause:'Pausa', reset:'Torna all’inizio', timeline:'Tempo simulato, min', circular:'Usa velocità circolare', sweep:'Verifica il limite di resistenza', record:'Registra il risultato', journal:'Apri il registro',
-  heading:'Che cosa determina l’orbita?', orbit:'Orbita iniziale nel vuoto', circle:'Quasi circolare', ellipse:'Ellittica', open:'Non legata', low:'Ellisse con perigeo sotto 100 km', reference:'Velocità circolare alla quota iniziale, km/s', result:'Esito della simulazione', bound:'Traiettoria legata dopo 6 ore', reentry:'Discesa fino a 100 km', escape:'Uscita dalla scena su traiettoria non legata', unbound:'Traiettoria non legata dopo 6 ore',
-  peri:'Perigeo attuale, km', apo:'Apogeo attuale, km', altitude:'Quota attuale, km', instantSpeed:'Velocità attuale, km/s', revolutions:'Giri complessivi',
-  range:'Valori provati: 0, 5, …, 100. Massimo valore provato con un giro completo e traiettoria legata sopra 100 km per 6 ore', none:'Nessun valore provato soddisfa entrambe le condizioni per 6 ore.',
-  caption:'Vista perpendicolare al piano orbitale. La linea tenue mostra la traiettoria prevista, quella brillante il tratto percorso. Il cerchio tratteggiato indica la quota iniziale.',
-  scope:'Il moto inizia alla quota scelta con velocità tangenziale. La Terra è sferica e ferma. Il calcolo dura al massimo 6 ore e si arresta a 100 km di quota o, in fuga, a sei raggi terrestri dal centro.',
-  gravity:'Nel vuoto, per un satellite di massa trascurabile, quota e velocità fissano l’orbita. La velocità circolare è √(GM/r), quella di fuga è √2 volte maggiore. Perigeo e apogeo si riferiscono all’orbita istantanea senza resistenza. Un perigeo negativo implica un’intersezione con la superficie.',
-  resistance:'La resistenza dissipa energia. L’accelerazione vale ρ Cᴅ A v²/(2m), con Cᴅ = 2,2. La densità diminuisce esponenzialmente su una scala di 35 km. A 200 km, la densità pari a 2,8 × 10⁻¹⁰ kg/m³ è moltiplicata per il valore scelto. Zero equivale al vuoto. La densità reale varia nel tempo e con l’attività solare.',
-  task:'Inizia con velocità circolare nel vuoto. Riduci la velocità per abbassare il perigeo. Confronta due masse a parità di velocità, sezione e densità.',
-  dragSource:'NOAA: resistenza atmosferica sui satelliti', image:'Foto della Terra',
- },
- es: {
-  settings:'Condiciones iniciales', height:'Altitud, km', speed:'Velocidad tangencial, km/s', mass:'Masa, kg', area:'Área transversal, m²', drag:'Multiplicador de densidad, ×',
-  play:'Iniciar', pause:'Pausa', reset:'Volver al inicio', timeline:'Tiempo simulado, min', circular:'Usar velocidad circular', sweep:'Comprobar el límite de resistencia', record:'Registrar resultado', journal:'Abrir cuaderno',
-  heading:'¿Qué determina la órbita?', orbit:'Órbita inicial en el vacío', circle:'Casi circular', ellipse:'Elíptica', open:'No ligada', low:'Elipse con perigeo inferior a 100 km', reference:'Velocidad circular a la altitud inicial, km/s', result:'Resultado de la simulación', bound:'Trayectoria ligada tras 6 horas', reentry:'Descenso hasta 100 km', escape:'Salida de escena en trayectoria no ligada', unbound:'Trayectoria no ligada tras 6 horas',
-  peri:'Perigeo actual, km', apo:'Apogeo actual, km', altitude:'Altitud actual, km', instantSpeed:'Velocidad actual, km/s', revolutions:'Vueltas totales',
-  range:'Valores probados: 0, 5, …, 100. Mayor valor probado con una vuelta completa y trayectoria ligada por encima de 100 km durante 6 horas', none:'Ningún valor probado cumple ambas condiciones durante 6 horas.',
-  caption:'Vista perpendicular al plano orbital. La línea tenue es la predicción y la brillante, el trecho recorrido. El círculo discontinuo indica la altitud inicial.',
-  scope:'El movimiento comienza a la altitud elegida con velocidad tangencial. La Tierra se considera esférica e inmóvil. El cálculo dura hasta 6 horas o termina a 100 km de altitud. En una trayectoria de escape se detiene también a seis radios terrestres del centro.',
-  gravity:'En el vacío, para una masa de satélite despreciable, la altitud y la velocidad determinan la órbita inicial. La velocidad circular es √(GM/r) y la de escape es √2 veces mayor. Perigeo y apogeo describen la órbita instantánea sin rozamiento. Un perigeo negativo cruza la superficie.',
-  resistance:'La resistencia disipa energía. Su aceleración vale ρ Cᴅ A v²/(2m), con Cᴅ = 2,2. La densidad decrece exponencialmente en una escala de 35 km. A 200 km se usa una referencia de 2,8 × 10⁻¹⁰ kg/m³, multiplicada por el valor del control. Cero representa el vacío. La densidad real varía con el tiempo y con la actividad solar.',
-  task:'Empieza con velocidad circular en el vacío. Reduce la velocidad para bajar el perigeo. Compara dos masas con la misma velocidad, área y densidad.',
-  dragSource:'NOAA: arrastre atmosférico en satélites', image:'Fotografía de la Tierra',
- },
+const words={
+ uk:['Початкові умови','Висота на старті, км','Дотична швидкість, км/с','Маса, кг','Площа перерізу, м²','Нахил орбіти i, °','Довгота висхідного вузла Ω, °',
+ 'Модель середовища','Стандартна атмосфера 1976','Вакуум','Встановити колову швидкість','Час симуляції, хв','Почати рух','Пауза','На початок','Масштаб кадру','Повернути вигляд','Записати результат','Журнал',
+ 'Початкова орбіта у вакуумі','Майже колова','Еліптична','Еліпс із перигеєм нижче 100 км','Незамкнена','Результат прогону','Зв’язана траєкторія після 6 годин','Спуск до 100 км','Траєкторія втечі','Поточна висота, км','Поточна швидкість, км/с','Поточний перигей, км','Поточний апогей, км','Колова швидкість на старті, км/с','Густина, кг/м³','Зміна висоти перигею, км','Північ','Екватор Землі — пунктир','Супутник продовжує рух поза кадром','Перетягуй Землю, щоб повернути камеру. Сіра лінія — розрахована траєкторія, жовта — вже пройдена ділянка. Масштаб зберігається, коли змінюєш початкові умови.'],
+ en:['Initial conditions','Initial altitude, km','Tangential speed, km/s','Mass, kg','Cross-sectional area, m²','Inclination i, °','Longitude of ascending node Ω, °',
+ 'Environment','1976 Standard Atmosphere','Vacuum','Set circular speed','Simulation time, min','Start motion','Pause','Back to start','View scale','Reset camera','Record result','Notebook',
+ 'Initial vacuum orbit','Nearly circular','Elliptical','Ellipse with perigee below 100 km','Unbound','Simulation result','Bound trajectory after 6 hours','Descended to 100 km','Escape trajectory','Current altitude, km','Current speed, km/s','Current perigee, km','Current apogee, km','Initial circular speed, km/s','Density, kg/m³','Change in perigee altitude, km','North','Dashed: Earth’s equator','The satellite continues outside the view','Drag Earth to rotate the camera. Grey is the predicted path and yellow is the distance travelled. The scale stays fixed when you change initial conditions.'],
+ it:['Condizioni iniziali','Quota iniziale, km','Velocità tangenziale, km/s','Massa, kg','Sezione, m²','Inclinazione i, °','Longitudine del nodo ascendente Ω, °',
+ 'Ambiente','Atmosfera standard 1976','Vuoto','Usa la velocità circolare','Tempo simulato, min','Avvia','Pausa','Torna all’inizio','Scala della vista','Ripristina la vista','Registra il risultato','Registro',
+ 'Orbita iniziale nel vuoto','Quasi circolare','Ellittica','Ellisse con perigeo sotto 100 km','Non legata','Esito della simulazione','Traiettoria legata dopo 6 ore','Discesa fino a 100 km','Traiettoria di fuga','Quota attuale, km','Velocità attuale, km/s','Perigeo attuale, km','Apogeo attuale, km','Velocità circolare iniziale, km/s','Densità, kg/m³','Variazione della quota del perigeo, km','Nord','Tratteggio: equatore terrestre','Il satellite prosegue fuori dall’inquadratura','Trascina la Terra per ruotare la vista. In grigio il percorso previsto, in giallo quello percorso. La scala resta fissa al cambiare delle condizioni iniziali.'],
+ es:['Condiciones iniciales','Altitud inicial, km','Velocidad tangencial, km/s','Masa, kg','Área de sección transversal, m²','Inclinación i, °','Longitud del nodo ascendente Ω, °',
+ 'Entorno','Atmósfera estándar de 1976','Vacío','Usar la velocidad circular','Tiempo simulado, min','Iniciar','Pausa','Volver al inicio','Escala de la vista','Restablecer la vista','Registrar resultado','Cuaderno',
+ 'Órbita inicial en el vacío','Casi circular','Elíptica','Elipse con perigeo por debajo de 100 km','No ligada','Resultado de la simulación','Trayectoria ligada tras 6 horas','Descenso hasta 100 km','Trayectoria de escape','Altitud actual, km','Velocidad actual, km/s','Perigeo actual, km','Apogeo actual, km','Velocidad circular inicial, km/s','Densidad, kg/m³','Cambio en la altitud del perigeo, km','Norte','Línea discontinua: ecuador terrestre','El satélite sigue fuera del encuadre','Arrastra la Tierra para girar la vista. En gris se muestra la trayectoria prevista y en amarillo, la recorrida. La escala se mantiene al cambiar las condiciones iniciales.'],
 };
+const keys=['settings','height','speed','mass','area','inclination','node','environment','standard','vacuum','circular','timeline','play','pause','reset','zoom','camera','record','journal','orbit','circle','ellipse','low','open','result','bound','reentry','unbound','altitude','instantSpeed','peri','apo','reference','density','shift','axis','eq','clipLabel','caption'];
+const locales={uk:'uk-UA',en:'en-GB',it:'it-IT',es:'es-ES'};
+const getWords=language=>Object.fromEntries(keys.map((key,i)=>[key,words[language][i]]));
+const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
 
 export function mountSatellite(root,{language,query,onRecord,onJournal,onChange}){
- let params=Object.fromEntries(Object.entries(initialOptions).map(([key,[min,max,,value]])=>{
+ const params=Object.fromEntries(Object.entries(initialOptions).map(([key,[min,max,,value]])=>{
   const n=Number(query.get('sat_'+key));
-  return [key,query.has('sat_'+key)&&Number.isFinite(n)?Math.max(min,Math.min(max,n)):value];
+  return [key,query.has('sat_'+key)&&Number.isFinite(n)?clamp(n,min,max):value];
  }));
- let run, position=0, frame=0, previous=0, trail, scan=null, renderedTrail=null;
+ const environment=query.get('sat_atmosphere');
+ params.atmosphere=environment==='vacuum'||environment==='standard'?environment:query.get('sat_drag')==='0'?'vacuum':'standard';
+ let t=getWords(language),run, preview,frame3d,viewer,position=0,animation=0,previous=0,drag=null;
+ let changed=0,renderPending=0;
+ let camera=defaultCamera();
  const $=id=>root.querySelector('#sat-'+id);
- const fmt=(n,d=1)=>n===null?'—':n.toLocaleString(language,{maximumFractionDigits:d});
- const render=()=>{
-  const t=labels[language]??labels.uk;
-  root.innerHTML=`<div class="sat-layout"><div class="sat-media"><svg id="sat-view" viewBox="0 0 560 440" role="img" aria-label="${t.caption}"></svg><p class="small muted">${t.caption}</p>
-  <div class="sat-play"><button class="primary" id="sat-play">${t.play}</button><button class="secondary" id="sat-reset">${t.reset}</button><label>${t.timeline} <output id="sat-minutes"></output><input id="sat-timeline" type="range" min="0" step="1" value="0"></label></div>
+ const fmt=(n,d=1)=>n===null?'—':n.toLocaleString(locales[language],{maximumFractionDigits:d});
+ const notify=()=>onChange(params);
+
+ function render(){
+  viewer?.close();
+  root.innerHTML=`<div class="sat-layout"><div class="sat-media"><canvas id="sat-view" width="720" height="540" tabindex="0" role="img" aria-label="${t.caption}"></canvas><p class="small muted">${t.caption}</p>
+  <div class="sat-play"><button type="button" class="primary" id="sat-play">${t.play}</button><button type="button" class="secondary" id="sat-reset">${t.reset}</button>
+  <label for="sat-timeline">${t.timeline} <output id="sat-minutes"></output></label><input id="sat-timeline" aria-label="${t.timeline}" type="range" min="0" step="1" value="0"></div>
+  <div class="sat-camera"><label for="sat-zoom">${t.zoom}</label><input id="sat-zoom" type="range" min="1.12" max="12" step=".01" value="${camera.zoom}" aria-label="${t.zoom}"><button class="secondary" id="sat-camera">${t.camera}</button></div>
   <div id="sat-metrics" class="metrics"></div></div>
   <section class="sat-settings" aria-labelledby="sat-settings"><h3 id="sat-settings">${t.settings}</h3>
-  ${Object.entries(initialOptions).map(([key,[min,max,step]])=>`<label class="sat-control" for="sat-${key}"><span>${t[key]}</span><output id="sat-o-${key}"></output><input type="range" id="sat-${key}" min="${min}" max="${max}" step="${step}" value="${params[key]}"></label>`).join('')}
-  <button class="secondary" id="sat-circle">${t.circular}</button><button class="secondary" id="sat-sweep">${t.sweep}</button><p id="sat-scan" role="status"></p>
-  <button class="secondary" id="sat-record">${t.record}</button><button class="secondary" id="sat-journal">${t.journal}</button></section></div>
-  <section id="satelliteTheory" class="black-hole-guide sat-theory"><h3>${t.heading}</h3><p>${t.scope}</p><p>${t.gravity}</p><p>${t.resistance}</p><p>${t.task}</p>
-  <p><a href="https://www.spaceweather.gov/impacts/satellite-drag" target="_blank" rel="noopener">${t.dragSource}</a> · <a href="https://science.nasa.gov/resource/the-blue-marble/" target="_blank" rel="noopener">${t.image} · NASA Johnson Space Center, Apollo 17</a></p></section>`;
-  for(const key of Object.keys(initialOptions))$(key).oninput=e=>{params[key]=Number(e.currentTarget.value);recompute();};
-  $('circle').onclick=()=>{params.speed=Number(circularSpeed(params.height).toFixed(3));$('speed').value=params.speed;recompute();};
-  $('play').onclick=()=>{if(frame){pause();return;}if(position>=run.time)position=0;frame=requestAnimationFrame(tick);$('play').textContent=t.pause;};
+  ${Object.entries(initialOptions).map(([key,[min,max,step]])=>`<div class="sat-control"><label for="sat-${key}">${t[key]}</label><input class="sat-number" type="number" id="sat-value-${key}" min="${min}" max="${max}" step="${step}" value="${params[key]}" aria-label="${t[key]}"><input type="range" id="sat-${key}" min="${min}" max="${max}" step="${step}" value="${params[key]}"></div>`).join('')}
+  <label for="sat-mode">${t.environment}</label><select id="sat-mode"><option value="standard">${t.standard}</option><option value="vacuum">${t.vacuum}</option></select>
+  <button class="secondary" id="sat-circle">${t.circular}</button>
+  <button class="secondary" id="sat-record">${t.record}</button><button class="secondary" id="sat-journal">${t.journal}</button></section></div>${satelliteTheory(language)}`;
+  $('mode').value=params.atmosphere;
+  viewer=createOrbitView($('view'),draw);
+  for(const [key,[min,max]] of Object.entries(initialOptions)){
+   const slider=$(key),number=$('value-'+key);
+   slider.oninput=()=>{number.value=slider.value;update(key,Number(slider.value));};
+   number.oninput=()=>{
+    const n=number.valueAsNumber;
+    if(Number.isFinite(n)&&n>=min&&n<=max){slider.value=n;update(key,n);}
+   };
+   number.onchange=()=>{
+    const n=Number.isFinite(number.valueAsNumber)?clamp(number.valueAsNumber,min,max):params[key];
+    slider.value=n;number.value=n;update(key,n);
+   };
+  }
+  $('mode').onchange=e=>update('atmosphere',e.target.value);
+  $('circle').onclick=()=>{const value=Number(circularSpeed(params.height).toFixed(3));$('speed').value=$('value-speed').value=value;update('speed',value);};
+  $('play').onclick=()=>{if(animation){pause();return;}if(position>=run.time)position=0;animation=requestAnimationFrame(tick);$('play').textContent=t.pause;};
   $('reset').onclick=()=>{pause();position=0;draw();};
-  $('timeline').oninput=e=>{pause();position=Math.min(run.time,Number(e.target.value));draw();};
-  $('record').onclick=()=>onRecord({height_m:params.height*1000,mass_kg:params.mass,initial_speed_ms:params.speed*1000,satellite_area_m2:params.area,drag_multiplier:params.drag,orbit_turns:run.turns,satellite_outcome:run.outcome,perigee_m:run.final.perigee,apogee_m:run.final.apogee,satellite_duration_s:run.time},params);
+  $('timeline').oninput=e=>{pause();position=Math.min(run.time,Number(e.currentTarget.value));draw();};
+  $('zoom').oninput=e=>{camera.zoom=Number(e.currentTarget.value);draw();};
+  $('camera').onclick=()=>{camera=defaultCamera();$('zoom').value=camera.zoom;draw();};
+  const view=$('view');
+  view.onpointerdown=e=>{drag=[e.clientX,e.clientY];view.setPointerCapture(e.pointerId);};
+  view.onpointermove=e=>{if(!drag)return;rotate(e.clientX-drag[0],e.clientY-drag[1]);drag=[e.clientX,e.clientY];};
+  view.onpointerup=view.onpointercancel=view.onlostpointercapture=()=>{drag=null;};
+  view.onkeydown=e=>{
+   const delta={ArrowLeft:[-12,0],ArrowRight:[12,0],ArrowUp:[0,-12],ArrowDown:[0,12]}[e.key];
+   if(delta){e.preventDefault();rotate(...delta);}
+  };
+  $('record').onclick=()=>{
+   refresh();
+   onRecord({height_m:params.height*1000,mass_kg:params.mass,initial_speed_ms:params.speed*1000,satellite_area_m2:params.area,
+    inclination_deg:params.inclination,ascending_node_deg:params.node,atmosphere_model:params.atmosphere,orbit_turns:run.turns,satellite_outcome:run.outcome,perigee_m:run.final.perigee,apogee_m:run.final.apogee,satellite_duration_s:run.time},params);
+  };
   $('journal').onclick=onJournal;
-  $('sweep').onclick=()=>{scan=testedDragLimit(params)??'none';drawScan();};
-  renderedTrail=null;draw();
- };
- function drawScan(){
-  const t=labels[language];
-  const message=scan===null?'':scan==='none'?t.none:t.range+': '+fmt(scan,0)+'×.';
-  if($('scan').textContent!==message)$('scan').textContent=message;
+  draw();
  }
- function pause(){cancelAnimationFrame(frame);frame=0;previous=0;if($('play'))$('play').textContent=labels[language].play;}
+ function rotate(x,y){
+  camera.yaw-=x*.009;
+  camera.pitch=clamp(camera.pitch+y*.009,-1.56,1.56);
+  draw();
+ }
+ function pause(){cancelAnimationFrame(animation);animation=0;previous=0;if($('play'))$('play').textContent=t.play;}
  function tick(now){
   if(previous)position=Math.min(run.time,position+Math.min(now-previous,50)/1000*1800);
-  previous=now;
-  draw();
-  if(position<run.time)frame=requestAnimationFrame(tick);else pause();
+  previous=now;draw();
+  if(position<run.time)animation=requestAnimationFrame(tick);else pause();
+ }
+ function update(key,value){
+  if(params[key]===value)return;
+  params[key]=value;
+  if(key==='inclination'||key==='node')frame3d=orbitFrame(params.inclination,params.node);
+  else changed=1;
+  if(!renderPending)renderPending=requestAnimationFrame(()=>{renderPending=0;refresh();});
  }
  function recompute(){
-  pause();position=0;scan=null;run=simulateSatellite(params);
-  const scale=194/run.widest;
-  const point=([x,y])=>[280+x*scale,220-y*scale].map(v=>v.toFixed(2)).join(',');
-  const stride=Math.max(1,Math.floor(run.points.length/750));
-  trail={scale,point,preview:run.points.filter((_,i)=>i%stride===0||i===run.points.length-1).map(s=>point(s.state)).join(' '),stride};
-  if($('view')){onChange(params);draw();}
+  run=simulateSatellite(params);
+  const stride=Math.max(1,Math.ceil(run.points.length/850));
+  preview=run.points.filter((_,i)=>i%stride===0||i===run.points.length-1);
+  position=Math.min(position,run.time);
+ }
+ function refresh(){
+  if(changed){changed=0;recompute();}
+  notify();draw();
  }
  function draw(){
-  const t=labels[language];
-  const {scale,point,preview,stride}=trail,r=radius*scale;
-  const i=Math.min(run.points.length-1,Math.floor(position/4));
-  const sample=position>=run.time?run.points.at(-1):run.points[i];
-  const active=run.points.slice(0,i+1).filter((_,j)=>j%stride===0).map(s=>point(s.state));
-  active.push(point(sample.state));
-  const [x,y]=point(sample.state).split(',');
-  const start=(radius+params.height*1000)*scale;
-  if(renderedTrail!==trail){
-   $('view').innerHTML=`<defs><clipPath id="sat-earth-clip"><circle cx="280" cy="220" r="${r}"/></clipPath></defs>
-  <circle cx="280" cy="220" r="${r}" fill="#3b6b96"/><image href="assets/earth-apollo17.webp" x="${280-r}" y="${220-r}" width="${2*r}" height="${2*r}" clip-path="url(#sat-earth-clip)"/>
-  <circle cx="280" cy="220" r="${start}" fill="none" stroke="#9db3c7" stroke-opacity=".62" stroke-dasharray="4 5"/>
-  <polyline points="${preview}" fill="none" stroke="#96bcd3" stroke-opacity=".55" stroke-width="1.5"/>
-  <polyline id="sat-active" fill="none" stroke="#d6df49" stroke-width="2.3"/>
-  <circle id="sat-probe" r="5" fill="#d6df49" stroke="#111" stroke-width="1.2"/>`;
-   renderedTrail=trail;
-  }
-  $('active').setAttribute('points',active.join(' '));$('probe').setAttribute('cx',x);$('probe').setAttribute('cy',y);
+  const index=Math.min(run.points.length-1,Math.floor(position/4));
+  const sample=position>=run.time?run.points.at(-1):run.points[index];
+  const active=preview.filter(p=>p.time<=sample.time).map(p=>p.state);
+  active.push(sample.state);
+  viewer.draw({camera,frame:frame3d,preview:preview.map(p=>p.state),active,state:sample.state,axis:t.axis,eq:t.eq,clipLabel:t.clipLabel,unbound:run.outcome==='unbound'});
   $('timeline').max=Math.ceil(run.time);$('timeline').value=position;
-  $('minutes').textContent=fmt(sample.time/60,1);
+  $('minutes').textContent=fmt(sample.time/60);
+  $('timeline').setAttribute('aria-valuetext',fmt(sample.time/60));
   const initialOrbit=run.initial.energy>=0?t.open:run.initial.perigee<100_000?t.low:run.initial.eccentricity<.01?t.circle:t.ellipse;
   const current=orbitalReadout(sample.state);
-  const pairs=[[t.orbit,initialOrbit],[t.result,t[run.outcome]],[t.reference,fmt(circularSpeed(params.height),3)],[t.altitude,fmt(current.altitude)],[t.instantSpeed,fmt(current.speed,3)],[t.peri,fmt(current.perigee)],[t.apo,fmt(current.apogee)],[t.revolutions,fmt(run.turns,2)]];
-  $('metrics').innerHTML=pairs.map(([name,value])=>`<div class="metric"><label>${name}</label><strong>${value}</strong></div>`).join('');
-  for(const key of Object.keys(initialOptions))$('o-'+key).textContent=fmt(params[key],3);
-  drawScan();
+  const pairs=[[t.orbit,initialOrbit],[t.result,t[run.outcome]],[t.reference,fmt(circularSpeed(params.height),3)],[t.altitude,fmt(current.altitude)],[t.instantSpeed,fmt(current.speed,3)],[t.peri,fmt(current.perigee)],[t.apo,fmt(current.apogee)],[t.density,params.atmosphere==='vacuum'?'0':densityText(atmosphericDensity(current.altitude),locales[language])],[t.shift,fmt((run.final.perigee-run.initial.perigee)/1000,3)]];
+  $('metrics').innerHTML=pairs.map(([name,value])=>`<div class="metric"><span>${name}</span><strong>${value}</strong></div>`).join('');
  }
+ frame3d=orbitFrame(params.inclination,params.node);
  recompute();render();
- return {pause,setLanguage(value){if(language!==value){pause();language=value;render();}},destroy(){pause();root.replaceChildren();}};
+ return {pause,setLanguage(value){if(language!==value){pause();language=value;t=getWords(language);render();}},destroy(){pause();cancelAnimationFrame(renderPending);viewer.close();root.replaceChildren();}};
 }

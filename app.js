@@ -1,8 +1,8 @@
 import {orbitVelocityHelp} from './orbit-velocity-help.js';
-import {dayWord, scientificNumber, journalLabel, unitLabel} from './uk-display.js?v=satellite1';
-import {mountSatellite} from './satellite-lab.js?v=satellite1';
+import {dayWord, scientificNumber, journalLabel, unitLabel} from './uk-display.js?v=orbit3d1';
+import {mountSatellite} from './satellite-lab.js?v=orbit3d1';
 import {mountProjectile} from './projectile.js?v=uk-copy1';
-import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=satellite1';
+import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=orbit3d1';
 import {binaryGridReference} from './binary-grid.js?v=palette2';
 import {geometryLearning} from './geometry-learning.js?v=satellite1';
 import {drawSurfaceLocal} from './surface-scene.js?v=fullaudit3';
@@ -12,10 +12,10 @@ import {schwarzReference,lensReference} from './black-hole-guide.js?v=uk-copy1';
 import {G,C,AU,DAY,MSUN,earth,planets,clockBodies,surface,jump,clock,clockAtHeight,clockReference,Binary,Schwarzschild,traceRay,rg,rs,rk4,norm,sampleRay,stepSurfaceFall} from './physics.js?v=fullaudit2';
 import {experiments,defaultParams,clockHeights,ui,tr} from './config.js?v=satellite1';
 import {theory,sources} from './theory.js?v=uk-copy1';
-import {Scene} from './scene.js?v=black-sphere1';
+import {Scene} from './scene.js?v=orbit3d1';
 import {schwarzField,weakField,orbitPlane} from './geometry.js?v=palette2';
 import {drawSchwarzGeometry,drawBinaryGeometry} from './geometry-scene.js?v=black-sphere1';
-import {dashboardHTML,updateClockHands} from './clock-dashboard.js?v=black-sphere1';
+import {dashboardHTML,updateClockHands} from './clock-dashboard.js?v=orbit3d1';
 import {drawCube} from './cube-scene.js?v=black-sphere1';
 import {cubeProbeValues} from './cube-physics.js?v=fullaudit2';
 import {startDiskRender} from './disk-task.js?v=palette2';
@@ -43,7 +43,7 @@ function showSatellite(){
  satelliteController=mountSatellite($('satelliteHost'),{
   language:getLanguage(),query:new URLSearchParams(location.search),
   onRecord(values,params){record(values,'satellite',params);},onJournal:openNotebook,
-  onChange(params){const url=new URL(location.href);for(const [key,value] of Object.entries(params))url.searchParams.set('sat_'+key,value);globalThis.history.replaceState(null,'',url);}
+  onChange(params){const url=new URL(location.href);url.searchParams.delete('sat_drag');for(const [key,value] of Object.entries(params))url.searchParams.set('sat_'+key,value);if(url.href!==location.href)globalThis.history.replaceState(null,'',url);}
  });
 }
 function hideSatellite(){

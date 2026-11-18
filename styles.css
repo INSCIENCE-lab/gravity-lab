@@ -145,3 +145,20 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
 .sat-play input{min-width:115px;flex:1}
 .sat-theory{margin-top:1rem}
 @media(max-width:800px){.sat-layout{grid-template-columns:1fr}}
+.sat-media canvas{display:block;width:100%;height:auto;aspect-ratio:4/3;background:#080e1c;border:1px solid #29394d;border-radius:12px;touch-action:none;cursor:grab}
+.sat-media canvas:active{cursor:grabbing}
+.sat-control{grid-template-columns:minmax(0,1fr) minmax(65px,82px)}
+.sat-control input.sat-number{grid-column:2;grid-row:1;width:100%;padding:.4rem .35rem;font-size:1rem}
+.sat-control input[type=range]{grid-row:2}
+.sat-settings select{width:100%;margin:.45rem 0 .65rem}
+.sat-camera{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;margin-top:.65rem}
+.sat-camera input{flex:1 1 110px}
+.sat-media .metric span{font-size:.85rem;color:#9db0c2}
+.sat-media .metric strong{display:block;font-size:1rem}
+.sat-theory article{max-width:83ch;padding:1rem 0;border-top:1px solid #26384c;line-height:1.6}
+.sat-theory h4{margin:.25rem 0}
+.sat-formula{background:#0c1422;border-inline-start:3px solid #a9bb4c;color:#e5edb6;padding:.65rem .8rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.sat-table-wrap{overflow:auto}
+.sat-theory table{width:100%;border-collapse:collapse;margin-top:.8rem}
+.sat-theory caption{text-align:left;padding:.5rem 0}
+.sat-theory th,.sat-theory td{text-align:left;padding:.25rem .65rem;border-bottom:1px solid #26384c}
