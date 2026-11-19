@@ -29,7 +29,7 @@ export const rows=`0|LE IDEE ESSENZIALI|LAS IDEAS ESENCIALES
 29|Vicino all’orizzonte degli eventi la legge di Newton non descrive tutto. Bisogna spiegare i raggi luminosi curvi, i diversi tempi propri misurati dagli orologi e l’orizzonte stesso. Lontano dal buco nero, l’approssimazione newtoniana può tornare sufficiente.|Cerca del horizonte de sucesos la ley de Newton ya no lo describe todo. Hay que explicar las trayectorias curvas de la luz, los distintos tiempos propios medidos por los relojes y el propio horizonte. Lejos del agujero negro, la aproximación newtoniana puede volver a ser suficiente.
 30|Qui la luce del lato lontano del disco si incurva attorno al buco nero e ci raggiunge. Parti del disco appaiono quindi sopra e sotto di esso. Questa è la|Aquí la luz del lado lejano del disco se curva alrededor del agujero negro y nos alcanza. Por eso partes del disco aparecen por encima y por debajo de él. Esto es la
 31|lente gravitazionale|lente gravitacional
-32|Illustrazione dell’effetto di lente gravitazionale.|Ilustración del efecto de lente gravitacional.
+32|Lente gravitazionale del disco di accrescimento.|Efecto de lente gravitacional en el disco de acreción.
 34|EINSTEIN · LA GRAVITÀ COME GEOMETRIA|EINSTEIN · LA GRAVEDAD COMO GEOMETRÍA
 35|Entra in scena la|Entra en escena la
 36|relatività|relatividad
@@ -64,7 +64,7 @@ export const rows=`0|LE IDEE ESSENZIALI|LAS IDEAS ESENCIALES
 65|Leggere una linea di universo.|Leer una línea de universo.
 66|Sono mostrati solo x e ct; y e z sono omessi. Le diagonali gialle rappresentano la luce; la linea verde acqua un corpo a 0,4c. Il diagramma usa spaziotempo piatto e scale uguali sugli assi.|Solo se muestran x y ct; se omiten y y z. Las diagonales amarillas representan la luz; la línea verde agua un cuerpo a 0,4c. El diagrama usa espacio-tiempo plano y escalas iguales en los ejes.
 67|Immaginare la curvatura.|Imaginar la curvatura.
-68|La griglia della lezione è un’analogia visiva della geometria spaziale. Non mostra tutto lo spaziotempo 4D: servono anche le componenti temporali della metrica. Giphy.|La cuadrícula de la conferencia es una analogía visual de la geometría espacial. No muestra todo el espacio-tiempo 4D: también se necesitan las componentes temporales de la métrica. Giphy.
+68|La griglia mostra come un corpo massiccio può curvare lo spazio. Per descrivere la geometria dello spaziotempo servono anche le componenti della metrica che coinvolgono il tempo.|La cuadrícula muestra cómo un cuerpo masivo puede curvar el espacio. Para describir la geometría del espacio-tiempo también necesitamos las componentes de la métrica que incluyen el tiempo.
 69|Un approfondimento: le equazioni dietro queste idee|Un poco más: las ecuaciones detrás de estas ideas
 70|Spaziotempo piatto:|Espacio-tiempo plano:
 71|usiamo la segnatura della metrica (−,+,+,+).|usamos la signatura de la métrica (−,+,+,+).
@@ -79,9 +79,9 @@ export const rows=`0|LE IDEE ESSENZIALI|LAS IDEAS ESENCIALES
 80|ORA PROVA TU|AHORA PRUÉBALO
 81|Dalla spiegazione all’esperimento|De la explicación al experimento
 82|Scegli una sezione. Modifica masse e distanze, segui il moto e registra i risultati nel quaderno.|Elige una sección. Cambia masas y distancias, sigue el movimiento y registra los resultados en el cuaderno.
-83|Lezione, illustrazioni e fonti|Conferencia, ilustraciones y fuentes
-84|Basato sulla lezione di Olena Kompaniiets «Che cosa collega buchi neri e satelliti?» (|Basado en la conferencia de Olena Kompaniiets «¿Qué conecta los agujeros negros y los satélites?» (
-86|). Le spiegazioni sono adattate al laboratorio. Il gatto e la griglia spaziale provengono dalla presentazione fornita, che li attribuisce a Giphy. Anche la GIF di Newton è attribuita a Giphy. I diagrammi delle coordinate sono stati creati per questa pagina.|). Las explicaciones se adaptaron al laboratorio. El gato y la cuadrícula espacial proceden de la presentación suministrada, que los atribuye a Giphy. La GIF de Newton también se atribuye a Giphy. Los diagramas de coordenadas se crearon para esta página.
+83|Illustrazioni e fonti|Ilustraciones y fuentes
+84|Animazione di un gatto sorpreso|Animación de un gato sorprendido
+86|Le animazioni di Newton, del gatto e della griglia spaziale sono attribuite a Giphy. I diagrammi delle coordinate sono stati creati per questa pagina.|Las animaciones de Newton, del gato y de la cuadrícula espacial se atribuyen a Giphy. Los diagramas de coordenadas se crearon para esta página.
 87|Royal Society: la storia della mela ↗|Royal Society: la historia de la manzana ↗
 88|Einstein Online: gravità geometrica ↗|Einstein Online: gravedad geométrica ↗
 89|Einstein Online: linea di universo ↗|Einstein Online: línea de universo ↗

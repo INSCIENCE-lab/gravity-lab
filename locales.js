@@ -1,7 +1,7 @@
 import {ukrainianText} from './uk-display.js';
 import {renderMathText,updateMathElement} from './assets/math.js?v=audit2';
-import {englishPhrases} from './romance-source.js?v=editorial1';
-import {rows as basics} from './romance-theory.js?v=editorial1';
+import {englishPhrases} from './romance-source.js?v=theory-copy';
+import {rows as basics} from './romance-theory.js?v=theory-copy';
 import {rows as relativity} from './romance-relativity.js?v=editorial1';
 import {rows as clocks} from './romance-clocks.js?v=fullaudit2';
 import {rows as ui} from './romance-ui.js?v=fullaudit2';
