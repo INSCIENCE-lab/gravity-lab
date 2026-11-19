@@ -41,7 +41,7 @@ const scene=new Scene($('scene'),()=>{if(model||current==='surface'||current==='
 function labels(){document.documentElement.lang=getLanguage();document.title=translate(lang==='uk'?'Гравітація у просторі-часі':'Gravity Lab · Exploring spacetime');document.querySelectorAll('[data-i18n]').forEach(el=>el.innerHTML=T(el.dataset.i18n));document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===getLanguage())));$('scene').setAttribute('aria-label',lang==='uk'?'3D-модель гравітації. Перетягни для обертання; стрілки клавіатури також керують камерою.':'3D gravity model. Drag to rotate; arrow keys also control the camera.');$('diskCanvas').setAttribute('aria-label',lang==='uk'?'Акреційний диск: чисельне трасування геодезичних Шварцшильда':'Accretion disk: numerical Schwarzschild ray tracing');$('zoomIn').setAttribute('aria-label',lang==='uk'?'Збільшити':'Zoom in');$('zoomOut').setAttribute('aria-label',lang==='uk'?'Зменшити':'Zoom out');$('resetBtn').title=T('reset');$('stepBtn').title=T('step');$('cameraReset').setAttribute('aria-label',T('reset'));$('playBtn').setAttribute('aria-label',running?T('pause'):T('start'));nav();if(current==='satellite'&&pageMode==='lab'){hideProjectile();showSatellite();return;}hideSatellite();if(current==='projectile'&&pageMode==='lab'){showProjectile();return;}hideProjectile();controls();viewTabs();staticContent();$('cubeBody').innerHTML=clockBodies.map(b=>`<option value="${b.id}">${b[lang]}</option>`).join('');$('cubeBody').value=cube.body;update();}
 
 function showSatellite(){
- $('theoryLink').href='#satelliteTheory';$('standardExperiment').hidden=true;$('satelliteHost').hidden=false;$('status').hidden=true;
+ $('standardExperiment').hidden=true;$('satelliteHost').hidden=false;$('status').hidden=true;
  const exp=experiments.satellite;
  $('modelBadge').textContent=tr(exp.badge,lang);$('labTitle').textContent=name('satellite');$('labSubtitle').textContent=tr(exp.tag,lang);
  if(satelliteController){satelliteController.setLanguage(getLanguage());return;}
@@ -56,7 +56,7 @@ function hideSatellite(){
  $('satelliteHost').hidden=true;
 }
 function showProjectile(){
- $('theoryLink').href='#projectileTheory';$('standardExperiment').hidden=true;$('projectileHost').hidden=false;
+ $('standardExperiment').hidden=true;$('projectileHost').hidden=false;
  $('modelBadge').textContent=tr(experiments.projectile.badge,lang);
  $('labTitle').textContent=translate(tr(experiments.projectile.name,lang));
  $('labSubtitle').textContent=translate(tr(experiments.projectile.tag,lang));
@@ -74,7 +74,7 @@ function showProjectile(){
 }
 function hideProjectile(){
  if(projectileController){projectileController.destroy();projectileController=null;}
- $('theoryLink').href='#theory';$('projectileHost').hidden=true;$('standardExperiment').hidden=false;$('status').hidden=false;
+ $('projectileHost').hidden=true;$('standardExperiment').hidden=false;$('status').hidden=false;
 }
 const navigationLabels={
  uk:['Навігація розділу','Теорія','Досліди','Журнал'],
@@ -90,7 +90,8 @@ function pageNavigation(){
  $('experimentsLink').textContent=experimentsLabel;
  $('journalLabel').textContent=journalLabel;
  const homeUrl='?lang='+getLanguage();
- if(!lab)$('theoryLink').href=(home?'':homeUrl)+'#homeTheory';
+ const theoryAnchor={satellite:'#satelliteTheory',projectile:'#projectileTheory'};
+ $('theoryLink').href=lab?(theoryAnchor[current]||'#theory'):(home?'':homeUrl)+'#homeTheory';
  $('experimentsLink').href=(home?'':homeUrl)+'#physicsTabs';
  if(home){
   $('heroExperimentCount').textContent=String(Object.keys(experiments).length).padStart(2,'0');
