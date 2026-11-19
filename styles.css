@@ -183,3 +183,6 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
 @media(min-width:1360px){.experiment-cards[data-category=all]{grid-template-columns:repeat(5,minmax(0,1fr))}}
 .canvas-wrap:has(#scene[data-experiment=jump]){min-height:380px}
 @media(max-width:600px){.canvas-wrap:has(#scene[data-experiment=jump]){min-height:435px}}
+
+.canvas-wrap:has(#scene[data-experiment=jump][data-view=scene]) :is(.scene-top-label,.scene-bottom-label,.camera-controls){display:none}
+#scene[data-experiment=jump][data-view=scene]{pointer-events:none}
