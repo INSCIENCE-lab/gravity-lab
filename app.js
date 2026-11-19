@@ -1,7 +1,7 @@
 import {orbitVelocityHelp} from './orbit-velocity-help.js';
 import {dayWord, scientificNumber, journalLabel, unitLabel} from './uk-display.js?v=editorial1';
-import {mountTransfer} from './transfer-lab.js?v=1';
-import {transferText} from './transfer-text.js?v=1';
+import {mountTransfer} from './transfer-lab.js?v=energy';
+import {transferText} from './transfer-text.js?v=energy';
 import {mountSatellite} from './satellite-lab.js?v=editorial1';
 import {mountProjectile} from './projectile.js?v=editorial1';
 import {translate,getLanguage,getLocale,setLanguage,localizeDOM,initLocalization} from './locales.js?v=transfer';
@@ -277,13 +277,14 @@ function openNotebook(){projectileController?.pause();satelliteController?.pause
 function renderNotebook(){const previous=$('chartFilter').value;setOptions($('chartFilter'),Object.keys(experiments).map(id=>[id,name(id)]),experiments[previous]?previous:current);updateAxes();renderEntries();$('exportBtn').disabled=!records.length;$('clearBtn').disabled=!records.length;}
 function setOptions(el,opts,value){el.innerHTML=opts.map(([v,l])=>`<option value="${esc(v)}" ${v===value?'selected':''}>${esc(l)}</option>`).join('');if(!opts.some(o=>o[0]===value)&&opts.length)el.value=opts[0][0];}
 function filtered(){return records.filter(r=>r.experiment===$('chartFilter').value);}
-function updateAxes(){const rows=filtered(),keys=[...new Set(rows.flatMap(r=>Object.keys(r.values).filter(k=>typeof r.values[k]==='number'&&Number.isFinite(r.values[k]))))];const preferred={transfer:['transfer_delta_v_kms','transfer_time_d'],satellite:['drag_multiplier','orbit_turns'],surface:['radius_m','g_ms2'],binary:['radius_m','force_N'],jump:['g_ms2','height_m'],pn:['radius_m','energy_residual'],schwarzschild:['radius_m','rate'],lens:['impact_rg','deflection_rad'],projectile:['x_m','y_m'],clocks:[p.mode==='height'?'height_m':'radius_m','lost_s']}[$('chartFilter').value];setOptions($('chartX'),keys.map(k=>[k,measurementLabel(k)]),keys.includes($('chartX').value)?$('chartX').value:preferred?.[0]);setOptions($('chartY'),keys.map(k=>[k,measurementLabel(k)]),keys.includes($('chartY').value)?$('chartY').value:preferred?.[1]);chart();}
+function updateAxes(){const rows=filtered(),keys=[...new Set(rows.flatMap(r=>Object.keys(r.values).filter(k=>typeof r.values[k]==='number'&&Number.isFinite(r.values[k]))))];const preferred={transfer:['departure_mjkg','transfer_time_d'],satellite:['drag_multiplier','orbit_turns'],surface:['radius_m','g_ms2'],binary:['radius_m','force_N'],jump:['g_ms2','height_m'],pn:['radius_m','energy_residual'],schwarzschild:['radius_m','rate'],lens:['impact_rg','deflection_rad'],projectile:['x_m','y_m'],clocks:[p.mode==='height'?'height_m':'radius_m','lost_s']}[$('chartFilter').value];setOptions($('chartX'),keys.map(k=>[k,measurementLabel(k)]),keys.includes($('chartX').value)?$('chartX').value:preferred?.[0]);setOptions($('chartY'),keys.map(k=>[k,measurementLabel(k)]),keys.includes($('chartY').value)?$('chartY').value:preferred?.[1]);chart();}
 function chart(){const kx=$('chartX').value,ky=$('chartY').value,lx=$('logX').checked,ly=$('logY').checked;const rows=filtered().filter(r=>typeof r.values[kx]==='number'&&typeof r.values[ky]==='number'&&Number.isFinite(r.values[kx])&&Number.isFinite(r.values[ky])&&(!lx||r.values[kx]>0)&&(!ly||r.values[ky]>0));if(!rows.length){$('journalChart').innerHTML=`<text x="420" y="145" fill="#8da4bc" font-size="13" text-anchor="middle">${T('noneNumeric')}</text>`;return;}const x=r=>lx?Math.log10(r.values[kx]):r.values[kx],y=r=>ly?Math.log10(r.values[ky]):r.values[ky];let xmin=Math.min(...rows.map(x)),xmax=Math.max(...rows.map(x)),ymin=Math.min(...rows.map(y)),ymax=Math.max(...rows.map(y));if(xmin===xmax){const pad=Math.abs(xmin)*.1||1;xmin-=pad;xmax+=pad;}if(ymin===ymax){const pad=Math.abs(ymin)*.1||1;ymin-=pad;ymax+=pad;}const X=v=>90+(v-xmin)/(xmax-xmin)*710,Y=v=>250-(v-ymin)/(ymax-ymin)*220;let svg='';for(let i=0;i<5;i++){const xx=xmin+(xmax-xmin)*i/4,yy=ymin+(ymax-ymin)*i/4;svg+=`<line x1="90" y1="${Y(yy)}" x2="800" y2="${Y(yy)}" stroke="#25394e"/><text x="81" y="${Y(yy)+4}" fill="#7f99b1" font-size="9" text-anchor="end">${esc(sci(ly?10**yy:yy,2))}</text><text x="${X(xx)}" y="270" fill="#7f99b1" font-size="9" text-anchor="middle">${esc(sci(lx?10**xx:xx,2))}</text>`;}svg+=`<text x="8" y="16" fill="#bbcdbe" font-size="10">${esc(journalLabel(ky,lang))}${ly?' (log)':''}</text><text x="445" y="294" fill="#bbcdbe" font-size="10" text-anchor="middle">${esc(journalLabel(kx,lang))}${lx?' (log)':''}</text>`;for(const r of rows){const color=clockBodies.find(b=>b.id===r.values.body)?.color||planets.find(b=>b.id===r.values.planet)?.color||'#BDC71E';svg+=`<circle cx="${X(x(r))}" cy="${Y(y(r))}" r="4" fill="${color}" opacity=".8" tabindex="0" data-record="${r.id}"><title>${esc((r.values.body||r.values.planet||name(r.experiment))+': '+kx+' = '+sci(r.values[kx])+', '+ky+' = '+sci(r.values[ky]))}</title></circle>`;}$('journalChart').innerHTML=svg;$('chartReadout').textContent=rows.length+' '+(lang==='uk'?'точок · наведи на точку для деталей':'points · hover for details');}
 function measurementLabel(key){
  const spec={
   transfer_time_d:['flight','days'],transfer_delta_v_kms:['delta','kms'],
   launch_distance_au:['launchDistance','au'],arrival_distance_au:['separation','au'],
-  arrival_speed_kms:['arrival','kms'],
+  arrival_speed_kms:['arrival','kms'],parking_burn_kms:['parkingBurn','kms'],
+  departure_mjkg:['specificWork','mjkg'],departure_gj:['totalWork','gj'],
  };
  if(!spec[key])return journalLabel(key,lang);
  const index=['uk','en','it','es'].indexOf(getLanguage());
@@ -292,7 +293,7 @@ function measurementLabel(key){
 function parameterLabel(experiment,key){
  if(experiment==='transfer'){
   const index=['uk','en','it','es'].indexOf(getLanguage());
-  if(transferText[key])return transferText[key][index]+(key==='phase'?', °':key==='speed'?', '+transferText.kms[index]:'');
+  if(transferText[key])return transferText[key][index]+(key==='phase'?', °':key==='speed'?', '+transferText.kms[index]:key==='mass'?', '+transferText.kg[index]:'');
  }
  const parameter=experiments[experiment].params.find(item=>item.key===key);
  if(!parameter)return journalLabel(key,lang);

@@ -1,4 +1,4 @@
-import {AU, DAY, G, MSUN} from './physics.js?v=fullaudit2';
+import {AU, DAY, G, MSUN, RSUN} from './physics.js?v=fullaudit2';
 
 const MU = G * MSUN * DAY ** 2 / AU ** 3;
 export const earthSpeed = Math.sqrt(MU) * AU / DAY / 1000;
@@ -53,6 +53,7 @@ export function transfer(radius, speedRatio, phase) {
  const targetSpeed = earthSpeed / Math.sqrt(radius);
  return {
   position, atAnomaly, start, end, duration, reaches, oppositeRadius, aim,
+  vx:0, vy:speedRatio * earthSpeed,
   deltaV: Math.abs(speedRatio - 1) * earthSpeed,
   miss: Math.hypot(arrival.x - radius * Math.cos(arrivalPhase), arrival.y - radius * Math.sin(arrivalPhase)),
   relativeSpeed: Math.hypot(arrival.vx + targetSpeed * Math.sin(arrivalPhase), arrival.vy - targetSpeed * Math.cos(arrivalPhase)),
@@ -76,4 +77,64 @@ export function flyby(body, altitude, excess, side) {
  const outgoing = [excess * Math.cos(direction), orbitalSpeed + excess * Math.sin(direction)];
  return {periapsis, eccentricity, limit, turn, incoming, outgoing, orbitalSpeed,
   change: Math.hypot(...outgoing) - Math.hypot(...incoming)};
+}
+
+// An ideal tangential departure from a 200 km Earth parking orbit.
+// Velocity components are heliocentric, expressed along the radial and prograde axes.
+export function departureCost(vx, vy) {
+ const excess = Math.hypot(vx, vy - earthSpeed);
+ const parkingSpeedSquared = assistBodies.Earth.mu / (assistBodies.Earth.radius + 200);
+ return {
+  excess,
+  burn: Math.sqrt(2 * parkingSpeedSquared + excess ** 2) - Math.sqrt(parkingSpeedSquared),
+  energy: (parkingSpeedSquared + excess ** 2) / 2, // 1 km²/s² = 1 MJ/kg
+ };
+}
+
+export const fastRatio = radius => Math.min(1.405, Math.max(.54, 1 + (hohmannRatio(radius) - 1) * 1.35));
+
+// Point the heliocentric velocity at the target's current position, then coast.
+// Orient the ellipse by its eccentricity vector and advance using Kepler's equation.
+export function directTransfer(radius, speedRatio, phase) {
+ const target = [radius * Math.cos(phase), radius * Math.sin(phase)];
+ const distance = Math.hypot(target[0] - 1, target[1]);
+ const vx = speedRatio * (target[0] - 1) / distance;
+ const vy = speedRatio * target[1] / distance;
+ const a = 1 / (2 - speedRatio ** 2);
+ const orientation = vy < 0 ? -1 : 1;
+ const ex = vy ** 2 - 1, ey = -vx * vy;
+ const e = Math.min(1, Math.hypot(ex, ey));
+ const omega = Math.atan2(ey, ex);
+ const minor = Math.abs(vy) / Math.sqrt(a);
+ const rate = circularRate(a);
+ const start = Math.atan2(vx / Math.sqrt(a), 1 - 1 / a);
+ const initialMean = start - e * Math.sin(start);
+ const straightDuration = distance / (speedRatio * circularRate(1));
+ const solarRadius = RSUN / AU;
+ let duration = straightDuration;
+ if (a * (1 - e) < solarRadius) {
+  const entry = -Math.acos((1 - solarRadius / a) / e);
+  const nextEntry = entry + 2 * Math.PI * Math.ceil((start - entry) / (2 * Math.PI));
+  duration = Math.min(duration, (nextEntry - e * Math.sin(nextEntry) - initialMean) / rate);
+ }
+ const position = days => {
+  const mean = initialMean + rate * days;
+  let lo = mean - e, hi = mean + e;
+  for (let i = 0; i < 48; i++) {
+   const mid = (lo + hi) / 2;
+   if (mid - e * Math.sin(mid) < mean) lo = mid;
+   else hi = mid;
+  }
+  const eccentricAnomaly = (lo + hi) / 2;
+  const px = a * (Math.cos(eccentricAnomaly) - e);
+  const py = orientation * a * minor * Math.sin(eccentricAnomaly);
+  return {x:px * Math.cos(omega) - py * Math.sin(omega), y:px * Math.sin(omega) + py * Math.cos(omega)};
+ };
+ const arrival = position(duration);
+ const targetPhase = phase + circularRate(radius) * duration;
+ return {
+  position, duration, straightDuration, target, collided: duration < straightDuration,
+  vx:vx * earthSpeed, vy:vy * earthSpeed,
+  miss:Math.hypot(arrival.x - radius * Math.cos(targetPhase), arrival.y - radius * Math.sin(targetPhase)),
+ };
 }

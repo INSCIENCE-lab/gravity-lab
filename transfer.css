@@ -19,3 +19,10 @@
 .transfer-theory li{margin-top:6px}
 .transfer-formula{display:block;margin:.5rem 0;padding:.75rem 1rem;background:var(--panel2);border-radius:8px;font-size:1.12em;overflow-wrap:anywhere}
 @media(max-width:780px){.transfer-layout{grid-template-columns:1fr}.transfer-controls{grid-row:1}}
+.transfer-controls [aria-pressed=true]{border-color:var(--route);color:var(--route)}
+.transfer-table-wrap{overflow-x:auto}
+.transfer-table{width:100%;border-collapse:collapse;text-align:left}
+.transfer-table th,.transfer-table td{padding:.65rem .9rem;border-bottom:1px solid var(--line)}
+.transfer-table td{white-space:nowrap}
+.transfer-table thead th{color:var(--muted);font-size:.9em}
+.transfer-table tbody th{font-weight:600;min-width:11rem}
