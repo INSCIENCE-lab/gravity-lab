@@ -1,3 +1,4 @@
+import {mountExperimentPreviews} from './experiment-previews.js?v=1';
 import {orbitVelocityHelp} from './orbit-velocity-help.js';
 import {dayWord, scientificNumber, journalLabel, unitLabel} from './uk-display.js?v=editorial1';
 import {mountTransfer} from './transfer-lab.js?v=energy';
@@ -99,6 +100,7 @@ const navigationLabels={
  it:['Navigazione della sezione','Teoria','Esperimenti','Diario'],
  es:['Navegación de la sección','Teoría','Experimentos','Cuaderno']
 };
+let disposeExperimentPreviews;
 function pageNavigation(){
  const home=pageMode==='home',section=pageMode==='section',lab=pageMode==='lab',group=lab?experiments[current].category:pageSection;
  const [navigation,theoryLabel,experimentsLabel,journalLabel]=navigationLabels[getLanguage()]||navigationLabels.en;
@@ -123,9 +125,25 @@ function pageNavigation(){
   $(key+'Tab').href='?section='+key+'&lang='+lang;
   $(key+'Tab').querySelector('small').textContent=ranges[key]+' →';
  }
+ disposeExperimentPreviews?.();
+ disposeExperimentPreviews=null;
  if(section){
   $('sectionTitle').textContent=T(group);$('sectionRange').textContent=ranges[group]+' · '+T('experiments');
-  $('experimentCards').innerHTML=Object.entries(experiments).filter(([,v])=>v.category===group).map(([id,v])=>`<a class="experiment-card" href="?experiment=${id}&lang=${lang}"><span class="experiment-number">${String(Object.keys(experiments).indexOf(id)+1).padStart(2,'0')}</span><h2>${tr(v.name,lang)}</h2><p>${tr(v.tag,lang)}</p><span class="experiment-open">${T('openSimulation')}</span></a>`).join('');
+  const language=getLanguage();
+  const grid=$('experimentCards');
+  grid.dataset.category=group;
+  grid.innerHTML=Object.entries(experiments).map(([id,v],index)=>{
+   if(v.category!==group)return '';
+   return `<a class="experiment-card" href="?experiment=${id}&amp;lang=${language}">
+    <canvas class="experiment-preview" data-preview="${id}" width="720" height="348" aria-hidden="true"></canvas>
+    <div class="experiment-card-copy">
+     <span class="experiment-number">${String(index+1).padStart(2,'0')}</span>
+     <h2>${tr(v.name,lang)}</h2><p>${tr(v.tag,lang)}</p>
+     <span class="experiment-open">${T('openSimulation')}</span>
+    </div>
+   </a>`;
+  }).join('');
+  disposeExperimentPreviews=mountExperimentPreviews(grid,$('catalogMotion'),language);
  }
 }
 function nav(){pageNavigation();const active=experiments[current].category;for(const group of ['newton','gr'])$(group+'Nav').hidden=group!==active;for(const group of ['newton','gr'])$(group+'Nav').innerHTML=Object.entries(experiments).filter(([,v])=>v.category===group).map(([id,v])=>`<button class="experiment-button ${id===current?'active':''}" data-exp="${id}" aria-current="${id===current?'page':'false'}"><span>${String(Object.keys(experiments).indexOf(id)+1).padStart(2,'0')}</span><span><strong>${tr(v.name,lang)}</strong><small>${tr(v.tag,lang)}</small></span></button>`).join('');}

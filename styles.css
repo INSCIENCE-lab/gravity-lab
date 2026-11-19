@@ -162,3 +162,22 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
 
 .sat-fit{display:flex;align-items:center;gap:.45rem;margin:.7rem 0}
 .sat-fit input{accent-color:#dae94d}
+
+/* Animated experiment covers on the two catalog pages. */
+.catalog-intro{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px}
+.catalog-intro p{margin:0;color:var(--muted)}
+.catalog-motion{min-height:44px}
+.experiment-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+.experiment-cards[data-category=gr]{grid-template-columns:repeat(4,minmax(0,1fr))}
+.experiment-card{min-width:0;min-height:0;padding:0;overflow:hidden}
+.experiment-preview{display:block;width:100%;height:auto;aspect-ratio:360/174;background:#0a101d;border-bottom:1px solid var(--line)}
+.experiment-card-copy{display:flex;flex:1;flex-direction:column;padding:22px 24px 24px}
+.experiment-card-copy h2{margin-top:12px}
+@media(max-width:1040px){
+ .experiment-cards,.experiment-cards[data-category=gr]{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:550px){
+ .experiment-cards,.experiment-cards[data-category=gr]{grid-template-columns:1fr}
+ .experiment-card-copy{padding:18px 20px 21px}
+}
+@media(prefers-reduced-motion:reduce){.experiment-card{transition:none}}
