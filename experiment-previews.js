@@ -1,3 +1,4 @@
+import {drawPlanetIllustration} from './planet-illustrations.js?v=1';
 import {Binary, Schwarzschild, clock, clockBodies, earth, jump, planets, rg, sampleRay, stepSurfaceFall, traceRay} from './physics.js?v=fullaudit2';
 import {flight, stateAt} from './projectile-physics.js';
 import {circularSpeed, referenceEllipse} from './satellite-physics.js?v=editorial1';
@@ -36,35 +37,6 @@ function glow(ctx,x,y,r,color){
  disc(ctx,x,y,r,color);
  ctx.restore();
 }
-function sphere(ctx,x,y,r,light,middle,dark){
- const gradient=ctx.createRadialGradient(x-r*.38,y-r*.48,r*.04,x,y,r*1.06);
- gradient.addColorStop(0,light);
- gradient.addColorStop(.53,middle);
- gradient.addColorStop(1,dark);
- disc(ctx,x,y,r,gradient);
-}
-function globe(ctx,x,y,r){
- glow(ctx,x,y,r+1.1,'#6597ee');
- sphere(ctx,x,y,r,'#9fddfb','#266194','#081426');
- ctx.save();
- ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.clip();
- ctx.translate(x,y);ctx.scale(r,r);
- const land=[
-  [[-.73,-.43],[-.51,-.67],[-.18,-.72],[.03,-.60],[-.04,-.44],[-.28,-.26],[-.19,-.02],[-.41,-.06],[-.6,-.20]],
-  [[-.16,-.01],[.09,.07],[.23,.29],[.09,.50],[-.04,.75],[-.14,.47],[-.26,.24]],
-  [[.2,-.54],[.66,-.65],[.91,-.37],[.65,-.2],[.43,-.27],[.33,-.08],[.48,.06],[.29,.4],[.14,.24],[.05,-.02],[.15,-.24]],
- ];
- for(const shape of land){
-  ctx.beginPath();shape.forEach(([u,v],i)=>i?ctx.lineTo(u,v):ctx.moveTo(u,v));
-  ctx.closePath();ctx.fillStyle='#729e80';ctx.fill();
- }
- ellipse(ctx,.1,-.25,.78,.12,-.27,'#d5eeff58',.032);
- ellipse(ctx,.14,.58,.59,.12,-.28,'#d5eeff4d',.026);
- const shade=ctx.createLinearGradient(-.7,-.5,.9,.7);
- shade.addColorStop(0,'transparent');shade.addColorStop(1,'#080c1bbe');
- disc(ctx,0,0,1,shade);
- ctx.restore();
-}
 function blackHole(ctx,x,y,r){
  ellipse(ctx,x,y,r*1.68,r*1.68,0,'#9b68d548');
  ellipse(ctx,x,y,r*1.27,r*1.27,0,'#b88ee6a0',1.3);
@@ -101,7 +73,7 @@ function fallPreview(){
  }
  return (ctx,t)=>{
   const height=heights[Math.round(Math.min(1,t*1.27)*(heights.length-1))];
-  globe(ctx,180,305,181);
+  drawPlanetIllustration(ctx,'earth',180,305,181);
   const platform=114;
   line(ctx,[[89,platform],[151,platform]],'#93b0cd',2);
   line(ctx,[[102,platform+1],[96,141]],'#6684a5',1.7);
@@ -141,8 +113,8 @@ function jumpPreview(){
  const measurements=[jump(earth),jump(mars)];
  const floor=130;
  return (ctx,t)=>{
-  globe(ctx,91,153,18);
-  sphere(ctx,269,153,18,'#ffd3a9','#b86142','#442832');
+  drawPlanetIllustration(ctx,'earth',91,153,18);
+  drawPlanetIllustration(ctx,'mars',269,153,18);
   measurements.forEach((measurement,i)=>{
    const x=91+i*178, color=i?copper:blue;
    const peak=floor-measurement.height_m*70;
@@ -179,7 +151,7 @@ function satellitePreview(){
   line(ctx,points.slice(128,257),'#86baa96f',1.3,[3,4]);
   const index=Math.round(t*256);
   if(index>=128)follow(ctx,points,t,lime,4.5);
-  globe(ctx,180,86,45);
+  drawPlanetIllustration(ctx,'earth',180,86,45);
   line(ctx,points.slice(0,129),'#acc9a5bd',1.3);
   if(index<128)follow(ctx,points,t,lime,4.5);
  };
@@ -248,7 +220,7 @@ function clocksPreview(){
  return (ctx,t)=>{
   clockFace(ctx,102,blue,t*earthRate);
   clockFace(ctx,258,violet,t*rate);
-  globe(ctx,102,142,12);
+  drawPlanetIllustration(ctx,'earth',102,142,12);
   blackHole(ctx,258,142,9);
   line(ctx,[[153,75],[206,75]],'#a8bfde75',1,[3,4]);
  };

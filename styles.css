@@ -181,3 +181,5 @@ footer{align-items:flex-start}.footer-identity{flex:1 1 480px;max-width:650px}.f
 
 #catalogTitle{margin-top:32px}
 @media(min-width:1360px){.experiment-cards[data-category=all]{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.canvas-wrap:has(#scene[data-experiment=jump]){min-height:380px}
+@media(max-width:600px){.canvas-wrap:has(#scene[data-experiment=jump]){min-height:435px}}

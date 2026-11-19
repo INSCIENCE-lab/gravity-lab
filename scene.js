@@ -1,3 +1,4 @@
+import {drawPlanetIllustration} from './planet-illustrations.js?v=1';
 import {translate} from './locales.js?v=editorial1';
 import {norm,scale,unit,add,rotateOrbit,earth,planets,jump,flamm,rg,C,sampleRay} from './physics.js?v=fullaudit2';
 export class Scene {
@@ -30,9 +31,44 @@ export class Scene {
  else {this.grid(extent*.85);for(const [R,col,label] of [[3,'#d5a88c55',lang==='uk'?'Фотонна сфера: 3r_g':'Photon sphere: 3r_g'],[6,'#5b9f9c88','ISCO: 6r_g']]){const pts=Array.from({length:101},(_,j)=>[R*Math.cos(j/100*Math.PI*2),R*Math.sin(j/100*Math.PI*2),0]);this.path(pts,col,1);this.label(label,[R,0,0],col.slice(0,7),-6);}this.path(model.history.map(h=>h.position),'#BDC71E',1.5);this.blackHole([0,0,0],2);this.sphere(model.position(),5,'#BDC71E',true);this.label(lang==='uk'?'Пробне тіло':'Test body',model.position(),'#BDC71E',-12);this.label(lang==='uk'?'Горизонт 2r_g':'Horizon 2r_g',[0,0,2],'#baae9a',-5);}
  }
  drawLens(ray,others,fraction,lang){this.clear(26);this.grid(25);for(const r of others)this.path(r.path.filter(p=>norm(p)<60),'#3c788b66',1);this.path(ray.path.filter(p=>norm(p)<60),'#dfc685',2);this.blackHole([0,0,0],2);const pt=sampleRay(ray,fraction).position;if(norm(pt)<80)this.sphere(pt,4,'#f7e4ac',true);const pts=Array.from({length:101},(_,j)=>[3*Math.cos(j/100*2*Math.PI),3*Math.sin(j/100*2*Math.PI),0]);this.path(pts,'#b6847e77',1);this.text(lang==='uk'?'Нульові геодезичні · вакуум · r у r_g':'Null geodesics · vacuum · r in r_g',18,this.H-40,'#778fa6',9);}
- drawJump(p,t,lang){this.clear(2);const c=this.ctx,results=planets.map(b=>jump(b,p.mass,p.earthHeight)),maxH=Math.max(...results.map(r=>r.height_m)),left=25,step=(this.W-50)/8,slanted=step<65,base=Math.min(this.H*.76,this.H-(slanted?118:90)),sy=Math.min(this.H*.46,base-65)/maxH;
- for(let i=0;i<8;i++){const planet=planets[i],r=results[i],x=left+step*(i+.5),h=Math.max(0,r.v0_ms*t-.5*r.g_ms2*t*t),peakY=base-r.height_m*sy,yy=base-h*sy;c.strokeStyle=planet.color+'35';c.setLineDash([2,4]);c.beginPath();c.moveTo(x,base);c.lineTo(x,peakY);c.stroke();c.setLineDash([]);c.strokeStyle=planet.color+'aa';c.beginPath();c.moveTo(x-11,base);c.lineTo(x+11,base);c.stroke();c.fillStyle=planet.color;c.beginPath();c.arc(x,yy-13,4,0,Math.PI*2);c.fill();c.strokeStyle=planet.color;c.lineWidth=1.5;c.beginPath();c.moveTo(x,yy-9);c.lineTo(x,yy-2);c.lineTo(x-4,yy+4);c.moveTo(x,yy-2);c.lineTo(x+4,yy+4);c.moveTo(x-5,yy-5);c.lineTo(x+5,yy-5);c.stroke();if(slanted){c.save();c.translate(x,base+43);c.rotate(-Math.PI/3);this.text(planet[lang],0,0,planet.color,11,'center');c.restore();}else this.text(planet[lang],x,base+30,planet.color,11,'center');this.text(r.height_m.toFixed(2)+' m',x,peakY-22,'#93a8bb',9,'center');}
- this.text(lang==='uk'?'Однакові v₀ та шкала висоти.':'Same v₀ and height scale.',18,this.H-34,'#778fa6',9);this.text(lang==='uk'?'Атмосфери не враховано.':'No atmospheric effects.',18,this.H-20,'#778fa6',9);
+ drawJump(p,t,lang){
+  this.clear(2);
+  const c=this.ctx;
+  const results=planets.map(planet=>jump(planet,p.mass,p.earthHeight));
+  const maxH=Math.max(...results.map(result=>result.height_m),Number.EPSILON);
+  const columns=this.W<540?4:8;
+  const rows=Math.ceil(planets.length/columns);
+  const step=(this.W-24)/columns;
+  const rowHeight=(this.H-42)/rows;
+  // A common visual diameter keeps the jump heights comparable across planets.
+  const radius=Math.max(10,Math.min(31,step*.27,rowHeight*.14));
+  const baseOffset=rowHeight-2*radius-25;
+  const scale=Math.max(1,baseOffset-40)/maxH;
+
+  for(let i=0;i<planets.length;i++){
+   const planet=planets[i], result=results[i];
+   const x=12+step*(i%columns+.5);
+   const base=8+Math.floor(i/columns)*rowHeight+baseOffset;
+   const altitude=Math.max(0,result.v0_ms*t-.5*result.g_ms2*t*t);
+   const peakY=base-result.height_m*scale;
+   const feetY=base-altitude*scale;
+   const cy=base+radius+4;
+   drawPlanetIllustration(c,planet.id,x,cy,radius);
+
+   c.strokeStyle=planet.color+'55';c.lineWidth=1;
+   c.setLineDash([2,4]);c.beginPath();c.moveTo(x,base);c.lineTo(x,peakY);c.stroke();c.setLineDash([]);
+   c.strokeStyle=planet.color+'9c';c.beginPath();c.moveTo(x-10,base);c.lineTo(x+10,base);c.stroke();
+   c.fillStyle=planet.color;c.beginPath();c.arc(x,feetY-15,4,0,Math.PI*2);c.fill();
+   c.strokeStyle=planet.color;c.lineWidth=1.5;c.beginPath();
+   c.moveTo(x,feetY-11);c.lineTo(x,feetY-6);c.lineTo(x-4,feetY);
+   c.moveTo(x,feetY-6);c.lineTo(x+4,feetY);
+   c.moveTo(x-5,feetY-9);c.lineTo(x+5,feetY-9);c.stroke();
+
+   this.text(planet[lang],x,cy+radius+16,planet.color,step<68?10:12,'center');
+   this.text(result.height_m.toFixed(2)+' m',x,peakY-22,'#a9bacd',step<68?9:10,'center');
+  }
+  this.text(lang==='uk'?'Однакові v₀ та шкала висоти.':'Same v₀ and height scale.',18,this.H-24,'#778fa6',9);
+  this.text(lang==='uk'?'Атмосфери не враховано.':'No atmospheric effects.',18,this.H-10,'#778fa6',9);
  }
  drawClocks(rows,elapsed,lang){this.clear(2);const c=this.ctx,width=this.W/rows.length,cy=this.H*.43,r=Math.min(43,width*.32);for(let i=0;i<rows.length;i++){const row=rows[i],x=width*(i+.5);c.strokeStyle=row.valid?'#557276':'#593d3c';c.lineWidth=1;c.beginPath();c.arc(x,cy,r,0,Math.PI*2);c.stroke();for(let a=0;a<12;a++){const angle=a*Math.PI/6;c.strokeStyle='#385068';c.beginPath();c.moveTo(x+Math.sin(angle)*(r-4),cy-Math.cos(angle)*(r-4));c.lineTo(x+Math.sin(angle)*r,cy-Math.cos(angle)*r);c.stroke();}if(row.valid){const a=elapsed*row.rate*2*Math.PI/10;c.strokeStyle='#E2E7AE';c.lineWidth=2;c.beginPath();c.moveTo(x,cy);c.lineTo(x+Math.sin(a)*(r-8),cy-Math.cos(a)*(r-8));c.stroke();c.fillStyle='#E2E7AE';c.beginPath();c.arc(x,cy,3,0,Math.PI*2);c.fill();}else this.text('—',x,cy+6,'#b88674',20,'center');this.text(row.label,x,cy+r+27,row.color,Math.min(11,width/9),'center');this.text(row.valid?row.rate.toFixed(6):lang==='uk'?'Недоступно':'Unavailable',x,cy+r+47,'#7f98af',10,'center');}this.text(lang==='uk'?'Оберт стрілки: 10 с у демонстрації; фізичні значення в таблиці.':'Dial turn: 10 s in the animation; physical values in the table.',18,this.H-40,'#778fa6',9);}
  drawWorldline(points,lengthScale,timeScale,lang,axis='x'){this.clear(2);const c=this.ctx,L=65,R=this.W-30,T=40,B=this.H-55,ts=points.map(p=>p.t*timeScale),xs=points.map(p=>p.x*lengthScale),tmax=Math.max(1e-30,...ts),xmin=Math.min(0,...xs),xmax=Math.max(0,...xs),range=Math.max(1e-30,xmax-xmin);const X=x=>L+(x-xmin)/range*(R-L),Y=t=>B-t/tmax*(B-T);c.strokeStyle='#3b516a';c.beginPath();c.moveTo(L,T);c.lineTo(L,B);c.lineTo(R,B);c.stroke();c.strokeStyle='#BDC71E';c.lineWidth=1.8;c.beginPath();points.forEach((p,i)=>{const x=X(xs[i]),y=Y(ts[i]);if(i)c.lineTo(x,y);else c.moveTo(x,y);});c.stroke();this.text('ct',24,35,'#b4c6ce',12);this.text(axis,R,B+23,'#b4c6ce',12);this.text((C*tmax).toExponential(2)+' m',L+7,T+8,'#8297ad',9);this.text(xmin.toExponential(2)+' m',L,B+18,'#8297ad',8);this.text(xmax.toExponential(2)+' m',R,B+18,'#8297ad',8,'right');this.text(lang==='uk'?'Осі масштабовано незалежно; нахил не показує швидкість світла.':'Axes scaled independently; slope does not represent the speed of light.',18,this.H-18,'#778fa6',8);}

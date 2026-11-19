@@ -1,4 +1,4 @@
-import {mountExperimentPreviews} from './experiment-previews.js?v=home-catalog';
+import {mountExperimentPreviews} from './experiment-previews.js?v=jump-planets';
 import {orbitVelocityHelp} from './orbit-velocity-help.js';
 import {dayWord, scientificNumber, journalLabel, unitLabel} from './uk-display.js?v=editorial1';
 import {mountTransfer} from './transfer-lab.js?v=energy';
@@ -15,7 +15,7 @@ import {schwarzReference,lensReference} from './black-hole-guide.js?v=uk-copy1';
 import {G,C,AU,DAY,MSUN,earth,planets,clockBodies,surface,jump,clock,clockAtHeight,clockReference,Binary,Schwarzschild,traceRay,rg,rs,rk4,norm,sampleRay,stepSurfaceFall} from './physics.js?v=fullaudit2';
 import {experiments,defaultParams,clockHeights,ui,tr} from './config.js?v=transfer';
 import {theory,sources} from './theory.js?v=editorial1';
-import {Scene} from './scene.js?v=editorial1';
+import {Scene} from './scene.js?v=jump-planets';
 import {schwarzField,weakField,orbitPlane} from './geometry.js?v=palette2';
 import {drawSchwarzGeometry,drawBinaryGeometry} from './geometry-scene.js?v=black-sphere1';
 import {dashboardHTML,updateClockHands} from './clock-dashboard.js?v=editorial1';
