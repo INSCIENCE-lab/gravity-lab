@@ -102,11 +102,17 @@ function fallPreview(){
  return (ctx,t)=>{
   const height=heights[Math.round(Math.min(1,t*1.27)*(heights.length-1))];
   globe(ctx,180,305,181);
-  for(let y=24;y<120;y+=15)line(ctx,[[107,y],[115,y]],'#89b9e35c');
-  line(ctx,[[180,26],[180,119]],'#a8cde768',1,[3,5]);
-  const y=116-height*.7;
-  glow(ctx,180,y,5,lime);
-  arrow(ctx,195,y,0,Math.min(28,124-y),copper);
+  const platform=114;
+  line(ctx,[[89,platform],[151,platform]],'#93b0cd',2);
+  line(ctx,[[102,platform+1],[96,141]],'#6684a5',1.7);
+  line(ctx,[[138,platform+1],[144,141]],'#6684a5',1.7);
+  glow(ctx,120,platform-6,5,lime);
+  arrow(ctx,106,platform-8,0,-27,blue);
+  arrow(ctx,134,platform-8,0,27,copper);
+  line(ctx,[[237,25],[237,130]],'#a8cde768',1,[3,5]);
+  const y=130-height*.82;
+  glow(ctx,237,y,5,lime);
+  arrow(ctx,252,y,0,26,copper);
  };
 }
 function binaryPreview(pn){
@@ -132,19 +138,20 @@ function binaryPreview(pn){
 }
 function jumpPreview(){
  const mars=planets.find(body=>body.id==='mars');
- const traces=[earth,mars].map((body,i)=>{
-  const measurement=jump(body);
-  const center=92+i*176;
-  return sample(t=>[center-47+94*t,130-65*measurement.height_m*4*t*(1-t)],80);
- });
+ const measurements=[jump(earth),jump(mars)];
+ const floor=130;
  return (ctx,t)=>{
-  globe(ctx,92,150,18);
-  sphere(ctx,268,150,18,'#ffd3a9','#b86142','#442832');
-  for(let i=0;i<2;i++){
-   line(ctx,[[27+i*176,132],[156+i*176,132]],'#a2b8d84a');
-   line(ctx,traces[i],i?copper:blue,1,[3,4]);
-   follow(ctx,traces[i],Math.min(1,t*(i?1.04:1.62)),i?copper:blue);
-  }
+  globe(ctx,91,153,18);
+  sphere(ctx,269,153,18,'#ffd3a9','#b86142','#442832');
+  measurements.forEach((measurement,i)=>{
+   const x=91+i*178, color=i?copper:blue;
+   const peak=floor-measurement.height_m*70;
+   const elapsed=Math.min(1,t*1.14*measurements[1].flight_s/measurement.flight_s);
+   line(ctx,[[x-58,floor+5],[x+58,floor+5]],'#a2b8d84a');
+   line(ctx,[[x,peak],[x,floor]],color+'70',1,[3,4]);
+   line(ctx,[[x-10,peak],[x+10,peak]],color+'a0');
+   glow(ctx,x,floor-(floor-peak)*4*elapsed*(1-elapsed),4.5,color);
+  });
  };
 }
 function projectilePreview(){

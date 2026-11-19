@@ -1,4 +1,4 @@
-import {mountExperimentPreviews} from './experiment-previews.js?v=1';
+import {mountExperimentPreviews} from './experiment-previews.js?v=home-catalog';
 import {orbitVelocityHelp} from './orbit-velocity-help.js';
 import {dayWord, scientificNumber, journalLabel, unitLabel} from './uk-display.js?v=editorial1';
 import {mountTransfer} from './transfer-lab.js?v=energy';
@@ -10,7 +10,7 @@ import {binaryGridReference} from './binary-grid.js?v=palette2';
 import {geometryLearning} from './geometry-learning.js?v=transfer';
 import {drawSurfaceLocal} from './surface-scene.js?v=fullaudit3';
 import {AnimationLoop} from './animation-loop.js?v=palette2';
-import {introduction} from './introduction.js?v=theory-copy';
+import {introduction} from './introduction.js?v=home-catalog';
 import {schwarzReference,lensReference} from './black-hole-guide.js?v=uk-copy1';
 import {G,C,AU,DAY,MSUN,earth,planets,clockBodies,surface,jump,clock,clockAtHeight,clockReference,Binary,Schwarzschild,traceRay,rg,rs,rk4,norm,sampleRay,stepSurfaceFall} from './physics.js?v=fullaudit2';
 import {experiments,defaultParams,clockHeights,ui,tr} from './config.js?v=transfer';
@@ -102,7 +102,7 @@ const navigationLabels={
 };
 let disposeExperimentPreviews;
 function pageNavigation(){
- const home=pageMode==='home',section=pageMode==='section',lab=pageMode==='lab',group=lab?experiments[current].category:pageSection;
+ const home=pageMode==='home',section=pageMode==='section',lab=pageMode==='lab';
  const [navigation,theoryLabel,experimentsLabel,journalLabel]=navigationLabels[getLanguage()]||navigationLabels.en;
  $('labNav').setAttribute('aria-label',navigation);
  $('theoryLink').textContent=theoryLabel;
@@ -116,33 +116,36 @@ function pageNavigation(){
   $('heroExperimentCount').textContent=String(Object.keys(experiments).length).padStart(2,'0');
   $('homeTheory').innerHTML=introduction(lang);
  }
- $('homePage').hidden=!home;$('sectionPage').hidden=!section;$('lab').hidden=!lab;$('pageBreadcrumbs').hidden=home;$('backSection').hidden=!lab;
- $('skipLink').href=home?'#homePage':section?'#sectionPage':'#lab';$('homeBrand').href=$('backHome').href='?lang='+lang;$('backSection').href='?section='+group+'&lang='+lang;
- const ranges={};
- for(const key of ['newton','gr']){
-  const indexes=Object.values(experiments).flatMap((experiment,i)=>experiment.category===key?[String(i+1).padStart(2,'0')]:[]);
-  ranges[key]=indexes[0]+'–'+indexes.at(-1);
-  $(key+'Tab').href='?section='+key+'&lang='+lang;
-  $(key+'Tab').querySelector('small').textContent=ranges[key]+' →';
- }
+ $('homePage').hidden=!home;$('physicsTabs').hidden=lab;$('lab').hidden=!lab;$('pageBreadcrumbs').hidden=home;$('backSection').hidden=!lab;
+ $('skipLink').href=home?'#homePage':section?'#physicsTabs':'#lab';
+ $('homeBrand').href=$('backHome').href=homeUrl;
+ $('backSection').href=homeUrl+'#physicsTabs';
  disposeExperimentPreviews?.();
  disposeExperimentPreviews=null;
- if(section){
-  $('sectionTitle').textContent=T(group);$('sectionRange').textContent=ranges[group]+' · '+T('experiments');
+ if(!lab){
   const language=getLanguage();
   const grid=$('experimentCards');
-  grid.dataset.category=group;
-  grid.innerHTML=Object.entries(experiments).map(([id,v],index)=>{
-   if(v.category!==group)return '';
-   return `<a class="experiment-card" href="?experiment=${id}&amp;lang=${language}">
+  const numbered=Object.entries(experiments).map(([id,experiment],index)=>({id,experiment,number:String(index+1).padStart(2,'0')}));
+  const cards=section?numbered.filter(item=>item.experiment.category===pageSection):numbered;
+  $('catalogTitle').hidden=section;
+  $('catalogTitle').textContent=translate(lang==='uk'?'Від пояснення — до досліду':'From explanation to experiment');
+  $('sectionTitle').hidden=!section;
+  $('sectionRange').hidden=!section;
+  $('physicsTabs').setAttribute('aria-labelledby',section?'sectionTitle':'catalogTitle');
+  if(section){
+   $('sectionTitle').textContent=T(pageSection);
+   $('sectionRange').textContent=cards[0].number+'–'+cards.at(-1).number+' · '+T('experiments');
+  }
+  grid.dataset.category=section?pageSection:'all';
+  const cardHeading=section?'h2':'h3';
+  grid.innerHTML=cards.map(({id,experiment,number})=>`<a class="experiment-card" href="?experiment=${id}&amp;lang=${language}">
     <canvas class="experiment-preview" data-preview="${id}" width="720" height="348" aria-hidden="true"></canvas>
     <div class="experiment-card-copy">
-     <span class="experiment-number">${String(index+1).padStart(2,'0')}</span>
-     <h2>${tr(v.name,lang)}</h2><p>${tr(v.tag,lang)}</p>
+     <span class="experiment-number">${number}</span>
+     <${cardHeading}>${tr(experiment.name,lang)}</${cardHeading}><p>${tr(experiment.tag,lang)}</p>
      <span class="experiment-open">${T('openSimulation')}</span>
     </div>
-   </a>`;
-  }).join('');
+   </a>`).join('');
   disposeExperimentPreviews=mountExperimentPreviews(grid,$('catalogMotion'),language);
  }
 }
