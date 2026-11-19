@@ -91,7 +91,10 @@ function menuNavigation(){
 function pageNavigation(){
  menuNavigation();
  const home=pageMode==='home',section=pageMode==='section',lab=pageMode==='lab',group=lab?experiments[current].category:pageSection;
- if(home)$('homeTheory').innerHTML=introduction(lang);
+ if(home){
+  $('heroExperimentCount').textContent=String(Object.keys(experiments).length).padStart(2,'0');
+  $('homeTheory').innerHTML=introduction(lang);
+ }
  $('homePage').hidden=!home;$('sectionPage').hidden=!section;$('lab').hidden=!lab;$('pageBreadcrumbs').hidden=home;$('backSection').hidden=!lab;$('theoryLink').hidden=!lab;
  $('skipLink').href=home?'#homePage':section?'#sectionPage':'#lab';$('homeBrand').href=$('backHome').href='?lang='+lang;$('backSection').href='?section='+group+'&lang='+lang;
  for(const key of ['newton','gr'])$(key+'Tab').href='?section='+key+'&lang='+lang;
