@@ -1,0 +1,21 @@
+.transfer-lab{--route:#d8e632;--destination:#f9a975;min-width:0}
+.transfer-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(225px,.42fr);gap:16px;align-items:start}
+.transfer-controls,.transfer-readout,.transfer-theory{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:18px}
+.transfer-controls{display:grid;gap:15px}
+.transfer-controls label,.transfer-play label{display:grid;gap:6px}
+.transfer-controls h3{margin:0}
+.transfer-controls input,.transfer-play input{width:100%}
+.transfer-map{width:100%;aspect-ratio:1.26;display:block;border-radius:14px;border:1px solid var(--line);background:#0a101d}
+.transfer-play,.transfer-actions,.transfer-legend{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:12px 0}
+.transfer-play label{flex:1 1 170px}
+.transfer-legend{color:var(--muted);font-size:.9em;gap:14px}
+.transfer-legend i{display:inline-block;width:.65em;height:.65em;border-radius:50%;margin-right:.4em}
+.transfer-readout{display:grid;gap:8px;margin:0 0 16px}
+.transfer-readout p,.transfer-controls p{margin:0}
+.transfer-readout strong{color:var(--route)}
+.transfer-theory{margin-top:18px;line-height:1.65}
+.transfer-theory p{max-width:74ch}
+.transfer-theory a{text-decoration:underline}
+.transfer-theory li{margin-top:6px}
+.transfer-formula{display:block;margin:.5rem 0;padding:.75rem 1rem;background:var(--panel2);border-radius:8px;font-size:1.12em;overflow-wrap:anywhere}
+@media(max-width:780px){.transfer-layout{grid-template-columns:1fr}.transfer-controls{grid-row:1}}

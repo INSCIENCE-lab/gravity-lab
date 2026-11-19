@@ -352,4 +352,36 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://inscience-lab.github.io/gravity-lab/?experiment=clocks&amp;lang=es" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://inscience-lab.github.io/gravity-lab/?experiment=clocks&amp;lang=uk" />
   </url>
+  <url>
+    <loc>https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=uk</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=uk" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=it" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=uk" />
+  </url>
+  <url>
+    <loc>https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=uk" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=it" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=uk" />
+  </url>
+  <url>
+    <loc>https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=it</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=uk" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=it" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=uk" />
+  </url>
+  <url>
+    <loc>https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=uk" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=it" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://inscience-lab.github.io/gravity-lab/?experiment=transfer&amp;lang=uk" />
+  </url>
 </urlset>
