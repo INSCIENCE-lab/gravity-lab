@@ -31,7 +31,12 @@ function sci(n,d=3){if(!Number.isFinite(n))return'—';if(n===0)return'0';if(Mat
 function seconds(n){if(!Number.isFinite(n))return'—';if(n!==0&&Math.abs(n)<1e-6)return sci(n*1e9)+' '+unitLabel('ns',lang);if(Math.abs(n)<.001&&n!==0)return sci(n*1e6)+' '+unitLabel('μs',lang);if(Math.abs(n)<1&&n!==0)return nf(n*1000)+' '+unitLabel('ms',lang);if(Math.abs(n)>=DAY*365.25)return nf(n/(DAY*365.25))+(lang==='uk'?' років':' yr');if(Math.abs(n)>=DAY)return nf(n/DAY)+' '+dayWord(n/DAY,lang,3);return nf(n)+(lang==='uk'?' с':' s');}
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3800);}
 try{const saved=JSON.parse(localStorage.getItem('gravity-notebook-v1')||'[]');if(Array.isArray(saved))records=saved.filter(r=>r&&experiments[r.experiment]&&r.values&&typeof r.id==='string').slice(-10000);lang=getLanguage()==='uk'?'uk':'en';}catch{}
-function saveRecords(){try{localStorage.setItem('gravity-notebook-v1',JSON.stringify(records));}catch{toast(lang==='uk'?'Не вдалося зберегти локально. Експортуй CSV.':'Local storage unavailable. Export CSV.');}$('recordCount').textContent=records.length;}
+function updateRecordCount(){
+ const badge=$('recordCount');
+ badge.textContent=records.length||'';
+ badge.hidden=records.length===0;
+}
+function saveRecords(){try{localStorage.setItem('gravity-notebook-v1',JSON.stringify(records));}catch{toast(lang==='uk'?'Не вдалося зберегти локально. Експортуй CSV.':'Local storage unavailable. Export CSV.');}updateRecordCount();}
 const scene=new Scene($('scene'),()=>{if(model||current==='surface'||current==='jump'||current==='clocks'||ray)draw();});
 function labels(){document.documentElement.lang=getLanguage();document.title=translate(lang==='uk'?'Гравітація у просторі-часі':'Gravity Lab · Exploring spacetime');document.querySelectorAll('[data-i18n]').forEach(el=>el.innerHTML=T(el.dataset.i18n));document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===getLanguage())));$('scene').setAttribute('aria-label',lang==='uk'?'3D-модель гравітації. Перетягни для обертання; стрілки клавіатури також керують камерою.':'3D gravity model. Drag to rotate; arrow keys also control the camera.');$('diskCanvas').setAttribute('aria-label',lang==='uk'?'Акреційний диск: чисельне трасування геодезичних Шварцшильда':'Accretion disk: numerical Schwarzschild ray tracing');$('zoomIn').setAttribute('aria-label',lang==='uk'?'Збільшити':'Zoom in');$('zoomOut').setAttribute('aria-label',lang==='uk'?'Зменшити':'Zoom out');$('resetBtn').title=T('reset');$('stepBtn').title=T('step');$('cameraReset').setAttribute('aria-label',T('reset'));$('playBtn').setAttribute('aria-label',running?T('pause'):T('start'));nav();if(current==='satellite'&&pageMode==='lab'){hideProjectile();showSatellite();return;}hideSatellite();if(current==='projectile'&&pageMode==='lab'){showProjectile();return;}hideProjectile();controls();viewTabs();staticContent();$('cubeBody').innerHTML=clockBodies.map(b=>`<option value="${b.id}">${b[lang]}</option>`).join('');$('cubeBody').value=cube.body;update();}
 
@@ -71,31 +76,27 @@ function hideProjectile(){
  if(projectileController){projectileController.destroy();projectileController=null;}
  $('theoryLink').href='#theory';$('projectileHost').hidden=true;$('standardExperiment').hidden=false;$('status').hidden=false;
 }
-function setMenu(open,returnFocus=false){
- $('menuPanel').hidden=!open;
- $('menuToggle').setAttribute('aria-expanded',String(open));
- $('menuToggle').setAttribute('aria-label',T(open?'menuClose':'menuOpen'));
- if(returnFocus)$('menuToggle').focus();
-}
-function menuNavigation(){
- $('menuHome').href='?lang='+lang;
- $('menuNewton').href='?section=newton&lang='+lang;
- $('menuGR').href='?section=gr&lang='+lang;
- $('menuPanel').setAttribute('aria-label',T('menuLabel'));
- $('menuToggle').setAttribute('aria-label',T($('menuPanel').hidden?'menuOpen':'menuClose'));
- const group=pageMode==='lab'?experiments[current].category:pageSection;
- $('menuHome').setAttribute('aria-current',pageMode==='home'?'page':'false');
- $('menuNewton').setAttribute('aria-current',pageMode!=='home'&&group==='newton'?'true':'false');
- $('menuGR').setAttribute('aria-current',pageMode!=='home'&&group==='gr'?'true':'false');
-}
+const navigationLabels={
+ uk:['Навігація розділу','Теорія','Досліди','Журнал'],
+ en:['Section navigation','Theory','Experiments','Journal'],
+ it:['Navigazione della sezione','Teoria','Esperimenti','Diario'],
+ es:['Navegación de la sección','Teoría','Experimentos','Cuaderno']
+};
 function pageNavigation(){
- menuNavigation();
  const home=pageMode==='home',section=pageMode==='section',lab=pageMode==='lab',group=lab?experiments[current].category:pageSection;
+ const [navigation,theoryLabel,experimentsLabel,journalLabel]=navigationLabels[getLanguage()]||navigationLabels.en;
+ $('labNav').setAttribute('aria-label',navigation);
+ $('theoryLink').textContent=theoryLabel;
+ $('experimentsLink').textContent=experimentsLabel;
+ $('journalLabel').textContent=journalLabel;
+ const homeUrl='?lang='+getLanguage();
+ if(!lab)$('theoryLink').href=(home?'':homeUrl)+'#homeTheory';
+ $('experimentsLink').href=(home?'':homeUrl)+'#physicsTabs';
  if(home){
   $('heroExperimentCount').textContent=String(Object.keys(experiments).length).padStart(2,'0');
   $('homeTheory').innerHTML=introduction(lang);
  }
- $('homePage').hidden=!home;$('sectionPage').hidden=!section;$('lab').hidden=!lab;$('pageBreadcrumbs').hidden=home;$('backSection').hidden=!lab;$('theoryLink').hidden=!lab;
+ $('homePage').hidden=!home;$('sectionPage').hidden=!section;$('lab').hidden=!lab;$('pageBreadcrumbs').hidden=home;$('backSection').hidden=!lab;
  $('skipLink').href=home?'#homePage':section?'#sectionPage':'#lab';$('homeBrand').href=$('backHome').href='?lang='+lang;$('backSection').href='?section='+group+'&lang='+lang;
  for(const key of ['newton','gr'])$(key+'Tab').href='?section='+key+'&lang='+lang;
  if(section){
@@ -248,7 +249,7 @@ async function requestDisk(){
 }
 function record(values=snapshot(),experiment=current,params=p,silent=false){const rows=Array.isArray(values)?values:[values];for(const value of rows){const clean=Object.fromEntries(Object.entries(value).filter(([,v])=>typeof v==='number'||typeof v==='string'||typeof v==='boolean'||v===null));records.push({id:globalThis.crypto.randomUUID?.()??Array.from(globalThis.crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join(''),date:new Date().toISOString(),experiment,params:{...params},values:clean,note:''});}records=records.slice(-10000);saveRecords();if(!silent)toast(T('recorded'));}
 function series(){pausePlayback();if(current==='surface')for(let i=0;i<16;i++){const h=i*earth.radius/15;record({...surface(p.mass,h),time_s:0},current,{...p,height:h},true);}if(current==='jump')for(const planet of planets)record({...jump(planet,p.mass,p.earthHeight),time_s:0},current,{...p,planet:planet.id},true);if(current==='binary'||current==='pn')for(let i=0;i<16;i++){const pp={...p,...(current==='binary'?{distance:.1*10**(i/15*2)}:{separation:100*10**(i/15*1.3)})};record(new Binary(pp,current==='pn').snapshot(),current,pp,true);}if(current==='schwarzschild')for(let i=0;i<16;i++){const pp={...p,r0:6+i*2,speed:1,radial:0};record(new Schwarzschild(pp).snapshot(),current,pp,true);}if(current==='lens')for(let i=0;i<20;i++){const b=4+i*.4,r=traceRay(b),l=rg(p.mass*MSUN);record({mass_solar:p.mass,impact_rg:b,impact_m:b*l,closest_rg:r.closest_rg,deflection_rad:r.deflection_rad,ray_status:r.status,null_constraint_error:r.constraint_error},current,{...p,impact:b},true);}if(current==='clocks'&&p.mode==='height'){for(const body of clockBodies)for(const h of clockHeights)record(clockAtHeight(body,h.height_m,p.duration*DAY,p.observerType),current,{...p,heightPreset:h.id,body:body.id},true);}else if(current==='clocks')for(const body of clockBodies)for(let i=0;i<14;i++){const r=p.mode==='absolute'?p.distance*AU*.1*10**(i/13*2):rs(body.mass)*1.01*10**(i/13*3);record(clock(body,r,p.duration*DAY,p.observerType),current,{...p,body:body.id},true);}toast(T('seriesRecorded'));}
-function openNotebook(){projectileController?.pause();satelliteController?.pause();setMenu(false);pausePlayback();renderNotebook();$('notebook').showModal();}
+function openNotebook(){projectileController?.pause();satelliteController?.pause();pausePlayback();renderNotebook();$('notebook').showModal();}
 function renderNotebook(){const previous=$('chartFilter').value;setOptions($('chartFilter'),Object.keys(experiments).map(id=>[id,name(id)]),experiments[previous]?previous:current);updateAxes();renderEntries();$('exportBtn').disabled=!records.length;$('clearBtn').disabled=!records.length;}
 function setOptions(el,opts,value){el.innerHTML=opts.map(([v,l])=>`<option value="${esc(v)}" ${v===value?'selected':''}>${esc(l)}</option>`).join('');if(!opts.some(o=>o[0]===value)&&opts.length)el.value=opts[0][0];}
 function filtered(){return records.filter(r=>r.experiment===$('chartFilter').value);}
@@ -292,12 +293,6 @@ $('playBtn').addEventListener('click',()=>{
 });$('resetBtn').addEventListener('click',reset);$('stepBtn').addEventListener('click',()=>{advance(current==='schwarzschild'?1:current==='lens'?.01:.05);update();});$('captureBtn').addEventListener('click',()=>record());$('seriesBtn').addEventListener('click',series);$('shareBtn').addEventListener('click',share);$('renderBtn').addEventListener('click',()=>{renderedKey='';requestDisk();});$('diskPresets').addEventListener('click',e=>{const b=e.target.closest('[data-disk-angle]');if(!b)return;p.inclination=Number(b.dataset.diskAngle);renderStats=null;controls();update();requestDisk();});$('fitGeometry').addEventListener('click',()=>{fitGeometry();scene.zoom=1;update();});$('cameraReset').addEventListener('click',()=>{if(view==='cube'){scene.yaw=-.25;scene.pitch=.28;scene.zoom=1;draw();}else scene.reset();});$('zoomIn').addEventListener('click',()=>{scene.zoom=Math.min(4,scene.zoom*1.2);draw();});$('zoomOut').addEventListener('click',()=>{scene.zoom=Math.max(.3,scene.zoom/1.2);draw();});
 $('timeline').addEventListener('input',e=>{const target=Number(e.target.value);pausePlayback(false);if(target<modelTime()){if(model)model=current==='schwarzschild'?new Schwarzschild(p):new Binary(p,current==='pn');else{time=0;surfaceY=[p.height||0,0];history=[];}done=false;reason='';}advance(Math.max(0,target-modelTime()));update();});
 $('comparison').addEventListener('change',e=>{const id=e.target.dataset.clockBody;if(id){const value=Number(e.target.value);if(Number.isFinite(value)&&(p.mode==='height'?value>=0:value>0)){if(p.mode==='height')clockHeightOverrides[id]=value*heightPreset().unit_m;else clockOverrides[id]=value*AU;e.target.blur();update();}}});$('comparison').addEventListener('click',e=>{if(e.target.id==='equalRadii'){clockOverrides={};clockHeightOverrides={};update();}});
-$('menuToggle').addEventListener('click',()=>setMenu($('menuPanel').hidden));
-$('menuPanel').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false);});
-document.addEventListener('pointerdown',e=>{if(!$('menuPanel').hidden&&!$('siteMenu').contains(e.target))setMenu(false);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('menuPanel').hidden){e.preventDefault();setMenu(false,true);}});
-$('siteMenu').addEventListener('focusout',e=>{if(e.relatedTarget&&!$('siteMenu').contains(e.relatedTarget))setMenu(false);});
-$('notebook').addEventListener('close',()=>$('menuToggle').focus());
 $('journalBtn').addEventListener('click',openNotebook);$('exportBtn').addEventListener('click',exportCSV);$('importBtn').addEventListener('click',()=>$('importFile').click());$('importFile').addEventListener('change',e=>{importCSV(e.target.files[0]);e.target.value='';});$('clearBtn').addEventListener('click',()=>{if(confirm(T('clearConfirm'))){records=[];saveRecords();renderNotebook();}});$('entries').addEventListener('click',e=>{const b=e.target.closest('[data-delete]');if(b){records=records.filter(r=>r.id!==b.dataset.delete);saveRecords();renderNotebook();}});$('entries').addEventListener('input',e=>{const r=records.find(r=>r.id===e.target.dataset.note);if(r){r.note=e.target.value;saveRecords();}});$('chartFilter').addEventListener('change',updateAxes);for(const id of ['chartX','chartY','logX','logY'])$(id).addEventListener('change',chart);
 for(const event of ['pointerover','focusin'])$('journalChart').addEventListener(event,e=>{const r=records.find(r=>r.id===e.target.dataset.record);if(r)$('chartReadout').textContent=(r.values.body||r.values.planet||name(r.experiment))+': '+$('chartX').value+' = '+sci(r.values[$('chartX').value])+', '+$('chartY').value+' = '+sci(r.values[$('chartY').value]);});
 document.querySelectorAll('dialog .close').forEach(b=>b.addEventListener('click',()=>b.closest('dialog').close()));$('copyBtn').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('shareUrl').value);$('shareDialog').close();toast(T('copied'));}catch{$('shareUrl').select();}});
@@ -319,6 +314,6 @@ function togglePlayback(){
 }
 
 const query=new URLSearchParams(location.search);pageMode=experiments[query.get('experiment')]?'lab':['newton','gr'].includes(query.get('section'))?'section':'home';pageSection=query.get('section')==='gr'?'gr':'newton';if(['uk','en'].includes(query.get('lang')))lang=query.get('lang');if(experiments[query.get('experiment')])current=query.get('experiment');p=defaultParams(current);for(const q of experiments[current].params){if(!query.has(q.key))continue;const v=query.get(q.key);if(['select','planet'].includes(q.type)){const valid=q.type==='planet'?planets.map(b=>b.id):q.options.map(o=>o[0]);if(valid.includes(v))p[q.key]=v;}else if(Number.isFinite(Number(v))&&Number(v)>=q.min&&Number(v)<=q.max)p[q.key]=Number(v);}
-if(current==='clocks')for(const b of clockBodies){const r=Number(query.get('r_'+b.id));if(Number.isFinite(r)&&r>0)clockOverrides[b.id]=r*AU;const h=Number(query.get('h_'+b.id));if(query.has('h_'+b.id)&&Number.isFinite(h)&&h>=0)clockHeightOverrides[b.id]=h;}view=current==='clocks'?'geometry':experiments[current].category==='gr'?'cube':'scene';cube.gain=current==='pn'?400:8;cube.density=current==='pn'?7:4;if(['cube','geometry','scene','planet','worldline','disk'].includes(query.get('view')))view=query.get('view');if(['deform','geodesic'].includes(query.get('cube_mode')))cube.mode=query.get('cube_mode');if(clockBodies.some(b=>b.id===query.get('cube_body')))cube.body=query.get('cube_body');if(query.has('cube_point')){const v=query.get('cube_point').split(',').map(Number);if(v.length===3&&v.every(x=>Number.isFinite(x)&&Math.abs(x)<=.9))cube.point=v;}if([3,4,5,7].includes(Number(query.get('cube_density'))))cube.density=Number(query.get('cube_density'));cube.probeVisible=query.get('cube_probe_visible')==='1';cube.reference=query.has('cube_reference')?query.get('cube_reference')==='1':current==='pn';cube.cutaway=query.get('cube_cutaway')==='1';$('cubeDensity').value=cube.density;$('cubeReference').checked=cube.reference;$('cubeCutaway').checked=cube.cutaway;for(let i=0;i<3;i++)$('cube'+'XYZ'[i]).value=cube.point[i];if(query.has('grid_unit')&&query.has('grid_outer')){const unit=Number(query.get('grid_unit')),outer=Number(query.get('grid_outer'));if(Number.isFinite(unit)&&unit>0&&unit<1e30&&Number.isFinite(outer)&&outer>0&&outer<1e6)geometryReference={unit,outer};}viewTabs();if(view==='cube'){scene.yaw=-.25;scene.pitch=.28;}reset();labels();$('recordCount').textContent=records.length;
+if(current==='clocks')for(const b of clockBodies){const r=Number(query.get('r_'+b.id));if(Number.isFinite(r)&&r>0)clockOverrides[b.id]=r*AU;const h=Number(query.get('h_'+b.id));if(query.has('h_'+b.id)&&Number.isFinite(h)&&h>=0)clockHeightOverrides[b.id]=h;}view=current==='clocks'?'geometry':experiments[current].category==='gr'?'cube':'scene';cube.gain=current==='pn'?400:8;cube.density=current==='pn'?7:4;if(['cube','geometry','scene','planet','worldline','disk'].includes(query.get('view')))view=query.get('view');if(['deform','geodesic'].includes(query.get('cube_mode')))cube.mode=query.get('cube_mode');if(clockBodies.some(b=>b.id===query.get('cube_body')))cube.body=query.get('cube_body');if(query.has('cube_point')){const v=query.get('cube_point').split(',').map(Number);if(v.length===3&&v.every(x=>Number.isFinite(x)&&Math.abs(x)<=.9))cube.point=v;}if([3,4,5,7].includes(Number(query.get('cube_density'))))cube.density=Number(query.get('cube_density'));cube.probeVisible=query.get('cube_probe_visible')==='1';cube.reference=query.has('cube_reference')?query.get('cube_reference')==='1':current==='pn';cube.cutaway=query.get('cube_cutaway')==='1';$('cubeDensity').value=cube.density;$('cubeReference').checked=cube.reference;$('cubeCutaway').checked=cube.cutaway;for(let i=0;i<3;i++)$('cube'+'XYZ'[i]).value=cube.point[i];if(query.has('grid_unit')&&query.has('grid_outer')){const unit=Number(query.get('grid_unit')),outer=Number(query.get('grid_outer'));if(Number.isFinite(unit)&&unit>0&&unit<1e30&&Number.isFinite(outer)&&outer>0&&outer<1e6)geometryReference={unit,outer};}viewTabs();if(view==='cube'){scene.yaw=-.25;scene.pitch=.28;}reset();labels();updateRecordCount();
 
 initLocalization();
